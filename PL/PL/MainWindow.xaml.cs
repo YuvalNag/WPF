@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.Controls;
+﻿using PL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +14,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Targil4
+namespace PL
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow : Window
     {
+
+        public CarsViewModel CurrentVM { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
+            CurrentVM = new CarsViewModel();
+            this.DataContext = CurrentVM;
         }
     }
 }

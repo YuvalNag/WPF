@@ -1,27 +1,41 @@
-﻿<UserControl x:Class="Targil4.addWorkerView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
               xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:Targil4"
+                xmlns:System="clr-namespace:System;assembly=mscorlib"
               xmlns:DP="clr-namespace:DataProtocol;assembly=DataProtocol"
+            
+             
+            
+            
+             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="Targil4.addWorkerView"
+            
+             
+            
             
              mc:Ignorable="d" 
              >
     <UserControl.Resources>
-        <DP:Worker x:Key="worker"/>
+
+        <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="DP:EDUCUATION"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <local:EnumConverter x:Key="enumConverter"/>
     </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <TextBox Text="{Binding firstName}" Controls:TextBoxHelper.UseFloatingWatermark="True"  Controls:TextBoxHelper.Watermark="First Name" Margin="8" Controls:TextBoxHelper.WatermarkAlignment="Center"/>
-            <TextBox Text="{Binding lastName}" Controls:TextBoxHelper.UseFloatingWatermark="True" Controls:TextBoxHelper.Watermark="Last Name" Margin="8" />
-            <ComboBox ItemsSource="{Binding educuationList}" Margin="8"/>
-            <Button Margin="8" Style="{StaticResource MetroCircleButtonStyle}" Command="{Binding addCommand}" CommandParameter="{Binding }">
-                <Image Source="Assets/submit.png" Height="40"/>
-            </Button> 
+            <TextBox Text="{Binding currentWorker.firstName, UpdateSourceTrigger=PropertyChanged}" Controls:TextBoxHelper.UseFloatingWatermark="True"  Controls:TextBoxHelper.Watermark="First Name" Margin="8" Controls:TextBoxHelper.WatermarkAlignment="Center"/>
+            <TextBox Text="{Binding currentWorker.lastName, UpdateSourceTrigger=PropertyChanged}" Controls:TextBoxHelper.UseFloatingWatermark="True" Controls:TextBoxHelper.Watermark="Last Name" Margin="8" />
+            <ComboBox ItemsSource="{Binding Source={StaticResource dataFromEnum}}" SelectedItem="{Binding currentWorker.educuation, UpdateSourceTrigger=PropertyChanged}" Margin="8" Controls:TextBoxHelper.Watermark="Education" Controls:TextBoxHelper.UseFloatingWatermark="True"/>
+            <Button Margin="8"  Command="{Binding addCommand}" CommandParameter="{Binding currentWorker}" Content="add"/>
         </StackPanel>
-
+        <!--Style="{StaticResource MetroCircleButtonStyle}"-->
 
     </Grid>
 </UserControl>

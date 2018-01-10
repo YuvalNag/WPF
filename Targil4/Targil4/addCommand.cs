@@ -26,14 +26,15 @@ namespace Targil4
 
         public bool CanExecute(object parameter)
         {
-            if (parameter is Worker)
+            Worker worker = parameter as Worker;
+            if (worker!=null&&!String.IsNullOrWhiteSpace(worker.firstName)&& !String.IsNullOrWhiteSpace(worker.lastName))
                 return true;
             return false;
         }
 
         public void Execute(object parameter)
         {
-            vm.workers.Add(parameter as Worker);
+            vm.addWorker();
         }
     }
 }
