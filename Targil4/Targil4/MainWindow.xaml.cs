@@ -26,5 +26,6 @@ namespace Targil4
             InitializeComponent();
             this.DataContext = new MainWindowViewModel();
         }
+
     }
 }

@@ -7,12 +7,16 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace Targil4
 {
     class MainWindowViewModel:INotifyPropertyChanged
     {
-        public ObservableCollection<Worker> workers { set; get; }
+        private ObservableCollection<Worker> workers_ObservableCollection; 
+        public ICollectionView workers { set; get; }
+
+
         private Worker worker;
         public Worker currentWorker
         {
@@ -25,6 +29,21 @@ namespace Targil4
 
 
         }
+
+        private string _filterString;
+        public string FilterString
+        {
+            get { return _filterString; }
+            set
+            {
+                _filterString = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FilterString"));
+                workers.Refresh();
+            }
+        }
+
+     
+     
         public addCommand addCommand { get; set; }
         private Model model;
 
@@ -34,16 +53,19 @@ namespace Targil4
         {
             model = new Model();
             addCommand = new addCommand(this);
-            workers = new ObservableCollection<Worker>(model.workerList);
-            currentWorker=   new Worker();
-           
+            workers_ObservableCollection = new ObservableCollection<Worker>(model.workerList);
+            workers = CollectionViewSource.GetDefaultView(workers_ObservableCollection);
+            currentWorker =   new Worker();
+            workers.Filter = WorkerFilter;
             workers.CollectionChanged += Workers_CollectionChanged;
            
         }
 
+
+
         public void addWorker()
         {
-            workers.Add(worker);
+            workers_ObservableCollection.Add(worker);
             currentWorker = new Worker();
         }
 
@@ -56,5 +78,12 @@ namespace Targil4
         }
 
 
+        private bool WorkerFilter(object item)
+        {
+            Worker worker = item as Worker;
+            if (String.IsNullOrWhiteSpace(_filterString) || worker == null || String.IsNullOrWhiteSpace(worker.lastName))
+                return true;
+            return worker.lastName.Contains(_filterString);
+        }
     }
 }
