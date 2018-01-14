@@ -6,7 +6,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
          x:Class="Targil4.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" SizeToContent="Height" Width="700" MaxHeight="500" WindowStartupLocation="CenterScreen"  BorderBrush="#CC119EDA" >
+        Title="MainWindow" SizeToContent="Height"  Width="700" WindowStartupLocation="CenterScreen"  BorderBrush="#CC119EDA" >
     <Window.Resources>
 
         <DataTemplate x:Key="workerItem">
@@ -37,20 +37,33 @@
         </GroupBox>
 
         <GroupBox x:Name="allWorkerGroup" Grid.Row="1" Header="all workers" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Controls:ControlsHelper.ContentCharacterCasing="Upper" Controls:ControlsHelper.HeaderFontWeight="Medium" Controls:ControlsHelper.HeaderFontStretch="UltraExpanded" Controls:ControlsHelper.HeaderMargin="0,0,0,0" Background="#7F137254" BorderBrush="#7F137254" ClipToBounds="True"  >
-            <StackPanel >
-                <TextBox Controls:TextBoxHelper.UseFloatingWatermark="True" Controls:TextBoxHelper.Watermark="search" Text="{Binding FilterString ,Mode=OneWayToSource ,UpdateSourceTrigger=PropertyChanged}" />
-                <ListView  ItemsSource="{Binding workers}" ItemTemplate="{StaticResource workerItem}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center" BorderBrush="{x:Null}" SelectionMode="Single">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBox  Controls:TextBoxHelper.UseFloatingWatermark="True" Controls:TextBoxHelper.Watermark="search" Text="{Binding FilterString ,Mode=OneWayToSource ,UpdateSourceTrigger=PropertyChanged}" />
+                <ListView Grid.Row="1" ItemsSource="{Binding workers}" 
+                           ItemTemplate="{StaticResource workerItem}"
+                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                           HorizontalAlignment="Center"
+                          BorderBrush="{x:Null}"
+                            
+                          >
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <!--<WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"/>-->
+                            
                             <WrapPanel 
                                 Orientation="Horizontal"
-                                Height="{Binding ElementName=allWorkerGroup,Path=Height}"
+                                IsItemsHost="True"
+                             
                                 /> 
+
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
                 </ListView>
-            </StackPanel>
+            </Grid>
         </GroupBox>
       
     </Grid>
