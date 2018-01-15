@@ -11,7 +11,8 @@
              
             
             
-             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="Targil4.addWorkerView"
+             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+    xmlns:local1="clr-namespace:System.ComponentModel;assembly=System" x:Class="Targil4.addWorkerView"
             
              
             
@@ -26,7 +27,7 @@
                 <x:Type TypeName="DP:EDUCUATION"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <local:EnumConverter x:Key="enumConverter"/>
+        <local1:EnumConverter x:Key="enumConverter"/>
     </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
