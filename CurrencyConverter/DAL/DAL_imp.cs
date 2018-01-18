@@ -207,7 +207,7 @@ namespace DAL
                         var RTRates = await instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live");
                         foreach (var qoute in RTRates.quotes)
                         {
-                            Country issuesCountry = Countries.Find(t => t.Code == qoute.Key.Substring(3));
+                            Country issuesCountry =await context.Countries.Where(t => t.Code == qoute.Key.Substring(3)).FirstOrDefaultAsync();
                             Currency newCurrency = new Currency() { Value = float.Parse(qoute.Value), IssuesCountry = issuesCountry, Direction = '+', Magnitude = 0 };
                             CurrenciesList.Add(newCurrency);
                         }
@@ -234,8 +234,8 @@ namespace DAL
                         Dictionary<string, float> dictionaryCurrencies = DbRates.CurrenciesList.ToDictionary(key => key.IssuesCountry.Code, value => value.Value);
                         foreach (var qoute in RTRates.quotes)
                         {
-                            Country issuesCountry = Countries.Find(t => t.Code == qoute.Key.Substring(3));
-                            Currency newCurrency = new Currency() { Value = float.Parse(qoute.Value), IssuesCountry = issuesCountry, };
+                        Country issuesCountry = await context.Countries.Where(t => t.Code == qoute.Key.Substring(3)).FirstOrDefaultAsync();
+                        Currency newCurrency = new Currency() { Value = float.Parse(qoute.Value), IssuesCountry = issuesCountry, };
                             addDirectionAndMagnitude(qoute, dictionaryCurrencies, newCurrency);
                             CurrenciesList.Add(newCurrency);
                         }
