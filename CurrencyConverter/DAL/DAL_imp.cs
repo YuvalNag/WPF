@@ -55,15 +55,19 @@ namespace DAL
             {
 
                 DbRates = await context.CurrenciesByDate.OrderBy(t => t.date).FirstOrDefaultAsync();
+                if (DbRates != null)
+                {
+                    List<Currency> list = (List<Currency>)DbRates.CurrenciesList;
 
-               
-                
+                }
+
+
 
             }
 
             if (DbRates != null && DbRates.date.ToUniversalTime().AddHours(1) > DateTime.UtcNow)
             {
-                List<Currency> list = (List<Currency>)DbRates.CurrenciesList;
+
                 return DbRates;
             }
 
@@ -96,17 +100,17 @@ namespace DAL
                     addDirectionAndMagnitude(qoute, dictionaryCurrencies, newCurrency);
                     CurrenciesList.Add(newCurrency);
                 }
-                    using (DB_Context context = new DB_Context())
-                    {
+                using (DB_Context context = new DB_Context())
+                {
 
-                        Currencies newCurrencies = context.CurrenciesByDate.Find(oldCurrencies.id);
-                        newCurrencies.CurrenciesList = CurrenciesList;
-                        newCurrencies.date = dateTime;
-                        context.SaveChanges();
-                        return newCurrencies;
-                    }
+                    Currencies newCurrencies = context.CurrenciesByDate.Find(oldCurrencies.id);
+                    newCurrencies.CurrenciesList = CurrenciesList;
+                    newCurrencies.date = dateTime;
+                    context.SaveChanges();
+                    return newCurrencies;
+                }
 
-                
+
             }
             else
             {
@@ -154,5 +158,122 @@ namespace DAL
 
         }
 
+        private async Task<Currencies> RTtry()
+        {
+            var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
+
+            using (DB_Context context = new DB_Context())
+            {
+                List<Country> Countries;
+
+
+                #region Countries
+                Countries = await context.Countries.ToListAsync();
+
+
+
+                if (!Countries.Any())
+                {
+                    var CountriesList = await instance.Invoke<CurrencyLayerDotNet.Models.CurrencyListModel>("list");
+                    if (CountriesList.Success == true)
+                    {
+                        Countries = CountriesList.quotes.Select(t => new Country() { Code = t.Key, Name = t.Value }).ToList();
+
+
+
+
+                        context.Countries.AddRange(Countries);
+
+
+
+
+                    }
+
+                    #endregion
+
+                    Currencies DbRates = await context.CurrenciesByDate.OrderBy(t => t.date).FirstOrDefaultAsync();
+
+                    
+
+                    if (DbRates != null && DbRates.date.ToUniversalTime().AddHours(1) > DateTime.UtcNow)
+                    {
+
+                        return DbRates;
+                    }
+
+                    else if(DbRates == null)
+                    {
+                        List<Currency> CurrenciesList = new List<Currency>();
+                        var RTRates = await instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live");
+                        foreach (var qoute in RTRates.quotes)
+                        {
+                            Country issuesCountry = Countries.Find(t => t.Code == qoute.Key.Substring(3));
+                            Currency newCurrency = new Currency() { Value = float.Parse(qoute.Value), IssuesCountry = issuesCountry, Direction = '+', Magnitude = 0 };
+                            CurrenciesList.Add(newCurrency);
+                        }
+
+                        DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                        dateTime = dateTime.AddSeconds(RTRates.Timestamp);
+
+                            Currencies newCurrencies = new Currencies();
+                            newCurrencies.CurrenciesList = CurrenciesList;
+                            newCurrencies.date = dateTime;
+                            context.CurrenciesByDate.Add(newCurrencies);
+                            context.SaveChanges();
+                            return newCurrencies;
+                        
+                    }
+
+
+
+                    else
+                    {
+                        List<Currency> CurrenciesList = new List<Currency>();
+                        var RTRates = await instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live");
+
+                        Dictionary<string, float> dictionaryCurrencies = DbRates.CurrenciesList.ToDictionary(key => key.IssuesCountry.Code, value => value.Value);
+                        foreach (var qoute in RTRates.quotes)
+                        {
+                            Country issuesCountry = countries.Find(t => t.Code == qoute.Key.Substring(3));
+                            Currency newCurrency = new Currency() { Value = float.Parse(qoute.Value), IssuesCountry = issuesCountry, };
+                            addDirectionAndMagnitude(qoute, dictionaryCurrencies, newCurrency);
+                            CurrenciesList.Add(newCurrency);
+                        }
+                        using (DB_Context context = new DB_Context())
+                        {
+
+                            Currencies newCurrencies = context.CurrenciesByDate.Find(oldCurrencies.id);
+                            newCurrencies.CurrenciesList = CurrenciesList;
+                            newCurrencies.date = dateTime;
+                            context.SaveChanges();
+                            return newCurrencies;
+                        }
+
+
+                    }
+                    else
+                    {
+                        foreach (var qoute in rTRates.quotes)
+                        {
+                            Country issuesCountry = countries.Find(t => t.Code == qoute.Key.Substring(3));
+                            Currency newCurrency = new Currency() { Value = float.Parse(qoute.Value), IssuesCountry = issuesCountry, Direction = '+', Magnitude = 0 };
+                            CurrenciesList.Add(newCurrency);
+                        }
+
+                        using (DB_Context context = new DB_Context())
+                        {
+
+                            Currencies newCurrencies = new Currencies();
+                            newCurrencies.CurrenciesList = CurrenciesList;
+                            newCurrencies.date = dateTime;
+                            context.CurrenciesByDate.Add(newCurrencies);
+                            context.SaveChanges();
+                            return newCurrencies;
+                        }
+                    }
+                }
+            }
+
+        }
     }
 }
