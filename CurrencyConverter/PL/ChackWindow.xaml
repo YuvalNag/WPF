@@ -1,0 +1,14 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="PL.ChackWindow"
+        mc:Ignorable="d"
+        Title="ChackWindow" Height="300" Width="300">
+    <Grid>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="78,47,0,0" VerticalAlignment="Top" Width="112" Height="42" Click="Button_Click"/>
+        <ProgressBar IsIndeterminate="True" HorizontalAlignment="Left" Height="10" Margin="90,115,0,0" VerticalAlignment="Top" Width="100"/>
+    </Grid>
+</Window>

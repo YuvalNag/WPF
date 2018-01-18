@@ -1,0 +1,54 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PL.UserControls"
+             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="PL.UserControls.CountriesListUC"
+             mc:Ignorable="d" 
+             d:DesignHeight="270" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="CountryItem">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding FlagImageUri}" />
+                <TextBlock Text="{Binding CountrySymbol}" Grid.Column="1" />
+                <TextBlock Text="{Binding CurrencyValue}" Grid.Column="2" />
+                <TextBlock Text="{Binding CountryName}" Grid.ColumnSpan="3" Grid.Row="1"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TextBox   Text="{Binding FilterString, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Custom:TextBoxHelper.UseFloatingWatermark="True"  Custom:TextBoxHelper.Watermark="search"/>
+        <ListView Grid.Row="1"  ItemsSource="{Binding CountriesList}" 
+                           ItemTemplate="{StaticResource CountryItem}"
+                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                           HorizontalAlignment="Center"
+                          BorderBrush="{x:Null}" Margin="148,1,148,139.118" Grid.RowSpan="2">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!--<WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"/>-->
+
+                    <WrapPanel 
+                                Orientation="Horizontal"
+                                IsItemsHost="True"
+                             
+                                />
+
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+    </Grid>
+</UserControl>
