@@ -158,7 +158,7 @@ namespace DAL
 
         }
 
-        private async Task<Currencies> RTtry()
+        public async Task<Currencies> RTtry()
         {
             var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
 
@@ -180,14 +180,14 @@ namespace DAL
                         Countries = CountriesList.quotes.Select(t => new Country() { Code = t.Key, Name = t.Value }).ToList();
 
 
-
-
+                        
                         context.Countries.AddRange(Countries);
 
 
 
 
                     }
+                }
 
                     #endregion
 
@@ -234,15 +234,15 @@ namespace DAL
                         Dictionary<string, float> dictionaryCurrencies = DbRates.CurrenciesList.ToDictionary(key => key.IssuesCountry.Code, value => value.Value);
                         foreach (var qoute in RTRates.quotes)
                         {
-                            Country issuesCountry = countries.Find(t => t.Code == qoute.Key.Substring(3));
+                            Country issuesCountry = Countries.Find(t => t.Code == qoute.Key.Substring(3));
                             Currency newCurrency = new Currency() { Value = float.Parse(qoute.Value), IssuesCountry = issuesCountry, };
                             addDirectionAndMagnitude(qoute, dictionaryCurrencies, newCurrency);
                             CurrenciesList.Add(newCurrency);
                         }
-                        using (DB_Context context = new DB_Context())
-                        {
 
-                            Currencies newCurrencies = context.CurrenciesByDate.Find(oldCurrencies.id);
+                    DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                    dateTime = dateTime.AddSeconds(RTRates.Timestamp);
+                    Currencies newCurrencies = context.CurrenciesByDate.Find(DbRates.id);
                             newCurrencies.CurrenciesList = CurrenciesList;
                             newCurrencies.date = dateTime;
                             context.SaveChanges();
@@ -250,28 +250,7 @@ namespace DAL
                         }
 
 
-                    }
-                    else
-                    {
-                        foreach (var qoute in rTRates.quotes)
-                        {
-                            Country issuesCountry = countries.Find(t => t.Code == qoute.Key.Substring(3));
-                            Currency newCurrency = new Currency() { Value = float.Parse(qoute.Value), IssuesCountry = issuesCountry, Direction = '+', Magnitude = 0 };
-                            CurrenciesList.Add(newCurrency);
-                        }
-
-                        using (DB_Context context = new DB_Context())
-                        {
-
-                            Currencies newCurrencies = new Currencies();
-                            newCurrencies.CurrenciesList = CurrenciesList;
-                            newCurrencies.date = dateTime;
-                            context.CurrenciesByDate.Add(newCurrencies);
-                            context.SaveChanges();
-                            return newCurrencies;
-                        }
-                    }
-                }
+                   
             }
 
         }

@@ -34,8 +34,8 @@ namespace PL
         private async void dfgdf()
         {
             DAL_imp dAL = new DAL_imp();
-            var co = await dAL.getCountries();
-            var co1 = await dAL.getRTRates();
+            // var co = await dAL.getCountries();
+            var co1 = await dAL.RTtry();
         //    var co2 = await dAL.getHRates();
 
             int x = 5;
