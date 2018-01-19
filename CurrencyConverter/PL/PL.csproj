@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="ViewModels\CountriesListVM.cs" />
     <Compile Include="ViewModels\CoverterVM.cs" />
+    <Compile Include="ViewModels\NotifyTaskCompletion.cs" />
     <Page Include="ChackWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

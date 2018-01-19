@@ -54,9 +54,17 @@
     <Compile Include="CurrencyLayerApi.cs" />
     <Compile Include="DAL_imp.cs" />
     <Compile Include="DB_Context.cs" />
-    <Compile Include="Migrations\201801181028458_InitialCreate.cs" />
-    <Compile Include="Migrations\201801181028458_InitialCreate.Designer.cs">
-      <DependentUpon>201801181028458_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201801181657509_InitialCreate.cs" />
+    <Compile Include="Migrations\201801181657509_InitialCreate.Designer.cs">
+      <DependentUpon>201801181657509_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801181801147_a.cs" />
+    <Compile Include="Migrations\201801181801147_a.Designer.cs">
+      <DependentUpon>201801181801147_a.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801182226279_l.cs" />
+    <Compile Include="Migrations\201801182226279_l.Designer.cs">
+      <DependentUpon>201801182226279_l.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseModel.cs" />
@@ -78,8 +86,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201801181028458_InitialCreate.resx">
-      <DependentUpon>201801181028458_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801181657509_InitialCreate.resx">
+      <DependentUpon>201801181657509_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801181801147_a.resx">
+      <DependentUpon>201801181801147_a.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801182226279_l.resx">
+      <DependentUpon>201801182226279_l.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

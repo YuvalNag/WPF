@@ -50,6 +50,7 @@
     <Compile Include="Country.cs" />
     <Compile Include="Currencies.cs" />
     <Compile Include="Currency.cs" />
+    <Compile Include="HistoryDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

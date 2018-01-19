@@ -4,11 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="PL.ChackWindow"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="PL.ChackWindow"
         mc:Ignorable="d"
         Title="ChackWindow" Height="300" Width="300">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="78,47,0,0" VerticalAlignment="Top" Width="112" Height="42" Click="Button_Click"/>
-        <ProgressBar IsIndeterminate="True" HorizontalAlignment="Left" Height="10" Margin="90,115,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Height="42" Click="Button_Click"/>
+        <ProgressBar IsIndeterminate="True" HorizontalAlignment="Left" Height="37" Margin="112,0,0,0" VerticalAlignment="Top" Width="180"/>
+        <ListBox ItemsSource="{Binding MyProperty.Result.CurrenciesList}"  HorizontalAlignment="Left" Height="227" Margin="0,42,0,0" VerticalAlignment="Top" Width="292">
+            <ListBox.ItemTemplate>
+                <DataTemplate >
+                    <StackPanel>
+                        <TextBlock x:Name="a" Text="{Binding Value}" />
+                        <TextBlock x:Name="b" Text="{Binding IssuedCountryName}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
