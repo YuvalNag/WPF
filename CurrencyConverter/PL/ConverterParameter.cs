@@ -13,15 +13,15 @@ namespace PL
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            
+
             Currency source, target;
             source = values[0] as Currency;
             target = values[1] as Currency;
 
 
             if (source != null && target != null)
-                return String.Format("{0} {1}", CurrencyCodeMapper.GetSymbol(source.IssuedCountryCode), (source.Value / target.Value).ToString());
-            return String.Format( "{0} {1}",CurrencyCodeMapper.GetSymbol(source.IssuedCountryCode),source.Value.ToString());
+                return (source.Value / target.Value).ToString();
+            return source.Value.ToString();
 
 
 
@@ -33,34 +33,34 @@ namespace PL
         }
     }
 
-    public static class CurrencyCodeMapper
-    {
-        private static readonly Dictionary<string, string> SymbolsByCode;
+    //public static class CurrencyCodeMapper
+    //{
+    //    private static readonly Dictionary<string, string> SymbolsByCode;
 
-        public static string GetSymbol(string code)
-        {
-            if(SymbolsByCode.ContainsKey(code))
-            {
-                return SymbolsByCode[code];
-            }
-            else 
-            {
+    //    public static string GetSymbol(string code)
+    //    {
+    //        if (SymbolsByCode.ContainsKey(code))
+    //        {
+    //            return SymbolsByCode[code];
+    //        }
+    //        else
+    //        {
 
-                return String.Format("({0}) ", code);
-            } }
+    //            return String.Format("({0}) ", code);
+    //        }
+    //    }
 
-        static CurrencyCodeMapper()
-        {
-            SymbolsByCode = new Dictionary<string, string>();
+    //    static CurrencyCodeMapper()
+    //    {
+    //        SymbolsByCode = new Dictionary<string, string>();
 
-            var regions = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
-                          .Select(x => new RegionInfo(x.LCID));
+    //        var regions = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+    //                      .Select(x => new RegionInfo(x.LCID));
 
-            foreach (var region in regions)
-                if (!SymbolsByCode.ContainsKey(region.ISOCurrencySymbol))
-                    SymbolsByCode.Add(region.ISOCurrencySymbol, region.CurrencySymbol);
-        }
+    //        foreach (var region in regions)
+    //            if (!SymbolsByCode.ContainsKey(region.ISOCurrencySymbol))
+    //                SymbolsByCode.Add(region.ISOCurrencySymbol, region.CurrencySymbol);
+    //    }
     }
 
-}
 

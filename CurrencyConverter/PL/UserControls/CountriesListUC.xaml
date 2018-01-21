@@ -4,12 +4,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PL.UserControls"
-             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="PL.UserControls.CountriesListUC"
+             
+             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:Converters="clr-namespace:PL.Converters"
+    x:Class="PL.UserControls.CountriesListUC"
              mc:Ignorable="d" 
              d:DesignHeight="270" d:DesignWidth="300">
     <UserControl.Resources>
-        <DataTemplate x:Key="CountryItem">
-            <Grid >
+        <Converters:CountryCodeToImgSourceConverter x:Key="CountryCodeToImgSourceConverter" />
+        <Converters:DirectionToBackgroundConverter x:Key="DirectionToBackgroundConverter" />
+        <Converters:ConvertValuse x:Key="ConvertValuse"/>
+        <Converters:IssuedCountryCodeToCountrySymbolConverter x:Key="IssuedCountryCodeToCountrySymbolConverter"/>
+
+
+
+
+
+        <DataTemplate x:Key="CurrencyItem">
+            <Grid Background="{Binding Direction, Converter={StaticResource DirectionToBackgroundConverter} }">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition Height="*"/>
@@ -19,10 +31,18 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="{Binding FlagImageUri}" />
-                <TextBlock Text="{Binding CountrySymbol}" Grid.Column="1" />
-                <TextBlock Text="{Binding CurrencyValue}" Grid.Column="2" />
-                <TextBlock Text="{Binding CountryName}" Grid.ColumnSpan="3" Grid.Row="1"/>
+                <Image Source="{Binding IssuedCountryCode, Converter={StaticResource CountryCodeToImgSourceConverter} }" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding IssuedCountryCode, Converter={StaticResource IssuedCountryCodeToCountrySymbolConverter} }" Grid.Column="1" FontSize="72" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                <TextBlock  Grid.Column="2" FontSize="48" VerticalAlignment="Center" Margin="0,48" HorizontalAlignment="Right" Width="97"  >
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{StaticResource ConvertValuse}">
+                            <Binding  />
+                            <Binding  RelativeSource="{RelativeSource TemplatedParent}" Path="SelectedItem" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Text="{Binding IssuedCountryCode}" Grid.Column="0" Grid.Row="1" FontSize="48" FontWeight="Bold"  Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding IssuedCountryName}" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
@@ -32,8 +52,8 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <TextBox   Text="{Binding FilterString, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Custom:TextBoxHelper.UseFloatingWatermark="True"  Custom:TextBoxHelper.Watermark="search"/>
-        <ListView Grid.Row="1"  ItemsSource="{Binding CountriesList}" 
-                           ItemTemplate="{StaticResource CountryItem}"
+        <ListView Grid.Row="1"  ItemsSource="{Binding currencies.Result.CurrenciesList}" 
+                           ItemTemplate="{StaticResource CurrencyItem}"
                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                            HorizontalAlignment="Center"
                           BorderBrush="{x:Null}" Margin="148,1,148,139.118" Grid.RowSpan="2">

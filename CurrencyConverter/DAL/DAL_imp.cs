@@ -8,10 +8,10 @@ using CurrencyLayerDotNet.Models;
 
 namespace DAL
 {
-    public class DAL_imp
+    public class DAL_imp : IDAL
     {
 
-        public async Task<List<Country>> getCountries()
+        public async Task<List<Country>> getCountriesAsync()
         {
             List<Country> Countries;
             using (DB_Context context = new DB_Context())
@@ -223,100 +223,79 @@ namespace DAL
         {
             float newValue = float.Parse(qoute.Value);
             var oldValue = currencies[qoute.Key.Substring(3)];
-            if (newValue > oldValue)
+            if (newValue >= oldValue)
             {
                 currency.Direction = "+";
-                currency.Magnitude = newValue - oldValue;
+                currency.Magnitude = (float)Math.Round((newValue - oldValue), 2);
             }
             else
             {
                 currency.Direction = "-";
-                currency.Magnitude = -(newValue - oldValue);
+                currency.Magnitude =(float) Math.Round(-(newValue - oldValue),2);
             }
         }
         public async Task<List<HistoryDTO>> getHRatesAsync(string code)
         {
             List<HistoryDTO> historyRates;
+            Currencies oldHistoryCurrencies;
+            DateTime lastHistoryDate;
+
             using (DB_Context context = new DB_Context())
             {
+                oldHistoryCurrencies = await context.CurrenciesByDate.OrderBy(t => t.date).FirstOrDefaultAsync();
+
+                if(oldHistoryCurrencies == null)
+                {
+                    lastHistoryDate = DateTime.Now.AddDays(-1);
+                    oldHistoryCurrencies= await getRTRatesAsync();
+                }
+                lastHistoryDate = oldHistoryCurrencies.date;
+               
+                if (lastHistoryDate.AddYears(1) > DateTime.Now.AddDays(1))
+                {
+                    var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
+                    List<Country> Countries = await getCountriesAsync().ConfigureAwait(false);
+                   
+                    for (DateTime start = lastHistoryDate; start.AddYears(1) > DateTime.Now;start= start.AddDays(-1))
+                    {
+                        var HRate = await instance.Invoke<CurrencyLayerDotNet.Models.HistoryModel>("historical", new Dictionary<string, string> { { "date", start.ToString("yyyy-MM-dd") } }).ConfigureAwait(false);
+                        Currencies currencies = new Currencies();
+                        currencies.date = start;
+                        currencies.CurrenciesList = ConverterHRate(Countries, HRate, oldHistoryCurrencies);
+                        context.CurrenciesByDate.Add(currencies);
+                    }
+                    await context.SaveChangesAsync();
+                }
                  historyRates= await context.CurrenciesByDate.OrderBy(t => t.date).Select(t=>new HistoryDTO() {Currency=t.CurrenciesList.FirstOrDefault(x=>x.IssuedCountryCode==code),date=t.date}).ToListAsync();
-                
+                 
             }
+           
             return historyRates;
 
         }
 
-        //public async Task<Currencies> RTRatesAsync()
-        //{
-        //    var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
-
-        //    using (DB_Context context = new DB_Context())
-        //    {
-        //        List<Country> Countries = await getCountries();
-
-
-        //        Currencies DbRates = await context.CurrenciesByDate.OrderBy(t => t.date).FirstOrDefaultAsync();
-
-
-        //        if (DbRates != null && DbRates.date.ToUniversalTime().AddHours(1) > DateTime.UtcNow)
-        //        {
-
-        //            return DbRates;
-        //        }
-
-        //        else
-
-
-        //        {
-        //            List<Currency> CurrenciesList;
-        //            var RTRates = await instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live");
-        //            if (DbRates == null)
-        //            {
-        //                CurrenciesList=await Task.Run(()=>FirstEntryConverter(Countries, RTRates));
-
-        //            }
-
-
-
-        //            else
-        //            {
-
-        //                CurrenciesList = await Task.Run(() => Converter(Countries, RTRates,DbRates));
-
-        //                context.CurrenciesByDate.Remove(DbRates);
-
-
-        //            }
-
-        //            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-        //            dateTime = dateTime.AddSeconds(RTRates.Timestamp);
-
-        //            Currencies newCurrencies = new Currencies();
-        //            newCurrencies.CurrenciesList = CurrenciesList;
-        //            newCurrencies.date = dateTime;
-        //            context.CurrenciesByDate.Add(newCurrencies);
-        //           await context.SaveChangesAsync();
-        //            return newCurrencies;
-        //        }
-
-
-
-        //    }
-
-        //}
-        public async Task<Currencies> RTRatesAsync1()
+        private List<Currency> ConverterHRate(List<Country> Countries, HistoryModel RTRates, Currencies DbRates)
         {
-            return await Task.Run<Currencies>(()=>RTRates());
+            List<Currency> CurrenciesList = new List<Currency>();
+            Dictionary<string, float> dictionaryCurrencies = DbRates.CurrenciesList.ToDictionary(key => key.IssuedCountryCode, value => value.Value);
+            foreach (var qoute in RTRates.quotes)
+            {
+                string issuesCountryName = Countries.Find(t => t.Code == qoute.Key.Substring(3)).Name;
+                Currency newCurrency = new Currency() { Value = float.Parse(qoute.Value), IssuedCountryCode = qoute.Key.Substring(3), IssuedCountryName = issuesCountryName };
+                addDirectionAndMagnitude(qoute, dictionaryCurrencies, newCurrency);
+                CurrenciesList.Add(newCurrency);
+            }
+            return CurrenciesList;
         }
 
-        public async Task<Currencies> RTRatesAsync()
+        public async Task<Currencies> getRTRatesAsync()
         {
             DB_Context context = new DB_Context();
                 Currencies DbRates = await context.CurrenciesByDate.OrderByDescending(t => t.date).Include("CurrenciesList").FirstOrDefaultAsync().ConfigureAwait(false);
 
             
 
-                if (DbRates != null && checkIfThreeHoursApartInTheSameDay(DbRates.date))
+                if (DbRates != null && isUpdatedInLastHours(DbRates.date))
                 {
                     context.Dispose();
                     return DbRates;
@@ -327,9 +306,9 @@ namespace DAL
 
                 {
                 var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
-                List<Country> Countries = await getCountries().ConfigureAwait(false);
+                List<Country> Countries = await getCountriesAsync().ConfigureAwait(false);
                 List<Currency> CurrenciesList;
-                    var RTRates = await instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live");
+                    var RTRates = await instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live").ConfigureAwait(false);
 
 
                     if (RTRates == null)
@@ -382,87 +361,14 @@ namespace DAL
 
         }
 
-        public  Currencies RTRates()
-        {
-            DB_Context context = new DB_Context();
-            Currencies DbRates = context.CurrenciesByDate.OrderByDescending(t => t.date).Include("CurrenciesList").FirstOrDefault();
+       
 
-
-
-            if (DbRates != null && checkIfThreeHoursApartInTheSameDay(DbRates.date))
-            {
-                context.Dispose();
-                return DbRates;
-            }
-
-            else
-
-
-            {
-                var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
-                var CountriesTask = getCountries();
-                CountriesTask.RunSynchronously();
-                List<Country> Countries = CountriesTask.Result;
-                List<Currency> CurrenciesList;
-                var RTRatesTask = instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live");
-                RTRatesTask.RunSynchronously();
-                LiveModel RTRates = RTRatesTask.Result;
-                if (RTRates == null)
-                {
-                    if (DbRates == null)
-                        throw new Exception("error");
-
-                    context.Dispose();
-                    return DbRates;
-                }
-
-
-                if (DbRates == null)
-                {
-
-                    CurrenciesList = FirstEntryConverter(Countries, RTRates);
-
-
-
-                }
-
-
-
-                else
-                {
-
-                    CurrenciesList = Converter(Countries, RTRates, DbRates);
-
-                    if (checkIfInTheSameDay(DbRates.date.ToLocalTime()))
-                        context.CurrenciesByDate.Remove(DbRates);
-
-
-                }
-
-                DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                dateTime = dateTime.AddSeconds(RTRates.Timestamp).ToLocalTime();
-
-                Currencies newCurrencies = new Currencies();
-                newCurrencies.CurrenciesList = CurrenciesList;
-                newCurrencies.date = dateTime;
-                context.CurrenciesByDate.Add(newCurrencies);
-                 context.SaveChanges();
-                context.Dispose();
-                return newCurrencies;
-            }
-
-
-
-
-
-        }
-
-        private bool checkIfThreeHoursApartInTheSameDay(DateTime start)
+        private bool isUpdatedInLastHours(DateTime start)
         {
            
             start = start.ToLocalTime();
             DateTime time = DateTime.Now;
-            return start.AddHours(1) > DateTime.Now &&checkIfInTheSameDay(start);
+            return start.AddHours(1) > DateTime.Now && checkIfInTheSameDay(start);
         }
 
         private bool checkIfInTheSameDay(DateTime start)

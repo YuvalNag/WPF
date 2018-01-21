@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PL
+namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,9 +23,6 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            //ChackWindow chackWindow = new ChackWindow();
-            //chackWindow.Show();
-            //this.Close();
         }
     }
 }

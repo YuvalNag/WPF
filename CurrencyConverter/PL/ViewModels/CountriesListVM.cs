@@ -1,4 +1,5 @@
-﻿using DP;
+﻿using BL;
+using DP;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,12 +14,26 @@ namespace PL.ViewModels
 {
     class CountriesListVM
     {
-        private ObservableCollection<Currency> Countries_ObservableCollection;
-        public ICollectionView CountriesList { set; get; }
+        private ObservableCollection<Currency> Currencies_ObservableCollection;
+        public ICollectionView CurrenciesList { set; get; }
 
 
-      
+        private NotifyTaskCompletion<Currencies> _currencies;
 
+        private BL_imp bl;
+
+        public NotifyTaskCompletion<Currencies> currencies
+        {
+            set
+            {
+                _currencies = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("currencies"));
+            }
+            get
+            {
+                return _currencies;
+            }
+        }
         private string _filterString;
         public string FilterString
         {
@@ -27,7 +42,8 @@ namespace PL.ViewModels
             {
                 _filterString = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FilterString"));
-                CountriesList.Refresh();
+                if(CurrenciesList!=null)
+                CurrenciesList.Refresh();
             }
         }
 
@@ -38,15 +54,23 @@ namespace PL.ViewModels
 
         public CountriesListVM()
         {
-            //Countries_ObservableCollection = new ObservableCollection<Country>(model.workerList);
-            CountriesList = CollectionViewSource.GetDefaultView(Countries_ObservableCollection);
-         //   CountriesList.Filter = WorkerFilter;
+            currencies = new NotifyTaskCompletion<Currencies>(getRTRatesAsync());
+            //CountriesList.Filter = WorkerFilter;
             //CountriesList.CollectionChanged += CountriesList_CollectionChanged;
 
         }
 
+        private async Task<Currencies> getRTRatesAsync()
+        {
 
-        
+            //Currencies a = await Task.Run(async () => await dAL.RTRatesAsync()); a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList); return a;
+            Currencies a = await new BL_imp().getRTRatesAsync();
+            a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList);
+            CurrenciesList = CollectionViewSource.GetDefaultView(a.CurrenciesList);
+            return a;
+
+        }
+
 
 
         //private bool WorkerFilter(object item)

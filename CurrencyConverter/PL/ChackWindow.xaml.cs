@@ -77,7 +77,7 @@ namespace PL
             //}
             //GetMyProperty().InvokeTresultChanged();
             MyProperty = new NotifyTaskCompletion<Currencies>(ab());
-            //MyPropertyH = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(abc("ILS"));
+            MyPropertyH = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(abc("ILS"));
 
         }
 
@@ -96,7 +96,7 @@ namespace PL
         {
 
             //Currencies a = await Task.Run(async () => await dAL.RTRatesAsync()); a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList); return a;
-            Currencies a = await new DAL_imp().RTRatesAsync();
+            Currencies a = await new DAL_imp().getRTRatesAsync();
             a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList);
             return a;
 
@@ -106,7 +106,7 @@ namespace PL
         {
 
             //Currencies a = await Task.Run(async () => await dAL.RTRatesAsync()); a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList); return a;
-            Currencies a =await dal.RTRatesAsync1();
+            Currencies a =await dal.getRTRatesAsync();
             a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList);
             return a;
         }
@@ -115,7 +115,7 @@ namespace PL
         {
             DAL_imp dAL = new DAL_imp();
             // var co = await dAL.getCountries();
-            var co1 = await dAL.RTRatesAsync();
+            var co1 = await dAL.getRTRatesAsync();
         //    var co2 = await dAL.getHRates();
 
             int x = 5;

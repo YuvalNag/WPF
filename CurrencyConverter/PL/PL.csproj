@@ -78,6 +78,10 @@
       <DependentUpon>ChackWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConverterParameter.cs" />
+    <Compile Include="Converters\ConvertValuse.cs" />
+    <Compile Include="Converters\CountryCodeToImgSourceConverter.cs" />
+    <Compile Include="Converters\DirectionToBackgroundConverter.cs" />
+    <Compile Include="Converters\IssuedCountryCodeToCountrySymbolConverter.cs" />
     <Compile Include="CurrancyItem.xaml.cs">
       <DependentUpon>CurrancyItem.xaml</DependentUpon>
     </Compile>
@@ -174,6 +178,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="FlagsImages\USD.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
