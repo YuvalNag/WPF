@@ -7,18 +7,31 @@
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="PL.ChackWindow"
         mc:Ignorable="d"
         Title="ChackWindow" Height="300" Width="300">
+    <Window.Resources>
+        <local:ConverterParameter x:Key="con"/>
+    </Window.Resources>
     <Grid>
         <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Height="42" Click="Button_Click"/>
-        <ProgressBar IsIndeterminate="True" HorizontalAlignment="Left" Height="37" Margin="112,0,0,0" VerticalAlignment="Top" Width="180"/>
-        <ListBox ItemsSource="{Binding MyProperty.Result.CurrenciesList}"  HorizontalAlignment="Left" Height="227" Margin="0,42,0,0" VerticalAlignment="Top" Width="292">
+        <ProgressBar IsIndeterminate="True" HorizontalAlignment="Left" Height="37" Margin="112,0,0,0" VerticalAlignment="Top" Width="87"/>
+        <ListBox Name="sd" ItemsSource="{Binding MyProperty.Result.CurrenciesList}"  HorizontalAlignment="Left" Height="227" Margin="0,42,0,0" VerticalAlignment="Top" Width="292">
             <ListBox.ItemTemplate>
                 <DataTemplate >
+                    <Border BorderBrush="Blue">
                     <StackPanel>
-                        <TextBlock x:Name="a" Text="{Binding Value}" />
+                        <TextBlock x:Name="a"  >
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource con}">
+                                    <Binding  />
+                                    <Binding  ElementName="sd" Path="SelectedItem" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
                         <TextBlock x:Name="b" Text="{Binding IssuedCountryName}" />
-                    </StackPanel>
+                        </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <TextBox Name="c" HorizontalAlignment="Left" Height="23" Margin="199,9,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="93"/>
     </Grid>
 </Window>

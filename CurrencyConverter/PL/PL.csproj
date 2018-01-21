@@ -78,6 +78,9 @@
       <DependentUpon>ChackWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConverterParameter.cs" />
+    <Compile Include="CurrancyItem.xaml.cs">
+      <DependentUpon>CurrancyItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ConverterUC.xaml.cs">
       <DependentUpon>ConverterUC.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
     <Compile Include="ViewModels\CoverterVM.cs" />
     <Compile Include="ViewModels\NotifyTaskCompletion.cs" />
     <Page Include="ChackWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CurrancyItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -25,7 +25,8 @@ namespace PL
     public partial class ChackWindow : Window,INotifyPropertyChanged
     {
         private NotifyTaskCompletion<Currencies> myProperty;
-       
+
+        private DAL_imp dal;
 
         public NotifyTaskCompletion<Currencies> MyProperty
         {
@@ -60,8 +61,8 @@ namespace PL
         {
             InitializeComponent();
 
-            MyProperty=new NotifyTaskCompletion<Currencies>( ab());
-            MyPropertyH = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(abc("USD"));
+            dal = new DAL_imp();
+            //MyProperty = new NotifyTaskCompletion<Currencies>(ab2());
             this.DataContext = this;
         }
 
@@ -75,7 +76,8 @@ namespace PL
 
             //}
             //GetMyProperty().InvokeTresultChanged();
-            MyPropertyH = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(abc("ILS"));
+            MyProperty = new NotifyTaskCompletion<Currencies>(ab());
+            //MyPropertyH = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(abc("ILS"));
 
         }
 
@@ -86,16 +88,30 @@ namespace PL
 
         private async Task<ObservableCollection<HistoryDTO>> abc(string code)
         {
-         return new ObservableCollection<HistoryDTO>(await new DAL_imp().getHRatesAsync(code));
+         return new ObservableCollection<HistoryDTO>(await dal.getHRatesAsync(code));
         }
 
 
         private async Task<Currencies> ab()
         {
-            DAL_imp dAL = new DAL_imp();
-            Currencies a = await Task.Run(async () => await dAL.RTRates()); a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList); return a;
+
+            //Currencies a = await Task.Run(async () => await dAL.RTRatesAsync()); a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList); return a;
+            Currencies a = await new DAL_imp().RTRatesAsync();
+            a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList);
+            return a;
+
         }
-        private async void dfgdf()
+
+        private async Task<Currencies> ab2()
+        {
+
+            //Currencies a = await Task.Run(async () => await dAL.RTRatesAsync()); a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList); return a;
+            Currencies a =await dal.RTRatesAsync1();
+            a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList);
+            return a;
+        }
+
+            private async void dfgdf()
         {
             DAL_imp dAL = new DAL_imp();
             // var co = await dAL.getCountries();

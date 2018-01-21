@@ -236,88 +236,87 @@ namespace DAL
         }
         public async Task<List<HistoryDTO>> getHRatesAsync(string code)
         {
-            List<HistoryDTO> a;
+            List<HistoryDTO> historyRates;
             using (DB_Context context = new DB_Context())
             {
-                 a= await context.CurrenciesByDate.OrderBy(t => t.date).Select(t=>new HistoryDTO() {Currency=t.CurrenciesList.FirstOrDefault(x=>x.IssuedCountryCode==code),date=t.date}).ToListAsync();
+                 historyRates= await context.CurrenciesByDate.OrderBy(t => t.date).Select(t=>new HistoryDTO() {Currency=t.CurrenciesList.FirstOrDefault(x=>x.IssuedCountryCode==code),date=t.date}).ToListAsync();
                 
             }
-            return a;
+            return historyRates;
 
+        }
+
+        //public async Task<Currencies> RTRatesAsync()
+        //{
+        //    var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
+
+        //    using (DB_Context context = new DB_Context())
+        //    {
+        //        List<Country> Countries = await getCountries();
+
+
+        //        Currencies DbRates = await context.CurrenciesByDate.OrderBy(t => t.date).FirstOrDefaultAsync();
+
+
+        //        if (DbRates != null && DbRates.date.ToUniversalTime().AddHours(1) > DateTime.UtcNow)
+        //        {
+
+        //            return DbRates;
+        //        }
+
+        //        else
+
+
+        //        {
+        //            List<Currency> CurrenciesList;
+        //            var RTRates = await instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live");
+        //            if (DbRates == null)
+        //            {
+        //                CurrenciesList=await Task.Run(()=>FirstEntryConverter(Countries, RTRates));
+
+        //            }
+
+
+
+        //            else
+        //            {
+
+        //                CurrenciesList = await Task.Run(() => Converter(Countries, RTRates,DbRates));
+
+        //                context.CurrenciesByDate.Remove(DbRates);
+
+
+        //            }
+
+        //            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        //            dateTime = dateTime.AddSeconds(RTRates.Timestamp);
+
+        //            Currencies newCurrencies = new Currencies();
+        //            newCurrencies.CurrenciesList = CurrenciesList;
+        //            newCurrencies.date = dateTime;
+        //            context.CurrenciesByDate.Add(newCurrencies);
+        //           await context.SaveChangesAsync();
+        //            return newCurrencies;
+        //        }
+
+
+
+        //    }
+
+        //}
+        public async Task<Currencies> RTRatesAsync1()
+        {
+            return await Task.Run<Currencies>(()=>RTRates());
         }
 
         public async Task<Currencies> RTRatesAsync()
         {
-            var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
+            DB_Context context = new DB_Context();
+                Currencies DbRates = await context.CurrenciesByDate.OrderByDescending(t => t.date).Include("CurrenciesList").FirstOrDefaultAsync().ConfigureAwait(false);
 
-            using (DB_Context context = new DB_Context())
-            {
-                List<Country> Countries = await getCountries();
+            
 
-
-                Currencies DbRates = await context.CurrenciesByDate.OrderBy(t => t.date).FirstOrDefaultAsync();
-
-
-                if (DbRates != null && DbRates.date.ToUniversalTime().AddHours(1) > DateTime.UtcNow)
-                {
-
-                    return DbRates;
-                }
-
-                else
-
-
-                {
-                    List<Currency> CurrenciesList;
-                    var RTRates = await instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live");
-                    if (DbRates == null)
-                    {
-                        CurrenciesList=await Task.Run(()=>FirstEntryConverter(Countries, RTRates));
-
-                    }
-
-
-
-                    else
-                    {
-
-                        CurrenciesList = await Task.Run(() => Converter(Countries, RTRates,DbRates));
-
-                        context.CurrenciesByDate.Remove(DbRates);
-
-
-                    }
-
-                    DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                    dateTime = dateTime.AddSeconds(RTRates.Timestamp);
-
-                    Currencies newCurrencies = new Currencies();
-                    newCurrencies.CurrenciesList = CurrenciesList;
-                    newCurrencies.date = dateTime;
-                    context.CurrenciesByDate.Add(newCurrencies);
-                   await context.SaveChangesAsync();
-                    return newCurrencies;
-                }
-
-
-
-            }
-
-        }
-        public async Task<Currencies> RTRates()
-        {
-            var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
-
-            using (DB_Context context = new DB_Context())
-            {
-                List<Country> Countries = await getCountries();
-
-
-                Currencies DbRates = await context.CurrenciesByDate.OrderBy(t => t.date).Include("CurrenciesList").FirstOrDefaultAsync();
-
-                
-
-                if (DbRates != null&& checkIfThreeHoursApartInTheSAmeDAy(DbRates.date))
+                if (DbRates != null && checkIfThreeHoursApartInTheSameDay(DbRates.date))
                 {
                     context.Dispose();
                     return DbRates;
@@ -327,9 +326,12 @@ namespace DAL
 
 
                 {
-                    List<Currency> CurrenciesList;
-                    var RTRates =await  instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live");
-                    
+                var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
+                List<Country> Countries = await getCountries().ConfigureAwait(false);
+                List<Currency> CurrenciesList;
+                    var RTRates = await instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live");
+
+
                     if (RTRates == null)
                     {
                         if (DbRates == null)
@@ -338,14 +340,14 @@ namespace DAL
                         context.Dispose();
                         return DbRates;
                     }
-                    
+
 
                     if (DbRates == null)
                     {
-                   
-                            CurrenciesList = FirstEntryConverter(Countries, RTRates);
-                       
-                            
+
+                        CurrenciesList = FirstEntryConverter(Countries, RTRates);
+
+
 
                     }
 
@@ -353,11 +355,11 @@ namespace DAL
 
                     else
                     {
-                        
-                            CurrenciesList =  Converter(Countries, RTRates, DbRates);
 
-                        if(checkIfInTheSameDay(DbRates.date.ToLocalTime()))
-                           context.CurrenciesByDate.Remove(DbRates);
+                        CurrenciesList = Converter(Countries, RTRates, DbRates);
+
+                        if (checkIfInTheSameDay(DbRates.date.ToLocalTime()))
+                            context.CurrenciesByDate.Remove(DbRates);
 
 
                     }
@@ -369,17 +371,93 @@ namespace DAL
                     newCurrencies.CurrenciesList = CurrenciesList;
                     newCurrencies.date = dateTime;
                     context.CurrenciesByDate.Add(newCurrencies);
-                    await context.SaveChangesAsync();
+                    await context.SaveChangesAsync().ConfigureAwait(false);
+                    context.Dispose();
                     return newCurrencies;
                 }
 
 
 
-            }
+            
 
         }
 
-        private bool checkIfThreeHoursApartInTheSAmeDAy(DateTime start)
+        public  Currencies RTRates()
+        {
+            DB_Context context = new DB_Context();
+            Currencies DbRates = context.CurrenciesByDate.OrderByDescending(t => t.date).Include("CurrenciesList").FirstOrDefault();
+
+
+
+            if (DbRates != null && checkIfThreeHoursApartInTheSameDay(DbRates.date))
+            {
+                context.Dispose();
+                return DbRates;
+            }
+
+            else
+
+
+            {
+                var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
+                var CountriesTask = getCountries();
+                CountriesTask.RunSynchronously();
+                List<Country> Countries = CountriesTask.Result;
+                List<Currency> CurrenciesList;
+                var RTRatesTask = instance.Invoke<CurrencyLayerDotNet.Models.LiveModel>("live");
+                RTRatesTask.RunSynchronously();
+                LiveModel RTRates = RTRatesTask.Result;
+                if (RTRates == null)
+                {
+                    if (DbRates == null)
+                        throw new Exception("error");
+
+                    context.Dispose();
+                    return DbRates;
+                }
+
+
+                if (DbRates == null)
+                {
+
+                    CurrenciesList = FirstEntryConverter(Countries, RTRates);
+
+
+
+                }
+
+
+
+                else
+                {
+
+                    CurrenciesList = Converter(Countries, RTRates, DbRates);
+
+                    if (checkIfInTheSameDay(DbRates.date.ToLocalTime()))
+                        context.CurrenciesByDate.Remove(DbRates);
+
+
+                }
+
+                DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                dateTime = dateTime.AddSeconds(RTRates.Timestamp).ToLocalTime();
+
+                Currencies newCurrencies = new Currencies();
+                newCurrencies.CurrenciesList = CurrenciesList;
+                newCurrencies.date = dateTime;
+                context.CurrenciesByDate.Add(newCurrencies);
+                 context.SaveChanges();
+                context.Dispose();
+                return newCurrencies;
+            }
+
+
+
+
+
+        }
+
+        private bool checkIfThreeHoursApartInTheSameDay(DateTime start)
         {
            
             start = start.ToLocalTime();
