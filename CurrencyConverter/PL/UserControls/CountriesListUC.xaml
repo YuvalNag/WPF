@@ -31,13 +31,13 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="{Binding IssuedCountryCode, Converter={StaticResource CountryCodeToImgSourceConverter} }" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Image Source="/PL;component/FlagsImages/USD.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <TextBlock Text="{Binding IssuedCountryCode, Converter={StaticResource IssuedCountryCodeToCountrySymbolConverter} }" Grid.Column="1" FontSize="72" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"  />
                 <TextBlock  Grid.Column="2" FontSize="48" VerticalAlignment="Center" Margin="0,48" HorizontalAlignment="Right" Width="97"  >
                     <TextBlock.Text>
                         <MultiBinding Converter="{StaticResource ConvertValuse}">
                             <Binding  />
-                            <Binding  RelativeSource="{RelativeSource TemplatedParent}" Path="SelectedItem" />
+                            <Binding  RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" Path="SelectedItem" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
