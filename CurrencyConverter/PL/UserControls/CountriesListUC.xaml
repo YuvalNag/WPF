@@ -49,14 +49,19 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox   Text="{Binding FilterString, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Custom:TextBoxHelper.UseFloatingWatermark="True"  Custom:TextBoxHelper.Watermark="search"/>
-        <ListView Grid.Row="1"  ItemsSource="{Binding currencies.Result.CurrenciesList}" 
-                           ItemTemplate="{StaticResource CurrencyItem}"
+        <TextBox   Text="{Binding FilterString, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}" 
+                   Custom:TextBoxHelper.UseFloatingWatermark="True"  
+                   Custom:TextBoxHelper.Watermark="search"/>
+        <ListView Grid.Row="1" 
+                  ItemsSource="{Binding currencies.Result.CurrenciesList}" 
+                        
                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                           HorizontalAlignment="Center"
-                          BorderBrush="{x:Null}" Margin="148,1,148,139.118" Grid.RowSpan="2">
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch"
+                 
+                          BorderBrush="{x:Null}" >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <!--<WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"/>-->
@@ -69,6 +74,33 @@
 
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Background="{Binding Direction, Converter={StaticResource DirectionToBackgroundConverter} }">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/PL;component/FlagsImages/USD.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding IssuedCountryCode, Converter={StaticResource IssuedCountryCodeToCountrySymbolConverter} }" Grid.Column="1" FontSize="72" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                    <TextBlock  Grid.Column="2" FontSize="48" VerticalAlignment="Center" Margin="0,48" HorizontalAlignment="Right" Width="97"  >
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{StaticResource ConvertValuse}">
+                                <Binding  />
+                                <Binding  RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" Path="SelectedItem" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Text="{Binding IssuedCountryCode}" Grid.Column="0" Grid.Row="1" FontSize="48" FontWeight="Bold"  Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding IssuedCountryName}" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
     </Grid>
 </UserControl>

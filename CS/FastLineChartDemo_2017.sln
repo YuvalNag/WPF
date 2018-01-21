@@ -1,9 +1,10 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion 15.0.26020.0
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastLine Chart Demo_2017", "FastLineChartDemo_2017.csproj", "{26038360-F08E-4962-89FB-298E7D773162}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastLineChartDemo_2017", "FastLineChartDemo_2017.csproj", "{26038360-F08E-4962-89FB-298E7D773162}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "..\WpfApp1\WpfApp1.csproj", "{003BE450-BDDD-4390-8F83-C13BDB2BF1E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +16,15 @@ Global
 		{26038360-F08E-4962-89FB-298E7D773162}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26038360-F08E-4962-89FB-298E7D773162}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26038360-F08E-4962-89FB-298E7D773162}.Release|Any CPU.Build.0 = Release|Any CPU
+		{003BE450-BDDD-4390-8F83-C13BDB2BF1E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{003BE450-BDDD-4390-8F83-C13BDB2BF1E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{003BE450-BDDD-4390-8F83-C13BDB2BF1E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{003BE450-BDDD-4390-8F83-C13BDB2BF1E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC71333B-C4F7-4769-A1AC-B28EF8AF765B}
 	EndGlobalSection
 EndGlobal

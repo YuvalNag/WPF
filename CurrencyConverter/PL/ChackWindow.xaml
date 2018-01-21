@@ -4,34 +4,95 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="PL.ChackWindow"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:Converters="clr-namespace:PL.Converters" x:Class="PL.ChackWindow"
         mc:Ignorable="d"
-        Title="ChackWindow" Height="300" Width="300">
+        Title="ChackWindow" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <local:ConverterParameter x:Key="con"/>
+
+        <Converters:CountryCodeToImgSourceConverter x:Key="CountryCodeToImgSourceConverter" />
+        <Converters:DirectionToBackgroundConverter x:Key="DirectionToBackgroundConverter" />
+        <Converters:ConvertValuse x:Key="ConvertValuse"/>
+        <Converters:IssuedCountryCodeToCountrySymbolConverter x:Key="IssuedCountryCodeToCountrySymbolConverter"/>
+
+
+
+
+
+        <DataTemplate x:Key="CurrencyItem">
+            <Grid Margin="5" Background="{Binding Direction, Converter={StaticResource DirectionToBackgroundConverter} }" Width="300" Height="150">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="/PL;component/FlagsImages/USD.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding IssuedCountryCode, Converter={StaticResource IssuedCountryCodeToCountrySymbolConverter} }" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36"  />
+                <TextBlock  Grid.Column="2"  VerticalAlignment="Center"  HorizontalAlignment="Center" FontSize="36"  >
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{StaticResource ConvertValuse}">
+                            <Binding  />
+                            <Binding  RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" Path="SelectedItem" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock  Grid.ColumnSpan="3" Grid.Row="1"  FontWeight="Bold"  Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24">
+                   
+                        <Run Text="{Binding IssuedCountryCode }" />
+                   <Run Text="-" />
+                    <Run Text="{Binding IssuedCountryName }" />
+               
+
+                </TextBlock>
+                
+            </Grid>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Height="42" Click="Button_Click"/>
-        <ProgressBar IsIndeterminate="True" HorizontalAlignment="Left" Height="37" Margin="112,0,0,0" VerticalAlignment="Top" Width="87"/>
-        <ListBox Name="sd" ItemsSource="{Binding MyProperty.Result.CurrenciesList}"  HorizontalAlignment="Left" Height="227" Margin="0,42,0,0" VerticalAlignment="Top" Width="292">
-            <ListBox.ItemTemplate>
-                <DataTemplate >
-                    <Border BorderBrush="Blue">
-                    <StackPanel>
-                        <TextBlock x:Name="a"  >
-                            <TextBlock.Text>
-                                <MultiBinding Converter="{StaticResource con}">
-                                    <Binding  />
-                                    <Binding  ElementName="sd" Path="SelectedItem" />
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                        <TextBlock x:Name="b" Text="{Binding IssuedCountryName}" />
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Height="42" Click="Button_Click"/>
+        <ProgressBar Grid.Row="0" IsIndeterminate="True" HorizontalAlignment="Left" Height="37" Margin="112,0,0,0" VerticalAlignment="Top" Width="87"/>
+        <ListView  Grid.Row="1" Name="sd"
+                 ItemTemplate="{StaticResource CurrencyItem}" 
+                 ItemsSource="{Binding MyProperty.Result.CurrenciesList}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 HorizontalAlignment="Center"  >
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!--<WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"/>-->
+
+                    <WrapPanel 
+                                Orientation="Horizontal"
+                              
+                             
+                                />
+
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
         <TextBox Name="c" HorizontalAlignment="Left" Height="23" Margin="199,9,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="93"/>
     </Grid>
 </Window>
+<!--<DataTemplate >
+    <Border BorderBrush="Blue">
+        <StackPanel>
+            <TextBlock x:Name="a"  >
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource con}">
+                        <Binding  />
+                        <Binding  ElementName="sd" Path="SelectedItem" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock x:Name="b" Text="{Binding IssuedCountryName}" />
+        </StackPanel>
+    </Border>
+</DataTemplate>-->

@@ -20,8 +20,8 @@ namespace PL.Converters
 
 
             if (source != null && target != null)
-                return (source.Value / target.Value).ToString();
-            return source.Value.ToString();
+                return Math.Round((source.Value / target.Value),3).ToString();
+            return Math.Round(source.Value,3).ToString();
 
 
 
