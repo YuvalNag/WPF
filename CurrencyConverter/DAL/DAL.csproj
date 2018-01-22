@@ -55,9 +55,9 @@
     <Compile Include="DAL_imp.cs" />
     <Compile Include="DB_Context.cs" />
     <Compile Include="IDAL.cs" />
-    <Compile Include="Migrations\201801211504151_gf.cs" />
-    <Compile Include="Migrations\201801211504151_gf.Designer.cs">
-      <DependentUpon>201801211504151_gf.cs</DependentUpon>
+    <Compile Include="Migrations\201801221940340_fg.cs" />
+    <Compile Include="Migrations\201801221940340_fg.Designer.cs">
+      <DependentUpon>201801221940340_fg.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseModel.cs" />
@@ -79,8 +79,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201801211504151_gf.resx">
-      <DependentUpon>201801211504151_gf.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801221940340_fg.resx">
+      <DependentUpon>201801221940340_fg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
