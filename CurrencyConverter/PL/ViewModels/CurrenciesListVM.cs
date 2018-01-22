@@ -1,4 +1,4 @@
-﻿using BL;
+﻿
 using DP;
 using System;
 using System.Collections.Generic;
@@ -12,16 +12,25 @@ using System.Windows.Data;
 
 namespace PL.ViewModels
 {
-    class CountriesListVM
+    class CurrenciesListVM:INotifyPropertyChanged
     {
         private ObservableCollection<Currency> Currencies_ObservableCollection;
-        public ICollectionView CurrenciesList { set; get; }
 
+        private ICollectionView _currenciesList;
+        public ICollectionView currenciesList {
+            get
+            {
+                return _currenciesList;
+            }
+            set
+            {
+                _currenciesList = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("currenciesList"));
 
+            }
+        }
+       
         private NotifyTaskCompletion<Currencies> _currencies;
-
-        private BL_imp bl;
-
         public NotifyTaskCompletion<Currencies> currencies
         {
             set
@@ -34,6 +43,7 @@ namespace PL.ViewModels
                 return _currencies;
             }
         }
+
         private string _filterString;
         public string FilterString
         {
@@ -42,32 +52,44 @@ namespace PL.ViewModels
             {
                 _filterString = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FilterString"));
-                if(CurrenciesList!=null)
-                CurrenciesList.Refresh();
+                if(_currenciesList!=null)
+                   _currenciesList.Refresh();
+            }
+        }
+
+     
+        private DateTime _date;
+        public DateTime Date
+        {
+            get { return _date; }
+            set
+            {
+                _date = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Date"));
             }
         }
 
 
-
-        
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public CountriesListVM()
+        private Models.CurrenciesRTModel rTModel;
+        public CurrenciesListVM()
         {
-            currencies = new NotifyTaskCompletion<Currencies>(getRTRatesAsync());
+            rTModel = new Models.CurrenciesRTModel();
+            currencies=new NotifyTaskCompletion<Currencies>(ConvertToObservableCollection());
             //CountriesList.Filter = WorkerFilter;
             //CountriesList.CollectionChanged += CountriesList_CollectionChanged;
 
         }
 
-        private async Task<Currencies> getRTRatesAsync()
+        private async Task<Currencies> ConvertToObservableCollection()
         {
-
-            //Currencies a = await Task.Run(async () => await dAL.RTRatesAsync()); a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList); return a;
-            Currencies a = await new BL_imp().getRTRatesAsync();
-            a.CurrenciesList = new ObservableCollection<Currency>(a.CurrenciesList);
-            CurrenciesList = CollectionViewSource.GetDefaultView(a.CurrenciesList);
-            return a;
+            
+            Currencies tempCurrencies = await (rTModel.GetCurrencies());
+            tempCurrencies.CurrenciesList = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
+            currenciesList = CollectionViewSource.GetDefaultView(tempCurrencies.CurrenciesList);
+            Date=tempCurrencies.date;
+            return tempCurrencies;
 
         }
 

@@ -25,7 +25,7 @@ namespace PL
             InitializeComponent();
             ChackWindow chackWindow = new ChackWindow();
             chackWindow.Show();
-            this.Close();
+           // this.Close();
         }
     }
 }

@@ -6,17 +6,9 @@
         xmlns:local="clr-namespace:PL"
         xmlns:UserControls="clr-namespace:PL.UserControls" x:Class="PL.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" SizeToContent="WidthAndHeight">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="42*"/>
-            <ColumnDefinition Width="5*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="28*"/>
-            <RowDefinition Height="291*"/>
-        </Grid.RowDefinitions>
-
+      
         <UserControls:CountriesListUC/>
 
     </Grid>

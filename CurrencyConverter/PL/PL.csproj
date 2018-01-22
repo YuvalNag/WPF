@@ -85,13 +85,14 @@
     <Compile Include="CurrancyItem.xaml.cs">
       <DependentUpon>CurrancyItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\CurrenciesRTModel.cs" />
     <Compile Include="UserControls\ConverterUC.xaml.cs">
       <DependentUpon>ConverterUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\CountriesListUC.xaml.cs">
-      <DependentUpon>CountriesListUC.xaml</DependentUpon>
+    <Compile Include="UserControls\CurrenciesListUC.xaml.cs">
+      <DependentUpon>CurrenciesListUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\CountriesListVM.cs" />
+    <Compile Include="ViewModels\CurrenciesListVM.cs" />
     <Compile Include="ViewModels\CoverterVM.cs" />
     <Compile Include="ViewModels\NotifyTaskCompletion.cs" />
     <Page Include="ChackWindow.xaml">
@@ -126,7 +127,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\CountriesListUC.xaml">
+    <Page Include="UserControls\CurrenciesListUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

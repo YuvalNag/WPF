@@ -24,7 +24,7 @@ namespace PL.UserControls
         public CountriesListUC()
         {
             InitializeComponent();
-            this.DataContext = new CountriesListVM();
+            this.DataContext = new CurrenciesListVM();
         }
     }
 }
