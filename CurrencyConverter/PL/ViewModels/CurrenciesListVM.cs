@@ -88,19 +88,20 @@ namespace PL.ViewModels
             Currencies tempCurrencies = await (rTModel.GetCurrencies());
             tempCurrencies.CurrenciesList = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
             currenciesList = CollectionViewSource.GetDefaultView(tempCurrencies.CurrenciesList);
-            Date=tempCurrencies.date;
+            currenciesList.Filter = CurrenciesFilter;
+            Date =tempCurrencies.date;
             return tempCurrencies;
 
         }
 
 
 
-        //private bool WorkerFilter(object item)
-        //{
-        //    Country country = item as Country;
-        //    if (String.IsNullOrWhiteSpace(_filterString) || country == null || String.IsNullOrWhiteSpace(country.CountryName))
-        //        return true;
-        //    return country.CountryName.Contains(_filterString);
-        //}
+        private bool CurrenciesFilter(object item)
+        {
+            Currency currency = item as Currency;
+            if (String.IsNullOrWhiteSpace(_filterString) || currency == null)
+                return true;
+            return currency.IssuedCountryName.ToLower().Contains(_filterString.ToLower());
+        }
     }
 }

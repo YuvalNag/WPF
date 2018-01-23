@@ -155,7 +155,7 @@ namespace DAL
 
                         CurrenciesList = Converter(Countries, RTRates, DbRates);
 
-                        if (checkIfInTheSameDay(DbRates.date.ToLocalTime()))
+                        if (checkIfInTheSameDay(DbRates.date))
                             context.CurrenciesByDate.Remove(DbRates);
 
 
@@ -199,8 +199,8 @@ namespace DAL
         private bool isUpdatedInLastHour(DateTime start)
         {
            
-            start = start.ToLocalTime();
-            DateTime time = DateTime.Now;
+            
+            DateTime time = DateTime.Now.ToLocalTime();
             return start.AddHours(1) > DateTime.Now && checkIfInTheSameDay(start);
         }
 

@@ -21,7 +21,9 @@ namespace PL.Converters
 
             if (source != null && target != null)
                 return Math.Round((source.Value / target.Value),3).ToString();
+            if(source != null)
             return Math.Round(source.Value,3).ToString();
+            return "0";
 
 
 

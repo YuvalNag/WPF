@@ -180,9 +180,14 @@
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\TileBackground.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="FlagsImages\USD.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\united-states-of-america.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
