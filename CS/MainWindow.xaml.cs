@@ -36,6 +36,7 @@ namespace FastLineChart
             ObservableCollection<Data> collection = viewModel.GenerateData();
             FastLine.Series[0].ItemsSource = collection;
             DateTimeRangeNavigator.ItemsSource = collection;
+            a.ItemsSource = collection;
         }
     }
 

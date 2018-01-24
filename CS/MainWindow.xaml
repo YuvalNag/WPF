@@ -22,7 +22,7 @@
                            Text="{Binding Path=LabelContent}"></TextBlock>
             </DataTemplate>
 
-           
+
             <Style TargetType="Line" x:Key="axisStyle">
                 <Setter Property="Stroke" Value="DarkGray"  />
                 <Setter Property="StrokeThickness" Value="1"/>
@@ -86,7 +86,7 @@
                                     
                                   
                                     MajorTickLineStyle="{StaticResource axisStyle1}">
-                    
+
                 </chart:DateTimeAxis>
             </chart:SfChart.PrimaryAxis>
 
@@ -105,11 +105,22 @@
                                   />
 
         </chart:SfChart>
-        <chart:SfDateTimeRangeNavigator Name="DateTimeRangeNavigator" Grid.Row="1" XBindingPath="Date" ToolTipLabelFormat="MMM" ViewRangeStart="{Binding ElementName=date, Path=SelectedDate,Mode=TwoWay}" Margin="0,0,155,0">
-            <ContentControl>
-                <TextBlock Text="{Binding ElementName=DateTimeRangeNavigator, Path=ViewRangeStart}"/>
-            </ContentControl>
+        <chart:SfDateTimeRangeNavigator Name="DateTimeRangeNavigator" XBindingPath="Date" ToolTipLabelFormat="MMM"  Grid.Row="2">
+            <chart:SfDateTimeRangeNavigator.Content>
+                <chart:SfChart x:Name="Chart">
+
+              
+
+                    <chart:ScatterSeries  x:Name="a"  Palette="Metro" 
+                                 
+                                 XBindingPath="Date"
+                                  YBindingPath="Value" 
+                                   />
+                </chart:SfChart>
+            </chart:SfDateTimeRangeNavigator.Content>
+
+       
+            
         </chart:SfDateTimeRangeNavigator >
-        <DatePicker Name="date" HorizontalAlignment="Left" Margin="610,42,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="150"/>
     </Grid>
 </layout:SampleLayoutWindow>

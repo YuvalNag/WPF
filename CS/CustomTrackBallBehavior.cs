@@ -36,12 +36,20 @@ namespace FastLineChart
 
         {
 
-            AddLabel(PointInfos[0], LabelVerticalAlignment, LabelHorizontalAlignment, PointInfos[0].Series.TrackBallLabelTemplate);
+            try
+            {
+                AddLabel(PointInfos[0], LabelVerticalAlignment, LabelHorizontalAlignment, PointInfos[0].Series.TrackBallLabelTemplate);
 
-            //Custom label.
+                //Custom label.
 
-             AddLabel(PointInfos[0], LabelVerticalAlignment, LabelHorizontalAlignment, CustomLabelTemplate);
+                AddLabel(PointInfos[0], LabelVerticalAlignment, LabelHorizontalAlignment, CustomLabelTemplate);
 
+            }
+            catch 
+            {
+
+                
+            }
         }
 
     }
