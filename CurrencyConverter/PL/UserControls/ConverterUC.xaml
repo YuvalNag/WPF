@@ -13,11 +13,14 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <ComboBox ItemsSource="{Binding ListOfCountries}"/>
-        <TextBox  x:Name="AmountTextBox"  Grid.Column="1"   Text="{Binding Amount}" Custom:TextBoxHelper.Watermark="Amount" Custom:TextBoxHelper.UseFloatingWatermark="True" />
-        <DatePicker Grid.Column="2"  DisplayDate="{Binding ChoosenDate }" DisplayDateEnd="{Binding CurrentDate }" DisplayDateStart="2018-01-14" />
-        <Button  Content="Convert"  CommandParameter="{Binding ConverterParameter}" Command="{Binding ConvertCommand}" FontStyle="Oblique" FontWeight="Bold" Grid.Column="3" />
+        <ComboBox ItemsSource="{Binding ListOfCountries}" Grid.Column="1"/>
+        <TextBox  x:Name="AmountTextBox"  Grid.Column="2" Text="{Binding Amount}" Custom:TextBoxHelper.Watermark="Amount" Custom:TextBoxHelper.UseFloatingWatermark="True" />
+        <TextBox  x:Name="ResultTextBox"  Grid.Column="3" Text="{Binding Result}" Custom:TextBoxHelper.Watermark="Result" Custom:TextBoxHelper.UseFloatingWatermark="True" />
+        <!--<DatePicker Grid.Column="2"  DisplayDate="{Binding ChoosenDate }" DisplayDateEnd="{Binding CurrentDate }" DisplayDateStart="2018-01-14" />-->
+        <Button  Content="Convert"  CommandParameter="{Binding ConverterParameter}" Command="{Binding ConvertCommand}" FontStyle="Oblique" FontWeight="Bold" Grid.Column="4" />
 
     </Grid>
 </UserControl>

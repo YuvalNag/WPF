@@ -10,7 +10,7 @@
         Title="MainWindow" Width="700" Height="600">
     <Grid>
       
-        <UserControls:CountriesListUC/>
+        <UserControls:HistoryUC/>
 
     </Grid>
 </Custom:MetroWindow>

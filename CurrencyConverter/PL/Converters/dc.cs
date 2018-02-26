@@ -8,15 +8,14 @@ using System.Windows.Data;
 
 namespace PL.Converters
 {
-    class DirectionToBackgroundConverter : IValueConverter
+    class dc: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((value as string) == "+")
-                return "#FF61E86D";
-            else
-                return "#FFF71C1C";
+            return value;
         }
+
+       
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

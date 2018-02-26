@@ -14,10 +14,11 @@ namespace PL.ViewModels
 {
     class CurrenciesListVM:INotifyPropertyChanged
     {
+        #region Properties
         private ObservableCollection<Currency> Currencies_ObservableCollection;
-
         private ICollectionView _currenciesList;
-        public ICollectionView currenciesList {
+        public ICollectionView currenciesList
+        {
             get
             {
                 return _currenciesList;
@@ -29,7 +30,7 @@ namespace PL.ViewModels
 
             }
         }
-       
+
         private NotifyTaskCompletion<Currencies> _currencies;
         public NotifyTaskCompletion<Currencies> currencies
         {
@@ -52,12 +53,12 @@ namespace PL.ViewModels
             {
                 _filterString = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FilterString"));
-                if(_currenciesList!=null)
-                   _currenciesList.Refresh();
+                if (_currenciesList != null)
+                    _currenciesList.Refresh();
             }
         }
 
-     
+
         private DateTime _date;
         public DateTime Date
         {
@@ -69,10 +70,11 @@ namespace PL.ViewModels
             }
         }
 
+        private Models.CurrenciesRTModel rTModel { set; get; }
 
+        #endregion
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private Models.CurrenciesRTModel rTModel;
         public CurrenciesListVM()
         {
             rTModel = new Models.CurrenciesRTModel();
@@ -93,8 +95,6 @@ namespace PL.ViewModels
             return tempCurrencies;
 
         }
-
-
 
         private bool CurrenciesFilter(object item)
         {

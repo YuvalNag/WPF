@@ -8,19 +8,19 @@ using System.Windows.Data;
 
 namespace PL.Converters
 {
-    class DirectionToBackgroundConverter : IValueConverter
+    public class LabelConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((value as string) == "+")
-                return "#FF61E86D";
-            else
-                return "#FFF71C1C";
+            DateTime date = (DateTime)value;
+            return date.ToString("D");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

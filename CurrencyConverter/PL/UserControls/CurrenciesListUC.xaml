@@ -15,9 +15,6 @@
         <Converters:DirectionToBackgroundConverter x:Key="DirectionToBackgroundConverter" />
         <Converters:ConvertValuse x:Key="ConvertValuse"/>
         <Converters:IssuedCountryCodeToCountrySymbolConverter x:Key="IssuedCountryCodeToCountrySymbolConverter"/>
-
-
-
         <Style TargetType="ListViewItem">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Margin" Value="5"/>
@@ -42,10 +39,8 @@
         </DataTemplate>
 
         <DataTemplate x:Key="CurrencyItem">
-
             <Grid  Background="{Binding Direction, Converter={StaticResource DirectionToBackgroundConverter} }"  Width="200" Height="85">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -61,7 +56,8 @@
                              <MultiBinding  Converter="{StaticResource ConvertValuse}" Mode="OneWay">
                                 <Binding   />
                                 <Binding  RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" Path="SelectedItem" />
-                            </MultiBinding>
+                                <Binding ElementName="AmountTextBox"  Path="Text"/>
+                             </MultiBinding>
                         </Run.Text>
                     </Run>
                 </TextBlock>
@@ -86,7 +82,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="66*"/>
+            <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <TextBox Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
                  Grid.Row="0"  
@@ -96,24 +93,23 @@
                  HorizontalAlignment="Stretch"/>
 
         <ListView x:Name="list" Background="Transparent" 
-                  Grid.Row="2" 
-                 ItemTemplate="{StaticResource CurrencyItem}" 
-                 ItemsSource="{Binding currenciesList, IsAsync=True}"
+                  Grid.Row="2"
+                  ItemsSource="{Binding currenciesList}" 
+                  ItemTemplate="{StaticResource CurrencyItem}"
                    HorizontalAlignment="Stretch"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                   VerticalAlignment="Stretch">
+                   VerticalAlignment="Stretch" Grid.RowSpan="2">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-
-
                     <WrapPanel Orientation="Horizontal" Background="Transparent" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>
+        <WrapPanel Grid.Row="1" >
         <ComboBox ItemsSource="{Binding currenciesList, IsAsync=True}" 
                   HorizontalAlignment="Left" 
                   Margin="10,5,0,0" 
-                  Grid.Row="1" 
+                   
                   
                   SelectedItem="{Binding ElementName=list,Path=SelectedItem}"
                   VerticalAlignment="Top"
@@ -121,9 +117,9 @@
                   SelectedIndex="0" 
                   Cursor="Hand" 
                   ScrollViewer.CanContentScroll="True"
-                  
                   Custom:TextBoxHelper.Watermark="choose the relative currency" 
-                  Custom:TextBoxHelper.UseFloatingWatermark="True" Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+                  Custom:TextBoxHelper.UseFloatingWatermark="True" 
+                  Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
             <ComboBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel IsItemsHost="True" 
@@ -132,5 +128,11 @@
                 </ItemsPanelTemplate>
             </ComboBox.ItemsPanel>
         </ComboBox>
+        <TextBox  x:Name="AmountTextBox" 
+                  Grid.Column="2"
+                 
+                  Custom:TextBoxHelper.Watermark="Amount" 
+                  Custom:TextBoxHelper.UseFloatingWatermark="True" />
+        </WrapPanel>
     </Grid>
 </UserControl>
