@@ -86,6 +86,8 @@
     <Compile Include="Converters\DirectionToBackgroundConverter.cs" />
     <Compile Include="Converters\IssuedCountryCodeToCountrySymbolConverter.cs" />
     <Compile Include="Converters\LabelConverter.cs" />
+    <Compile Include="Converters\MinMaxConverter.cs" />
+    <Compile Include="Converters\MultiConverter.cs" />
     <Compile Include="CurrancyItem.xaml.cs">
       <DependentUpon>CurrancyItem.xaml</DependentUpon>
     </Compile>
