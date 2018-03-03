@@ -11,69 +11,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="270" d:DesignWidth="300" MinWidth="300" MinHeight="270">
     <UserControl.Resources>
-        <Converters:CountryCodeToImgSourceConverter x:Key="CountryCodeToImgSourceConverter" />
-        <Converters:DirectionToBackgroundConverter x:Key="DirectionToBackgroundConverter" />
-        <Converters:ConvertValuse x:Key="ConvertValuse"/>
-        <Converters:IssuedCountryCodeToCountrySymbolConverter x:Key="IssuedCountryCodeToCountrySymbolConverter"/>
-        <Style TargetType="ListViewItem">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-
-        <DataTemplate x:Key="CurrencyComboBoxItem">
-            <Grid Background="#8C008000" Width="150" Height="50">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-
-                </Grid.ColumnDefinitions>
-                <Image Grid.RowSpan="2" Source="/PL;component/Assets/united-states-of-america.png" Stretch="UniformToFill" AutomationProperties.LabeledBy="{Binding Text, ElementName=textBlock}" Margin="5" />
-                <TextBlock  Text="{Binding IssuedCountryCode }" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"  />
-                <TextBlock Text="{Binding IssuedCountryName }" Grid.Row="1"   HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="12" Grid.Column="1" Margin="5,0,0,0" />
-
-            </Grid>
-        </DataTemplate>
-
-        <DataTemplate x:Key="CurrencyItem">
-            <Grid  Background="{Binding Direction, Converter={StaticResource DirectionToBackgroundConverter} }"  Width="200" Height="85">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image Source="/PL;component/Assets/united-states-of-america.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <TextBlock  Grid.Column="1"  Grid.ColumnSpan="2" VerticalAlignment="Center"  TextWrapping="Wrap" HorizontalAlignment="Stretch" FontSize="20"  >
-                    <Run  FontWeight="Bold" Text="{Binding IssuedCountryCode, Converter={StaticResource IssuedCountryCodeToCountrySymbolConverter} }" />
-                    <Run>
-                        <Run.Text>
-                             <MultiBinding  Converter="{StaticResource ConvertValuse}" Mode="OneWay">
-                                <Binding   />
-                                <Binding  RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" Path="SelectedItem" />
-                                <Binding ElementName="AmountTextBox"  Path="Text"/>
-                             </MultiBinding>
-                        </Run.Text>
-                    </Run>
-                </TextBlock>
-
-                <TextBlock  Grid.ColumnSpan="3" Grid.Row="1" TextWrapping="Wrap"  Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
-                   
-                        <Run Text="{Binding IssuedCountryCode }" />
-                   <Run Text="-" />
-                    <Run Text="{Binding IssuedCountryName }" />
-
-
-                </TextBlock>
-
-            </Grid>
-
-        </DataTemplate>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/PL;component/ResorceDictionary/DictionaryCurrency.xaml"  />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.Background>
@@ -83,7 +25,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="66*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+            
         </Grid.RowDefinitions>
         <TextBox Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
                  Grid.Row="0"  
@@ -92,21 +35,24 @@
                  Custom:TextBoxHelper.Watermark="search"
                  HorizontalAlignment="Stretch"/>
 
-        <ListView x:Name="list" Background="Transparent" 
+        <ListView x:Name="list" 
+                  Background="Transparent" 
                   Grid.Row="2"
-                  ItemsSource="{Binding currenciesList}" 
+                  ItemsSource="{Binding currenciesList}"
                   ItemTemplate="{StaticResource CurrencyItem}"
                    HorizontalAlignment="Stretch"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                   VerticalAlignment="Stretch" Grid.RowSpan="2">
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                   VerticalAlignment="Stretch"
+                  Grid.RowSpan="2">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" Background="Transparent" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
+            
         </ListView>
         <WrapPanel Grid.Row="1" >
-        <ComboBox ItemsSource="{Binding currenciesList, IsAsync=True}" 
+            <ComboBox ItemsSource="{Binding currenciesList, IsAsync=True}" 
                   HorizontalAlignment="Left" 
                   Margin="10,5,0,0" 
                    
@@ -120,19 +66,20 @@
                   Custom:TextBoxHelper.Watermark="choose the relative currency" 
                   Custom:TextBoxHelper.UseFloatingWatermark="True" 
                   Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
-            <ComboBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" 
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel IsItemsHost="True" 
                              Orientation="Vertical"
                              />
-                </ItemsPanelTemplate>
-            </ComboBox.ItemsPanel>
-        </ComboBox>
-        <TextBox  x:Name="AmountTextBox" 
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <TextBox  x:Name="AmountTextBox" 
                   Grid.Column="2"
                  
                   Custom:TextBoxHelper.Watermark="Amount" 
                   Custom:TextBoxHelper.UseFloatingWatermark="True" />
         </WrapPanel>
+        <ProgressBar Visibility="{Binding taskCurrencies.IsNotCompleted, Converter={StaticResource boolToVis}}" Grid.Row="3" IsIndeterminate="True" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="updating...." />
     </Grid>
 </UserControl>

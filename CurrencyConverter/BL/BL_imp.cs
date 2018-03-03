@@ -18,6 +18,22 @@ namespace BL
         {
             return new DAL_imp().getHRatesAsync( countryCode);
         }
+        public async Task<List<HistoryDTO>> getHRatesAsync(string sourceCountryCode, string targetCountryCode="USD")
+        {
+            IDAL dal = new DAL_imp();
+            List<HistoryDTO> listSource = await dal.getHRatesAsync(sourceCountryCode);
+            if (!String.Equals(targetCountryCode,"USD"))
+            {
+                List<HistoryDTO> listTarget = await dal.getHRatesAsync(targetCountryCode);
+                for (int i = 0; i < listSource.Count; i++)
+                {
+                    listSource[i].Currency.Value /= listTarget[i].Currency.Value;
+                } 
+            }
+            return listSource;
+
+
+        }
         public Task<Currencies> getRTRatesAsync()
         {
             return new DAL_imp().getRTRatesAsync();

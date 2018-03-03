@@ -71,6 +71,7 @@ namespace PL.ViewModels
             set
             {
                 _raltiveCountry = value;
+                stockPriceDetails = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(ConvertStockToObservableCollection());
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("raltiveCountry"));
 
             }
@@ -83,16 +84,27 @@ namespace PL.ViewModels
             countries = new NotifyTaskCompletion<ObservableCollection<Country>>(ConvertCountriesToObservableCollection());
         }
 
+        private void stopTaskIfRunning(NotifyTaskCompletion<Task> task)
+        {
+
+        }
         private async Task<ObservableCollection<Country>> ConvertCountriesToObservableCollection()
         {
             List<Country> countriesTemp = await  hModel.GetCountries();
-            country = countriesTemp.Find(t => t.Code.CompareTo("USA")==0);
+            country = countriesTemp.Find(t => String.Equals(t.Code, "ILS"));
+            _raltiveCountry = countriesTemp.Find(t => String.Equals(t.Code,"USD"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("raltiveCountry"));
             return new ObservableCollection<Country>(countriesTemp);
         }
 
         private async Task<ObservableCollection<HistoryDTO>> ConvertStockToObservableCollection()
         {
-            List<HistoryDTO> tempCurrencies = await hModel.GetCurrencies(country.Code);
+            List<HistoryDTO> tempCurrencies;
+            if (raltiveCountry != null)
+                   tempCurrencies = await hModel.GetCurrenciesR(country.Code,raltiveCountry.Code);
+            else
+                tempCurrencies = await hModel.GetCurrenciesR(country.Code);
+
             return new ObservableCollection<HistoryDTO>(tempCurrencies);
             
         }

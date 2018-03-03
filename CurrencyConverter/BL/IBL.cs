@@ -8,6 +8,7 @@ namespace BL
     {
         Task<List<Country>> getCountriesAsync();
         Task<List<HistoryDTO>> getHRatesAsync(string code);
+        Task<List<HistoryDTO>> getHRatesAsync(string code,string targetcode);
         Task<Currencies> getRTRatesAsync();
     }
 }

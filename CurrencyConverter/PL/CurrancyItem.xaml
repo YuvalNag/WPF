@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:PL"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+    <Grid  >
+
     </Grid>
+
 </UserControl>

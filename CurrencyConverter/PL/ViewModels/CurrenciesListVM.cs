@@ -15,7 +15,7 @@ namespace PL.ViewModels
     class CurrenciesListVM:INotifyPropertyChanged
     {
         #region Properties
-        private ObservableCollection<Currency> Currencies_ObservableCollection;
+
         private ICollectionView _currenciesList;
         public ICollectionView currenciesList
         {
@@ -31,17 +31,17 @@ namespace PL.ViewModels
             }
         }
 
-        private NotifyTaskCompletion<Currencies> _currencies;
-        public NotifyTaskCompletion<Currencies> currencies
+        private NotifyTaskCompletion<Currencies> _taskCurrencies;
+        public NotifyTaskCompletion<Currencies> taskCurrencies
         {
             set
             {
-                _currencies = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("currencies"));
+                _taskCurrencies = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("taskCurrencies"));
             }
             get
             {
-                return _currencies;
+                return _taskCurrencies;
             }
         }
 
@@ -78,12 +78,10 @@ namespace PL.ViewModels
         public CurrenciesListVM()
         {
             rTModel = new Models.CurrenciesRTModel();
-            currencies=new NotifyTaskCompletion<Currencies>(ConvertToObservableCollection());
-            //CountriesList.Filter = WorkerFilter;
-            //CountriesList.CollectionChanged += CountriesList_CollectionChanged;
-
+            taskCurrencies=new NotifyTaskCompletion<Currencies>(ConvertToObservableCollection());
         }
 
+        //get in the backround the 
         private async Task<Currencies> ConvertToObservableCollection()
         {
             
@@ -96,6 +94,7 @@ namespace PL.ViewModels
 
         }
 
+        // a predicate to filter for ICollectionView
         private bool CurrenciesFilter(object item)
         {
             Currency currency = item as Currency;

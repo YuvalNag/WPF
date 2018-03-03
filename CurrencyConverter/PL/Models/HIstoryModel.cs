@@ -16,6 +16,11 @@ namespace PL.Models
             return await Task.Run(async () => await new BL_imp().getHRatesAsync(countryCode));
         }
 
+        public async Task<List<HistoryDTO>> GetCurrenciesR(string sourceCountryCode, string targetCountryCode = "USD")
+        {
+            return await Task.Run(async () => await new BL_imp().getHRatesAsync(sourceCountryCode, targetCountryCode));
+        }
+
         public async Task<List<Country>> GetCountries()
         {
             return await Task.Run(async () => await new BL_imp().getCountriesAsync());

@@ -10,6 +10,7 @@ namespace PL.Converters
         public  Dictionary<string, string> Currencies = new Dictionary<string, string>() {
                                                     {"AED", "د.إ.‏"},
                                                     {"AFN", "؋ "},
+                                                    {"BTC","฿" },
                                                     {"ALL", "Lek"},
                                                     {"AMD", "դր."},
                                                     {"ARS", "$"},

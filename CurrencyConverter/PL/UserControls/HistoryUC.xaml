@@ -6,175 +6,80 @@
              xmlns:local="clr-namespace:PL.ViewModels"
              xmlns:converters="clr-namespace:PL.Converters"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
-          xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
+             xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
              mc:Ignorable="d"
             >
-
+    <UserControl.Resources>
+        <ResourceDictionary  >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/PL;component/ResorceDictionary/ChartDictionary.xaml"  />
+        
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Margin="0,0,20,0">
 
         <Grid.DataContext>
             <local:HistoryVM/>
         </Grid.DataContext>
 
-        <Grid.Resources>
-            <converters:MinMaxConverter x:Key="MinMaxConverter"/>
-            <DataTemplate x:Key="CurrencyComboBoxItem">
-                <Grid Background="#8C008000" Width="150" Height="50">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-
-                    </Grid.ColumnDefinitions>
-                    <Image Grid.RowSpan="2" Source="/PL;component/Assets/united-states-of-america.png" Stretch="UniformToFill" AutomationProperties.LabeledBy="{Binding Text, ElementName=textBlock}" Margin="5" />
-                    <TextBlock  Text="{Binding Code }" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"  />
-                    <TextBlock Text="{Binding Name }" Grid.Row="1"   HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="12" Grid.Column="1" Margin="5,0,0,0" />
-
-                </Grid>
-            </DataTemplate>
-            <converters:LabelConverter x:Key="trackballLabel"/>
-            <DataTemplate x:Key="headerTemplate">
-                <TextBlock FontSize="16" Foreground="Black" Margin="5" Text="{Binding}"/>
-            </DataTemplate>
-
-            <DataTemplate x:Key="labelTemplate">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock FontSize="14" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type chart:AreaSeries}} ,Path=country.Code}" Foreground="Black"/>
-                    <TextBlock FontSize="14" Foreground="Black" Text="{Binding Path=LabelContent}"/>
-                </StackPanel>
-            </DataTemplate>
-
-            <DataTemplate x:Key="labelTemplate1">
-                <TextBlock FontSize="14" Foreground="Black" Text="{Binding Path=LabelContent}"/>
-            </DataTemplate>
-
-            <DataTemplate x:Key="symboltemplate">
-                <Ellipse Height="25" Width="25" Fill="White" Stroke="Black" StrokeThickness="3"/>
-            </DataTemplate>
-
-            <Style TargetType="Line" x:Key="AxisStyle">
-                <Setter Property="Stroke" Value="LightGray"/>
-                <Setter Property="StrokeThickness" Value="1"/>
-            </Style>
-
-            <Style TargetType="Line" x:Key="GridLineStyle">
-                <Setter Property="Stroke" Value="LightGray"/>
-                <Setter Property="StrokeThickness" Value="0.5"/>
-            </Style>
-
-            <Style TargetType="Line" x:Key="TrackballLineStyle">
-                <Setter Property="Stroke" Value="DarkGray"/>
-                <Setter Property="StrokeThickness" Value="0.5"/>
-            </Style>
-
-            <!--<Style x:Key="ButtonStyle" TargetType="Button">
-                <Setter Property="Background" Value="White"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Grid>
-                                <Border CornerRadius="3" BorderBrush="DarkGray" BorderThickness="1" Background="{TemplateBinding Background}"/>
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            </Grid>
-                            <ControlTemplate.Triggers >
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Cursor" Value="Hand"/>
-                                </Trigger>
-
-                                <Trigger Property="IsFocused" Value="True">
-                                    <Setter Property="BorderThickness" Value="2"/>
-                                    <Setter Property="FontWeight" Value="Bold"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>-->
-
-            <Style TargetType="TextBlock" x:Key="HigherbarLabel">
-                <Setter Property="Foreground" Value="Transparent"/>
-            </Style>
-
-            <Style TargetType="TextBlock" x:Key="LowerbarLabel">
-                <Setter Property="Foreground" Value="Black"/>
-            </Style>
-
-            <Style TargetType="Line" x:Key="highertickline">
-                <Setter Property="StrokeThickness" Value="0"/>
-            </Style>
-
-            <Style TargetType="chart:ChartTrackBallControl" x:Key="trackballStyle">
-                <Setter Property="Template" >
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <Canvas >
-                                <Ellipse Fill="White" Height="10" Width="10" StrokeThickness="1.5"
-                                         Stroke="LightSkyBlue"/>
-                            </Canvas>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </Grid.Resources>
 
         
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="70*"/>
             <RowDefinition Height="20*"/>
+       
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="50,10,0,0" >
-            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
+        <Grid Grid.Row="1" Margin="50,10,0,0" >
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="State:" Height="20" Margin="2" />
-                <ComboBox x:Name="ComboBox" ItemsSource="{Binding countries.Result, IsAsync=True}" 
-                  HorizontalAlignment="Left" 
-                  Margin="10,5,0,0" 
-                  SelectedItem="{Binding country}"
-                  VerticalAlignment="Top"
-                  ItemTemplate="{StaticResource CurrencyComboBoxItem}"
-                  SelectedIndex="0" 
-                  Cursor="Hand" 
-                  ScrollViewer.CanContentScroll="True"
-                  Custom:TextBoxHelper.Watermark="choose the relative currency" 
-                  Custom:TextBoxHelper.UseFloatingWatermark="True" 
-                  Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+                <ComboBox x:Name="ComboBox" 
+                          ItemsSource="{Binding countries.Result, IsAsync=True}" 
+                          HorizontalAlignment="Left" 
+                          Margin="10,5,0,0" 
+                          SelectedItem="{Binding country}"
+                          VerticalAlignment="Top"
+                          ItemTemplate="{StaticResource CurrencyComboBoxItem}"
+                          Cursor="Hand" 
+                          ScrollViewer.CanContentScroll="True"
+                          Custom:TextBoxHelper.Watermark="choose the relative currency" 
+                          Custom:TextBoxHelper.UseFloatingWatermark="True" 
+                          Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel IsItemsHost="True" 
-                             Orientation="Vertical"
-                             />
+                                        Orientation="Vertical"
+                                        />
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
-                <TextBlock Text="Raltive:" Height="20" Margin="2" />
-                <ComboBox x:Name="RaltiveComboBox" ItemsSource="{Binding countries.Result, IsAsync=True}" 
-                  HorizontalAlignment="Left" 
-                  Margin="10,5,0,0" 
-                  SelectedItem="{Binding countryRaltive}"
-                  VerticalAlignment="Top"
-                  ItemTemplate="{StaticResource CurrencyComboBoxItem}"
-                  SelectedIndex="0" 
-                  Cursor="Hand" 
-                  ScrollViewer.CanContentScroll="True"
-                  Custom:TextBoxHelper.Watermark="choose the relative currency" 
-                  Custom:TextBoxHelper.UseFloatingWatermark="True" 
-                  Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+                <TextBlock Text="Relative:" Height="20" Margin="2" />
+                <ComboBox x:Name="RelativeComboBox" 
+                          ItemsSource="{Binding countries.Result, IsAsync=True}" 
+                          HorizontalAlignment="Left" 
+                          Margin="10,5,0,0" 
+                          VerticalAlignment="Top"
+                          ItemTemplate="{StaticResource CurrencyComboBoxItem}"
+                          SelectedItem="{Binding raltiveCountry}" 
+                          Cursor="Hand" 
+                          ScrollViewer.CanContentScroll="True"
+                          Custom:TextBoxHelper.Watermark="choose the relative currency" 
+                          Custom:TextBoxHelper.UseFloatingWatermark="True" 
+                          Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel IsItemsHost="True" 
-                             Orientation="Vertical"
-                             />
+                                        Orientation="Vertical"
+                                        />
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
-               
             </StackPanel>
         </Grid>
 
-        <chart:SfChart AreaBorderThickness="0,1,1,1" x:Name="Chart" Grid.Row="1">
+        <chart:SfChart AreaBorderThickness="0,1,1,1" x:Name="Chart" Grid.Row="2">
             <chart:SfChart.Behaviors>
                 <chart:ChartZoomPanBehavior/>
                 <chart:ChartTrackBallBehavior ShowLine="True" 
@@ -253,7 +158,7 @@
             </chart:AreaSeries>
         </chart:SfChart>
 
-        <Grid Grid.Row="2" Margin="75,0,0,10">
+        <Grid Grid.Row="3" Margin="75,0,0,10">
 
             <chart:SfDateTimeRangeNavigator x:Name="RangeNavigator" 
                                             ShowToolTip="False"  
@@ -313,5 +218,6 @@
                 </chart:SfDateTimeRangeNavigator.LeftThumbStyle>
             </chart:SfDateTimeRangeNavigator>
         </Grid>
+        <ProgressBar Visibility="{Binding stockPriceDetails.IsNotCompleted, Converter={StaticResource boolToVis}}" Grid.Row="0" IsIndeterminate="True" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="updating...." />
     </Grid>
 </UserControl>

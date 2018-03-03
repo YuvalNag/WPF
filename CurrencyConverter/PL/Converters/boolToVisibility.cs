@@ -4,15 +4,20 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace PL.Converters
 {
-    class dc: IValueConverter
+    class boolToVisibility: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value;
+            bool vis=(bool)value;
+            if (vis)
+                return Visibility.Visible;
+            else
+                return Visibility.Collapsed;
         }
 
        
