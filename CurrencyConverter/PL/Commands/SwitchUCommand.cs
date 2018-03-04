@@ -8,12 +8,12 @@ using System.Windows.Input;
 
 namespace PL.Commands
 {
-   public class SwitchCurrencyCommand : ICommand
+    class SwitchUCommand : ICommand
     {
-        public IHistoryVM HistoryVM { get; set; }
-        public SwitchCurrencyCommand(IHistoryVM IHistoryVM)
+        public IMainVM MainVM { get; set; }
+        public SwitchUCommand(IMainVM MainVM)
         {
-            HistoryVM = IHistoryVM;
+            this.MainVM = MainVM;
         }
 
         public bool CanExecute(object parameter)
@@ -23,7 +23,7 @@ namespace PL.Commands
 
         public void Execute(object parameter)
         {
-            HistoryVM.SwitchSourceCurrencyAndRelative();
+            MainVM.SwitchUCSelected();
         }
 
         public event EventHandler CanExecuteChanged
@@ -32,7 +32,5 @@ namespace PL.Commands
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-
     }
 }
-

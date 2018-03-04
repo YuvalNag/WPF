@@ -4,14 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PL.ViewModels
 {
-   public class HistoryVM : INotifyPropertyChanged, IHistoryVM
+    public class HistoryVM : INotifyPropertyChanged, IHistoryVM
     {
         private ICommand _switchCommand;
         public ICommand switchCommand {
@@ -121,7 +119,7 @@ namespace PL.ViewModels
         }
 
 
-        public void switchSourchCurrencyAndRelative()
+        public void SwitchSourceCurrencyAndRelative()
         {
             Country tempRelative = raltiveCountry;
             Country tempsource = country;

@@ -8,12 +8,14 @@
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
              mc:Ignorable="d"
+              d:DesignHeight="270" d:DesignWidth="300" MinWidth="300" MinHeight="270" Background="White"
+            
             >
     <UserControl.Resources>
         <ResourceDictionary  >
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/PL;component/ResorceDictionary/ChartDictionary.xaml"  />
-        
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -24,13 +26,13 @@
         </Grid.DataContext>
 
 
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="70*"/>
             <RowDefinition Height="20*"/>
-       
+
         </Grid.RowDefinitions>
         <Grid Grid.Row="1" Margin="50,10,0,0" >
             <StackPanel Orientation="Horizontal">
@@ -77,7 +79,7 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
-                
+
             </StackPanel>
         </Grid>
 
@@ -129,13 +131,7 @@
             </chart:SfChart.SecondaryAxis>
 
             <chart:AreaSeries Name="series" ItemsSource="{Binding stockPriceDetails.Result}" XBindingPath="date" YBindingPath="Currency.Value">
-                <!--<chart:AreaSeries.ItemsSource>
-                    <MultiBinding Converter="{StaticResource MultiConverter }" >
-                        <Binding ElementName="ComboBox" Path="SelectedItem"/>
-                        <Binding ElementName="RaltiveComboBox" Path="SelectedItem"/>
-                        <Binding Path="stockPriceDetails.Result"/>
-                    </MultiBinding>
-                </chart:AreaSeries.ItemsSource>-->
+              
                 <chart:AreaSeries.Interior>
                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03" Opacity="0.8">
                         <GradientStop Color="LightSkyBlue" Offset="0"/>
@@ -220,6 +216,6 @@
                 </chart:SfDateTimeRangeNavigator.LeftThumbStyle>
             </chart:SfDateTimeRangeNavigator>
         </Grid>
-        <ProgressBar Visibility="{Binding stockPriceDetails.IsNotCompleted, Converter={StaticResource boolToVis}}" Grid.Row="0" IsIndeterminate="True" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="updating...." />
+        <ProgressBar  Visibility="{Binding stockPriceDetails.IsNotCompleted, Converter={StaticResource boolToVis}}" Grid.Row="0" IsIndeterminate="True" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="updating...." />
     </Grid>
 </UserControl>

@@ -83,6 +83,7 @@
       <DependentUpon>ChackWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\SwitchCurrencyCommand.cs" />
+    <Compile Include="Commands\SwitchUCommand.cs" />
     <Compile Include="ConverterParameter.cs" />
     <Compile Include="Converters\ConvertValuse.cs" />
     <Compile Include="Converters\CountryCodeToImgSourceConverter.cs" />
@@ -110,6 +111,8 @@
     <Compile Include="ViewModels\CoverterVM.cs" />
     <Compile Include="ViewModels\HistoryVM.cs" />
     <Compile Include="ViewModels\IHistoryVM.cs" />
+    <Compile Include="ViewModels\IMainVM.cs" />
+    <Compile Include="ViewModels\MainVM.cs" />
     <Compile Include="ViewModels\NotifyTaskCompletion.cs" />
     <Page Include="ChackWindow.xaml">
       <SubType>Designer</SubType>
@@ -216,6 +219,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\united-states-of-america.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\stock.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
