@@ -1,4 +1,5 @@
 ﻿using DP;
+using PL.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,11 +7,24 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PL.ViewModels
 {
-    class HistoryVM:INotifyPropertyChanged
+   public class HistoryVM : INotifyPropertyChanged, IHistoryVM
     {
+        private ICommand _switchCommand;
+        public ICommand switchCommand {
+            get
+            {
+                return _switchCommand;
+            }
+            set
+            {
+                _switchCommand = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("switchCommand"));
+            }
+        }
         //public ObservableCollection<HistoryDTO> StockPriceDetails { get; set; }
         private NotifyTaskCompletion<ObservableCollection<HistoryDTO>> _stockPriceDetails;
         public NotifyTaskCompletion<ObservableCollection<HistoryDTO>> stockPriceDetails
@@ -82,21 +96,41 @@ namespace PL.ViewModels
             hModel = new Models.HIstoryModel();
            // stockPriceDetails = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(ConvertStockToObservableCollection());
             countries = new NotifyTaskCompletion<ObservableCollection<Country>>(ConvertCountriesToObservableCollection());
+            switchCommand = new SwitchCurrencyCommand(this);
         }
 
         private void stopTaskIfRunning(NotifyTaskCompletion<Task> task)
         {
 
         }
+
+
         private async Task<ObservableCollection<Country>> ConvertCountriesToObservableCollection()
         {
             List<Country> countriesTemp = await  hModel.GetCountries();
+
+            //update the country and relative country
             country = countriesTemp.Find(t => String.Equals(t.Code, "ILS"));
+
+            //skip the property  
             _raltiveCountry = countriesTemp.Find(t => String.Equals(t.Code,"USD"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("raltiveCountry"));
+
+
             return new ObservableCollection<Country>(countriesTemp);
         }
 
+
+        public void switchSourchCurrencyAndRelative()
+        {
+            Country tempRelative = raltiveCountry;
+            Country tempsource = country;
+            _country = tempRelative;
+            raltiveCountry = tempsource;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("country"));
+           
+
+        }
         private async Task<ObservableCollection<HistoryDTO>> ConvertStockToObservableCollection()
         {
             List<HistoryDTO> tempCurrencies;

@@ -55,6 +55,7 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
+                <Button Content="switch" Command="{Binding switchCommand}" />
                 <TextBlock Text="Relative:" Height="20" Margin="2" />
                 <ComboBox x:Name="RelativeComboBox" 
                           ItemsSource="{Binding countries.Result, IsAsync=True}" 
@@ -76,6 +77,7 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
+                
             </StackPanel>
         </Grid>
 

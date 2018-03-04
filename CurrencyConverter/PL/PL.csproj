@@ -79,6 +79,7 @@
     <Compile Include="ChackWindow.xaml.cs">
       <DependentUpon>ChackWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commands\SwitchCurrencyCommand.cs" />
     <Compile Include="ConverterParameter.cs" />
     <Compile Include="Converters\ConvertValuse.cs" />
     <Compile Include="Converters\CountryCodeToImgSourceConverter.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="ViewModels\CurrenciesListVM.cs" />
     <Compile Include="ViewModels\CoverterVM.cs" />
     <Compile Include="ViewModels\HistoryVM.cs" />
+    <Compile Include="ViewModels\IHistoryVM.cs" />
     <Compile Include="ViewModels\NotifyTaskCompletion.cs" />
     <Page Include="ChackWindow.xaml">
       <SubType>Designer</SubType>
