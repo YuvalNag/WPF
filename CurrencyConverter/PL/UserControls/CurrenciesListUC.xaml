@@ -9,7 +9,7 @@
     xmlns:Converters="clr-namespace:PL.Converters"
     x:Class="PL.UserControls.CountriesListUC"
              mc:Ignorable="d" 
-             d:DesignHeight="270" d:DesignWidth="300" MinWidth="300" MinHeight="270">
+             d:DesignHeight="270" d:DesignWidth="300" MinWidth="300" MinHeight="300">
     <UserControl.Resources>
         <ResourceDictionary >
             <ResourceDictionary.MergedDictionaries>
@@ -18,32 +18,40 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Grid.Background>
+        <!--<Grid.Background>
             <ImageBrush ImageSource="/PL;component/Assets/TileBackground.png" Stretch="UniformToFill"/>
-        </Grid.Background>
+        </Grid.Background>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="66*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
             
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
         <TextBox Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
                  Grid.Row="0"  
                  Text="{Binding FilterString, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}" 
                  Custom:TextBoxHelper.UseFloatingWatermark="True"  
                  Custom:TextBoxHelper.Watermark="search"
-                 HorizontalAlignment="Stretch"/>
+                 HorizontalAlignment="Stretch"
+                 Margin="10"
+                 VerticalAlignment="Center"/>
 
         <ListView x:Name="list" 
                   Background="Transparent" 
                   Grid.Row="2"
+                  
+                  Grid.Column="0"
                   ItemsSource="{Binding currenciesList}"
                   ItemTemplate="{StaticResource CurrencyItem}"
                    HorizontalAlignment="Stretch"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                   VerticalAlignment="Stretch"
-                  Grid.RowSpan="2">
+                   VerticalAlignment="Stretch" Grid.ColumnSpan="2"
+                  >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" Background="Transparent" />
@@ -51,21 +59,27 @@
             </ListView.ItemsPanel>
             
         </ListView>
-        <WrapPanel Grid.Row="1" >
-            <ComboBox ItemsSource="{Binding currenciesList, IsAsync=True}" 
-                  HorizontalAlignment="Left" 
-                  Margin="10,5,0,0" 
+        
+            <ComboBox 
+                Grid.Row="0"   
+                 
+                ItemsSource="{Binding currenciesList, IsAsync=True}" 
+                  HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                  Margin="10" 
                    
                   
                   SelectedItem="{Binding ElementName=list,Path=SelectedItem}"
-                  VerticalAlignment="Top"
+                  
                   ItemTemplate="{StaticResource CurrencyComboBoxItem}"
                   SelectedIndex="0" 
                   Cursor="Hand" 
                   ScrollViewer.CanContentScroll="True"
                   Custom:TextBoxHelper.Watermark="choose the relative currency" 
                   Custom:TextBoxHelper.UseFloatingWatermark="True" 
-                  Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+                  Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}" 
+                  Grid.Column="1" 
+                  Grid.RowSpan="2">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel IsItemsHost="True" 
@@ -75,11 +89,15 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <TextBox  x:Name="AmountTextBox" 
-                  Grid.Column="2"
-                 
+                  Grid.Row="1"
+                  Grid.Column="0"
+                    
                   Custom:TextBoxHelper.Watermark="Amount" 
-                  Custom:TextBoxHelper.UseFloatingWatermark="True" />
-        </WrapPanel>
-        <ProgressBar Visibility="{Binding taskCurrencies.IsNotCompleted, Converter={StaticResource boolToVis}}" Grid.Row="3" IsIndeterminate="True" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="updating...." />
+                  Custom:TextBoxHelper.UseFloatingWatermark="True"
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Center"
+                      Margin="10" />
+        
+        <ProgressBar Visibility="{Binding taskCurrencies.IsNotCompleted, Converter={StaticResource boolToVis}}" Grid.Row="3" IsIndeterminate="True" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="updating...." Grid.ColumnSpan="2" />
     </Grid>
 </UserControl>
