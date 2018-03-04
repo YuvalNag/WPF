@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace PL.ViewModels
 {
-    public class HistoryVM : INotifyPropertyChanged, IHistoryVM
+    public class HistoryVM : INotifyPropertyChanged, IHistoryVM,BaseVM
     {
         private ICommand _switchCommand;
         public ICommand switchCommand {

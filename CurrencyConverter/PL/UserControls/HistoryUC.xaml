@@ -8,8 +8,8 @@
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
              mc:Ignorable="d"
-              d:DesignHeight="270" d:DesignWidth="300" MinWidth="300" MinHeight="270" Background="White"
-            
+               Background="White"
+            Height="600" Width="650"
             >
     <UserControl.Resources>
         <ResourceDictionary  >

@@ -12,7 +12,7 @@ using System.Windows.Data;
 
 namespace PL.ViewModels
 {
-    class CurrenciesListVM:INotifyPropertyChanged
+    class CurrenciesListVM:INotifyPropertyChanged,BaseVM
     {
         #region Properties
 

@@ -107,6 +107,7 @@
     <Compile Include="UserControls\HistoryUC.xaml.cs">
       <DependentUpon>HistoryUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\BaseVM.cs" />
     <Compile Include="ViewModels\CurrenciesListVM.cs" />
     <Compile Include="ViewModels\CoverterVM.cs" />
     <Compile Include="ViewModels\HistoryVM.cs" />

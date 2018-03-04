@@ -6,26 +6,35 @@
         xmlns:local="clr-namespace:PL"
     xmlns:VM="clr-namespace:PL.ViewModels"
       xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:UserControls="clr-namespace:PL.UserControls" x:Class="PL.MainWindow"
+        xmlns:UserControls="clr-namespace:PL.UserControls" 
+    x:Class="PL.MainWindow"
     xmlns:syncfusion="http://schemas.syncfusion.com/wpf"    
     mc:Ignorable="d"
-        Title="MainWindow" MaxHeight="1000" MaxWidth="850">
-    <Window.DataContext >
+        Title="MainWindow" SizeToContent="WidthAndHeight" >
+    <Window.DataContext>
         <VM:MainVM></VM:MainVM>
     </Window.DataContext>
     <Grid>
-
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"> </RowDefinition>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Content="switch" Command="{Binding switchCommand}" HorizontalAlignment="Right" />
-        <syncfusion:Carousel Grid.Row="1" RadiusX="350" RadiusY="0" RotationSpeed="300">
-            <syncfusion:CarouselItem>
-                <UserControls:HistoryUC Height="850" Width="850"/>
-            </syncfusion:CarouselItem>
-            <syncfusion:CarouselItem IsSelected="{Binding isRTView}">
-                <UserControls:CountriesListUC Height="850" Width="850"/>
-            </syncfusion:CarouselItem>
+        <Button Height="100" Width="100"  Content="switch" Command="{Binding switchCommand}" Background="#FFF01B1B" HorizontalAlignment="Right" Panel.ZIndex="2"/>
+        <syncfusion:Carousel
+                        Grid.Row="0"  
+                        RadiusX="350" 
+                        RadiusY="0" 
+                        RotationSpeed="300" 
+            ItemsSource="{Binding UC}"
+            SelectedIndex="{Binding selectedIndex}"
+            Grid.RowSpan="2" 
+            Height="600"
+            Width="650"  
+            EnableTouch="True"
+            ItemsPerPage="-1" 
+            VisualMode="Standard"
+            OpacityFraction="0">
+           
 
 
         </syncfusion:Carousel>
