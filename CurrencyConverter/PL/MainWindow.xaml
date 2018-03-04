@@ -14,6 +14,7 @@
         <VM:MainVM></VM:MainVM>
     </Window.DataContext>
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
@@ -25,6 +26,7 @@
             <syncfusion:CarouselItem IsSelected="{Binding isRTView}">
                 <UserControls:CountriesListUC Height="850" Width="850"/>
             </syncfusion:CarouselItem>
+
 
         </syncfusion:Carousel>
     </Grid>
