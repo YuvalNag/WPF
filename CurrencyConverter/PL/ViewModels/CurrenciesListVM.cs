@@ -12,9 +12,10 @@ using System.Windows.Data;
 
 namespace PL.ViewModels
 {
-    class CurrenciesListVM:INotifyPropertyChanged,BaseVM
+    class CurrenciesListVM:INotifyPropertyChanged
     {
         #region Properties
+
 
         private ICollectionView _currenciesList;
         public ICollectionView currenciesList
@@ -27,6 +28,21 @@ namespace PL.ViewModels
             {
                 _currenciesList = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("currenciesList"));
+
+            }
+        }
+
+        private ObservableCollection<Currency> _currenciesListCollection;
+        public ObservableCollection<Currency> currenciesListCollection
+        {
+            get
+            {
+                return _currenciesListCollection;
+            }
+            set
+            {
+                _currenciesListCollection = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("currenciesListCollection"));
 
             }
         }
@@ -86,6 +102,7 @@ namespace PL.ViewModels
         {
             
             Currencies tempCurrencies = await (rTModel.GetCurrencies());
+            currenciesListCollection = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
             tempCurrencies.CurrenciesList = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
             currenciesList = CollectionViewSource.GetDefaultView(tempCurrencies.CurrenciesList);
             currenciesList.Filter = CurrenciesFilter;

@@ -10,7 +10,7 @@ using System.Windows.Data;
 
 namespace PL.Converters
 {
-    class MinMaxConverter : IValueConverter
+    public class MinMaxConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

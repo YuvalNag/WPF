@@ -6,10 +6,9 @@
              xmlns:local="clr-namespace:PL.UserControls"
              
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:Converters="clr-namespace:PL.Converters"
     x:Class="PL.UserControls.CountriesListUC"
              mc:Ignorable="d" 
-             Height="600" Width="650" Background="White">
+             Height="600" Width="680" Background="White">
     <UserControl.Resources>
         <ResourceDictionary >
             <ResourceDictionary.MergedDictionaries>
@@ -26,7 +25,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
-            
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -43,33 +42,33 @@
 
         <ListView x:Name="list" 
                   Background="Transparent" 
-                  Grid.Row="2"
+                  Grid.Row="1"
+                  SelectedItem="{Binding ElementName=ralativeCombo,Path=SelectedItem, Mode=OneWayToSource, TargetNullValue=UNBOUND}"
                   
                   Grid.Column="0"
                   ItemsSource="{Binding currenciesList}"
                   ItemTemplate="{StaticResource CurrencyItem}"
                    HorizontalAlignment="Stretch"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                   VerticalAlignment="Stretch" Grid.ColumnSpan="2"
+                   VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,45,0,1" Grid.RowSpan="2"
                   >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" Background="Transparent" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
-            
+
         </ListView>
-        
-            <ComboBox 
+
+        <ComboBox x:Name="ralativeCombo"
                 Grid.Row="0"   
                  
-                ItemsSource="{Binding currenciesList, IsAsync=True}" 
+                ItemsSource="{Binding currenciesListCollection}" 
                   HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                   Margin="10" 
                    
                   
-                  SelectedItem="{Binding ElementName=list,Path=SelectedItem}"
                   
                   ItemTemplate="{StaticResource CurrencyComboBoxItem}"
                   SelectedIndex="0" 
@@ -80,15 +79,15 @@
                   Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}" 
                   Grid.Column="1" 
                   Grid.RowSpan="2">
-                <ComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel IsItemsHost="True" 
+            <ComboBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" 
                              Orientation="Vertical"
                              />
-                    </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
-            </ComboBox>
-            <TextBox  x:Name="AmountTextBox" 
+                </ItemsPanelTemplate>
+            </ComboBox.ItemsPanel>
+        </ComboBox>
+        <TextBox  x:Name="AmountTextBox" 
                   Grid.Row="1"
                   Grid.Column="0"
                     
@@ -97,7 +96,7 @@
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Center"
                       Margin="10" />
-        
+
         <ProgressBar Visibility="{Binding taskCurrencies.IsNotCompleted, Converter={StaticResource boolToVis}}" Grid.Row="3" IsIndeterminate="True" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="updating...." Grid.ColumnSpan="2" />
     </Grid>
 </UserControl>

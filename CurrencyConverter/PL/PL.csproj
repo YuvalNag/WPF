@@ -85,10 +85,12 @@
     <Compile Include="Commands\SwitchCurrencyCommand.cs" />
     <Compile Include="Commands\SwitchUCommand.cs" />
     <Compile Include="ConverterParameter.cs" />
+    <Compile Include="Converters\ContentConverter.cs" />
     <Compile Include="Converters\ConvertValuse.cs" />
     <Compile Include="Converters\CountryCodeToImgSourceConverter.cs" />
     <Compile Include="Converters\boolToVisibility.cs" />
     <Compile Include="Converters\DirectionToBackgroundConverter.cs" />
+    <Compile Include="Converters\HorizontalAlignmentConverter.cs" />
     <Compile Include="Converters\IssuedCountryCodeToCountrySymbolConverter.cs" />
     <Compile Include="Converters\LabelConverter.cs" />
     <Compile Include="Converters\MinMaxConverter.cs" />

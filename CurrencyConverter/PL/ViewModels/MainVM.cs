@@ -32,7 +32,7 @@ namespace PL.ViewModels
             UC = new ObservableCollection<UserControl>();
             UC.Add(new HistoryUC());
             UC.Add(new CountriesListUC());
-            selectedIndex = 1;
+            selectedIndex = 0;
             switchCommand = new SwitchUCommand(this);
         }
         public event PropertyChangedEventHandler PropertyChanged;

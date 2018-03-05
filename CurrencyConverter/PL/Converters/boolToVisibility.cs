@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace PL.Converters
 {
-    class boolToVisibility: IValueConverter
+   public class boolToVisibility: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

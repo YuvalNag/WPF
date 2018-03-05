@@ -11,7 +11,7 @@ using System.Windows.Data;
 
 namespace PL.Converters
 {
-    class MultiConverter : IMultiValueConverter
+    public class MultiConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

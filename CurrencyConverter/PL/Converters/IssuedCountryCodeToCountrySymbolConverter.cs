@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace PL.Converters
 {
-    class IssuedCountryCodeToCountrySymbolConverter : IValueConverter
+    public class IssuedCountryCodeToCountrySymbolConverter : IValueConverter
     {
         public  Dictionary<string, string> Currencies = new Dictionary<string, string>() {
                                                     {"AED", "د.إ.‏"},

@@ -9,7 +9,7 @@
              xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
              mc:Ignorable="d"
                Background="White"
-            Height="600" Width="650"
+            Height="600" Width="680"
             >
     <UserControl.Resources>
         <ResourceDictionary  >

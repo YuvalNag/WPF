@@ -60,7 +60,8 @@
                         <Run.Text>
                              <MultiBinding  Converter="{StaticResource ConvertValuse}" Mode="OneWay">
                                 <Binding   />
-                                <Binding  RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" Path="SelectedItem" />
+                                 <Binding  ElementName="ralativeCombo" Path="SelectedItem" />
+                                <!--<Binding  RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" Path="SelectedItem" />-->
                                 <Binding ElementName="AmountTextBox"  Path="Text"/>
                              </MultiBinding>
                         </Run.Text>
