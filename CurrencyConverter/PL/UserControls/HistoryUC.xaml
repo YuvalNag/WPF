@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PL.ViewModels"
-             xmlns:converters="clr-namespace:PL.Converters"
+             
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
              mc:Ignorable="d"
@@ -29,7 +29,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="70*"/>
             <RowDefinition Height="20*"/>
 
@@ -57,7 +57,9 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
-                <Button Content="switch" Command="{Binding switchCommand}" />
+                <Button Margin="10"  Command="{Binding switchCommand}" >
+                    <Image Source="/PL;component/Assets/Switch_Icon.png" Height="45" Width="59" />
+                </Button>
                 <TextBlock Text="Relative:" Height="20" Margin="2" />
                 <ComboBox x:Name="RelativeComboBox" 
                           ItemsSource="{Binding countries.Result, IsAsync=True}" 
@@ -131,7 +133,7 @@
             </chart:SfChart.SecondaryAxis>
 
             <chart:AreaSeries Name="series" ItemsSource="{Binding stockPriceDetails.Result}" XBindingPath="date" YBindingPath="Currency.Value">
-              
+
                 <chart:AreaSeries.Interior>
                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03" Opacity="0.8">
                         <GradientStop Color="LightSkyBlue" Offset="0"/>

@@ -1,12 +1,7 @@
 ﻿using PL.Commands;
 using PL.UserControls;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -52,20 +47,7 @@ namespace PL.ViewModels
                 return _selectedIndex;
             }
         }
-        //private UserControl _selectedItem;
-        //public UserControl selectedItem
-        //{
-        //    set
-        //    {
-        //        _selectedItem = value;
-
-        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("selectedItem"));
-        //    }
-        //    get
-        //    {
-        //        return _selectedItem;
-        //    }
-        //}
+      
         private ICommand _switchCommand;
         public ICommand switchCommand
         {

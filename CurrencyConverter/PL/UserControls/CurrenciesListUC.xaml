@@ -43,7 +43,7 @@
         <ListView x:Name="list" 
                   Background="Transparent" 
                   Grid.Row="1"
-                  SelectedItem="{Binding ElementName=ralativeCombo,Path=SelectedItem, Mode=OneWayToSource, TargetNullValue=UNBOUND}"
+                  SelectedItem="{Binding relativeCurrency, Mode=OneWayToSource}"
                   
                   Grid.Column="0"
                   ItemsSource="{Binding currenciesList}"
@@ -69,7 +69,7 @@
                   Margin="10" 
                    
                   
-                  
+                  SelectedItem="{Binding relativeCurrency, Mode=OneWay}"
                   ItemTemplate="{StaticResource CurrencyComboBoxItem}"
                   SelectedIndex="0" 
                   Cursor="Hand" 
@@ -86,6 +86,13 @@
                              />
                 </ItemsPanelTemplate>
             </ComboBox.ItemsPanel>
+            <!--<ComboBox.SelectedItem>
+                <MultiBinding>
+                    <Binding ElementName="list" Path="SelctedItem"/>
+                    <Binding RelativeSource="{RelativeSource AncestorType=ComboBox}" Path="SelctedIndex"/>
+                    <Binding ElementName="currenciesListCollection" />
+                </MultiBinding>
+            </ComboBox.SelectedItem>-->
         </ComboBox>
         <TextBox  x:Name="AmountTextBox" 
                   Grid.Row="1"

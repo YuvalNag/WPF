@@ -16,7 +16,24 @@ namespace PL.ViewModels
     {
         #region Properties
 
+        private Currency _relativeCurrency;
+        public Currency relativeCurrency
+        {
+            get
+            {
+                return _relativeCurrency;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _relativeCurrency = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("relativeCurrency"));
+                }
 
+            }
+        }
+         
         private ICollectionView _currenciesList;
         public ICollectionView currenciesList
         {
