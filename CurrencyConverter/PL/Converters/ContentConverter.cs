@@ -18,9 +18,9 @@ namespace PL.Converters
             {
                 int index = (int)value;
                 if (index == 0)
-                    return "RT Panel";
+                    return "RT";
                 else
-                    return "History Panel";
+                    return "History";
             }
             //else
             //{
