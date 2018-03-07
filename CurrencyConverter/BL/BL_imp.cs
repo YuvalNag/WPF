@@ -51,9 +51,9 @@ namespace BL
             return filterdList;
         }
         
-        private Predicate<Country> CountryPredicate
-        {
+        //private Predicate<Country> CountryPredicate()
+        //{
 
-        }
+        //}
     }
 }
