@@ -116,7 +116,7 @@ namespace PL.Converters
         {
             //RegionInfo myRI1 = new RegionInfo(value as string);
             //return myRI1.ISOCurrencySymbol;
-            if (Currencies.ContainsKey((string)value))
+            if (value != null&&Currencies.ContainsKey((string)value))
                 return Currencies[(string)value];
             else
                 return (string)value;

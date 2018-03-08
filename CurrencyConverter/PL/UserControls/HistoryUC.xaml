@@ -147,7 +147,9 @@
                                 <StackPanel Margin="5">
                                     <TextBlock  Text="{Binding Item.date, Converter={StaticResource trackballLabel}}" />
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Stock price : "  />
+                                        <TextBlock Text="Value : "  />
+                                        <TextBlock Text="{Binding ElementName=ComboBox, Path=SelectedItem.Code, Converter={StaticResource SymbolConverter} }"  />
+                                        <TextBlock Text=" "  />
                                         <TextBlock Text="{Binding ValueY}" FontWeight="Bold" />
                                     </StackPanel>
                                 </StackPanel>

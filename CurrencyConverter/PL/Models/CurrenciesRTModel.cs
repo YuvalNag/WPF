@@ -15,12 +15,12 @@ namespace PL.Models
        public async Task<Currencies> GetCurrencies()
         {
             string[] d = { "AED",
-                         "AFN",
+                         //"AFN",
                          "BTC",
                          "ALL",
                          //"AMD",
                          //"ARS",
-                         //"AUD",
+                         "AUD",
                          //"AZN",
                          //"BAM",
                          //"BDT",
@@ -126,7 +126,7 @@ namespace PL.Models
             
             return  await Task.Run(async ()=> {
                 Currencies currencies = await new BL_imp().getRTRatesAsync();
-                currencies.CurrenciesList = currencies.CurrenciesList.Where(t => d.Contains(t.IssuedCountryCode)).ToList();
+                //currencies.CurrenciesList = currencies.CurrenciesList.Where(t => d.Contains(t.IssuedCountryCode)).ToList();
                 return currencies;
             });
         }
