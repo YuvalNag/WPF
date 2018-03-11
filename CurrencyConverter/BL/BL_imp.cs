@@ -17,7 +17,7 @@ namespace BL
         }
         public Task<List<HistoryDTO>> getHRatesAsync(string countryCode)
         {
-            return new DAL_imp().getHRatesAsync( countryCode);
+            return null;
         }
         public async Task<List<HistoryDTO>> getHRatesAsync(string sourceCountryCode, string targetCountryCode="USD")
         {
@@ -40,16 +40,16 @@ namespace BL
             return new DAL_imp().getRTRatesAsync();
         }
 
-        private List<Object> FilterByCodeCountry(List<Object> originaList,Predicate<Object> predicate)
-        {
-            List<Object> filterdList = new List<object>();
-            List<string> codesList = new List<string>() { "USD", "ILS", "AED" ,"AFN" ,"ALL" ,"AMD" ,"ANG" ,"AOA" ,"ARS" ,"AUD" ,"SGD" ,"GBP" };
-            foreach (var code in codesList)
-            {
-                filterdList.Add(originaList.Find(predicate));  
-            }
-            return filterdList;
-        }
+        //private List<Object> FilterByCodeCountry(List<Object> originaList,Predicate<Object> predicate)
+        //{
+        //    List<Object> filterdList = new List<object>();
+        //    List<string> codesList = new List<string>() { "USD", "ILS", "AED" ,"AFN" ,"ALL" ,"AMD" ,"ANG" ,"AOA" ,"ARS" ,"AUD" ,"SGD" ,"GBP" };
+        //    foreach (var code in codesList)
+        //    {
+        //        filterdList.Add(originaList.Find(predicate));  
+        //    }
+        //    return filterdList;
+        //}
         
         //private Predicate<Country> CountryPredicate()
         //{

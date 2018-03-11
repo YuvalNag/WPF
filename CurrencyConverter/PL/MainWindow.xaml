@@ -37,7 +37,7 @@
                 Content="{Binding selectedIndex, Converter={StaticResource ContentConverter }, ConverterParameter=content }" 
                 Custom:ButtonHelper.CornerRadius="100"
                 Grid.Row="1"
-                Margin="5,5,0,0" 
+                Margin="5,0,0,5" 
                 HorizontalAlignment="Left"
                 FontSize="9"/>
        

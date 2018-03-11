@@ -33,7 +33,41 @@ namespace PL.ViewModels
 
             }
         }
-         
+        private bool _showTop12;
+        public bool showTop12
+        {
+            get
+            {
+                return _showTop12;
+            }
+            set
+            {
+
+                _showTop12 = value;
+              
+                    if (_showTop12)
+                    {
+
+                        currenciesList = Top12CollectioView;
+                        FilterString = _filterString;
+                    
+                        currenciesListCollection = Top12List;
+
+                    }
+                    else
+                    {
+
+                        currenciesList = allCollectioView;
+                        FilterString = _filterString;
+                        currenciesListCollection = allList;
+
+                    }
+               
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("showTop12"));
+
+            }
+        }
+
         private ICollectionView _currenciesList;
         public ICollectionView currenciesList
         {
@@ -78,6 +112,7 @@ namespace PL.ViewModels
             }
         }
 
+
         private string _filterString;
         public string FilterString
         {
@@ -87,21 +122,22 @@ namespace PL.ViewModels
                 _filterString = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FilterString"));
                 if (_currenciesList != null)
-                    _currenciesList.Refresh();
+                    currenciesList.Refresh();
             }
         }
+        
 
 
-        private DateTime _date;
-        public DateTime Date
-        {
-            get { return _date; }
-            set
-            {
-                _date = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Date"));
-            }
-        }
+        //private DateTime _date;
+        //public DateTime Date
+        //{
+        //    get { return _date; }
+        //    set
+        //    {
+        //        _date = value;
+        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Date"));
+        //    }
+        //}
 
         private Models.CurrenciesRTModel rTModel { set; get; }
 
@@ -111,30 +147,146 @@ namespace PL.ViewModels
         public CurrenciesListVM()
         {
             rTModel = new Models.CurrenciesRTModel();
-            taskCurrencies=new NotifyTaskCompletion<Currencies>(ConvertToObservableCollection());
+            taskCurrencies=new NotifyTaskCompletion<Currencies>(ConvertToICollectionViewAsync());
         }
 
         //get in the backround the 
-        private async Task<Currencies> ConvertToObservableCollection()
+        private async Task<Currencies> ConvertToICollectionViewAsync()
         {
-            
+            string[] d = { "AED",
+                         //"AFN",
+                         "BTC",
+                         "ALL",
+                         //"AMD",
+                         //"ARS",
+                         "AUD",
+                         //"AZN",
+                         //"BAM",
+                         //"BDT",
+                         //"BGN",
+                         //"BHD",
+                         //"BND",
+                         //"BOB",
+                         "BRL",
+                         "BYR",
+                         "BZD",
+                         "CAD",
+                         //"CHF",
+                         //"CLP",
+                         //"CNY",
+                         //"COP",
+                         //"CRC",
+                         //"CSD",
+                         //"CZK",
+                         //"DKK",
+                         //"DOP",
+                         //"DZD",
+                         //"EEK",
+                         //"EGP",
+                         //"ETB",
+                         //"EUR",
+                         //"GBP",
+                         //"GEL",
+                         //"GTQ",
+                         //"HKD",
+                         //"HNL",
+                         //"HRK",
+                         //"HUF",
+                         //"IDR",
+                         "ILS",
+                         //"INR",
+                         //"IQD",
+                         //"IRR",
+                         //"ISK",
+                         //"JMD",
+                         //"JOD",
+                         //"JPY",
+                         //"KES",
+                         //"KGS",
+                         //"KHR",
+                         //"KRW",
+                         //"KWD",
+                         //"KZT",
+                         //"LAK",
+                         //"LBP",
+                         //"LKR",
+                         //"LTL",
+                         //"LVL",
+                         //"LYD",
+                         //"MAD",
+                         //"MKD",
+                         //"MNT",
+                         //"MOP",
+                         //"MVR",
+                         //"MXN",
+                         //"MYR",
+                         //"NIO",
+                         //"NOK",
+                         //"NPR",
+                         //"NZD",
+                         //"OMR",
+                         //"PAB",
+                         //"PEN",
+                         //"PHP",
+                         //"PKR",
+                         //"PLN",
+                         //"PYG",
+                         //"QAR",
+                         //"RON",
+                         //"RSD",
+                         //"RUB",
+                         "RWF",
+                         "SAR",
+                         "SEK",
+                         "SGD",
+                         //"SYP",
+                         //"THB",
+                         //"TJS",
+                         //"TMT",
+                         //"TND",
+                         //"TRY",
+                         //"TTD",
+                         //"TWD",
+                         //"UAH",
+                         "USD",
+                         //"UYU",
+                         //"UZS",
+                         //"VEF",
+                         //"VND",
+                         //"XOF",
+                         //"YER",
+                         //"ZAR",
+                         "ZWL"};
             Currencies tempCurrencies = await (rTModel.GetCurrencies());
-            currenciesListCollection = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
-            tempCurrencies.CurrenciesList = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
-            currenciesList = CollectionViewSource.GetDefaultView(tempCurrencies.CurrenciesList);
-            currenciesList.Filter = CurrenciesFilter;
-            Date =tempCurrencies.date;
+
+            Top12List = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList.Where(t => d.Contains(t.IssuedCountryCode)));
+            Top12CollectioView=CollectionViewSource.GetDefaultView( new ObservableCollection<Currency>(Top12List));
+            Top12CollectioView.Filter = CurrenciesFilter;
+
+            allList = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
+            allCollectioView = CollectionViewSource.GetDefaultView(new ObservableCollection<Currency>(allList));
+            allCollectioView.Filter = CurrenciesFilter;
+
+
+            showTop12 = true;
+           
             return tempCurrencies;
 
         }
+        
+        private ObservableCollection<Currency> Top12List { get; set; }
+        private ICollectionView Top12CollectioView { get; set; }
+
+        private ObservableCollection<Currency> allList { get; set; }
+        private ICollectionView allCollectioView { get; set; }
 
         // a predicate to filter for ICollectionView
         private bool CurrenciesFilter(object item)
         {
             Currency currency = item as Currency;
-            if (String.IsNullOrWhiteSpace(_filterString) || currency == null)
+            if (String.IsNullOrWhiteSpace(FilterString) || currency == null)
                 return true;
-            return currency.IssuedCountryName.ToLower().Contains(_filterString.ToLower());
+            return currency.IssuedCountryName.Contains(FilterString);
         }
     }
 }

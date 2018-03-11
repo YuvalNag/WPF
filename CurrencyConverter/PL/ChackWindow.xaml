@@ -78,7 +78,7 @@
             </ListView.ItemsPanel>
         </ListView>
         <TextBox Name="c" HorizontalAlignment="Left" Height="23" Margin="199,9,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="93"/>-->
-        <UserControls:HistoryUC />
+        <ToggleButton Content="hjh"></ToggleButton>
     </Grid>
 </Window>
 <!--<DataTemplate >

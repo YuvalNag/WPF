@@ -99,6 +99,7 @@
     <Compile Include="CurrancyItem.xaml.cs">
       <DependentUpon>CurrancyItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomPanel\VirtualizingWrapPanel.cs" />
     <Compile Include="Models\CurrenciesRTModel.cs" />
     <Compile Include="Models\HIstoryModel.cs" />
     <Compile Include="UserControls\ConverterUC.xaml.cs">

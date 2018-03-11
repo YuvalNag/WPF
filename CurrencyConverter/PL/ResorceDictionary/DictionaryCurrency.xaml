@@ -49,6 +49,10 @@
                Grid.RowSpan="2"
                HorizontalAlignment="Center"
                VerticalAlignment="Center" />
+            <Viewbox  Grid.Column="1" 
+                    Grid.ColumnSpan="2"
+                       StretchDirection="DownOnly" 
+                    Grid.Row="0">
             <TextBlock  Grid.Column="1" 
                     Grid.ColumnSpan="2"
                     Grid.Row="0"
@@ -63,12 +67,12 @@
                              <MultiBinding  Converter="{StaticResource ConvertValuse}" Mode="OneWay">
                                 <Binding   />
                                  <Binding  ElementName="ralativeCombo" Path="SelectedItem" />
-                                <!--<Binding  RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" Path="SelectedItem" />-->
                                 <Binding ElementName="AmountTextBox"  Path="Text"/>
                              </MultiBinding>
                         </Run.Text>
                     </Run>
             </TextBlock>
+            </Viewbox>
             <Viewbox Grid.ColumnSpan="2"
                             Grid.Row="1" 
                             Grid.Column="1"

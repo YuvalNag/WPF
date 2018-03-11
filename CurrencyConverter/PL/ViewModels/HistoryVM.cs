@@ -23,7 +23,7 @@ namespace PL.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("switchCommand"));
             }
         }
-        //public ObservableCollection<HistoryDTO> StockPriceDetails { get; set; }
+        
         private NotifyTaskCompletion<ObservableCollection<HistoryDTO>> _stockPriceDetails;
         public NotifyTaskCompletion<ObservableCollection<HistoryDTO>> stockPriceDetails
         {
@@ -90,17 +90,13 @@ namespace PL.ViewModels
         }
         public HistoryVM()
         {
-            //country.Code = "USA";
+           
             hModel = new Models.HIstoryModel();
-           // stockPriceDetails = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(ConvertStockToObservableCollection());
+           
             countries = new NotifyTaskCompletion<ObservableCollection<Country>>(ConvertCountriesToObservableCollection());
             switchCommand = new SwitchCurrencyCommand(this);
         }
-
-        private void stopTaskIfRunning(NotifyTaskCompletion<Task> task)
-        {
-
-        }
+        
 
 
         private async Task<ObservableCollection<Country>> ConvertCountriesToObservableCollection()

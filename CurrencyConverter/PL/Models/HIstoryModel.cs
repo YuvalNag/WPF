@@ -11,10 +11,10 @@ namespace PL.Models
     class HIstoryModel
     {
 
-        public async Task<List<HistoryDTO>> GetCurrencies(string countryCode)
-        {
-            return await Task.Run(async () => await new BL_imp().getHRatesAsync(countryCode));
-        }
+        //public async Task<List<HistoryDTO>> GetCurrencies(string countryCode)
+        //{
+        //    return await Task.Run(async () => await new BL_imp().getHRatesAsync(countryCode));
+        //}
 
         public async Task<List<HistoryDTO>> GetCurrenciesR(string sourceCountryCode, string targetCountryCode = "USD")
         {

@@ -118,7 +118,7 @@ namespace PL
             var co1 = await dAL.getRTRatesAsync();
         //    var co2 = await dAL.getHRates();
 
-            int x = 5;
+           
         }
     }
 }

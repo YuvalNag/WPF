@@ -11,6 +11,7 @@ namespace CurrencyLayerDotNet
 {
     public partial class CurrencyLayerApi
     {
+        static int reqCount = 0;
         private string _baseUrl;
         private string _queryUrl;
         private string _accessKey;
@@ -21,12 +22,13 @@ namespace CurrencyLayerDotNet
         public CurrencyLayerApi()
         {
             this._baseUrl = "http://apilayer.net/api/";
-            this._accessKey = "b3edcd3cd21f61f75ca785fb7fd7862a";
+            this._accessKey = "1072679b68e6b7b81e9139872e0319c9";
         }
         public async Task<T> Invoke<T>(string path, Dictionary<string, string> postdata = null)
         {
             try
             {
+                reqCount++;
                 _httpClient = new HttpClient();
 
                 this._queryUrl = (this._baseUrl + path + buildEndpointRoute(_accessKey, postdata));
