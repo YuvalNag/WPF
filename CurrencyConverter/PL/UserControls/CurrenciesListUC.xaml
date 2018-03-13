@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PL.UserControls"
-             
+             xmlns:panel="clr-namespace:PL.CustomPanel"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
     x:Class="PL.UserControls.CountriesListUC"
              mc:Ignorable="d" 
@@ -30,36 +30,53 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <TextBox Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
+  
+            <TextBox Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
                  Grid.Row="0"  
                  Text="{Binding FilterString, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}" 
                  Custom:TextBoxHelper.UseFloatingWatermark="True"  
                  Custom:TextBoxHelper.Watermark="search"
                  HorizontalAlignment="Stretch"
                  Margin="10"
-                 VerticalAlignment="Center"/>
-
-        <ListView x:Name="list" 
+                 VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+        <CheckBox Content="show top 12" IsChecked="{Binding showTop12}" Grid.Row="1" Grid.Column="1" Margin="5,0" ToolTip="הביצועים לא כלכך טובים כאשר כל המטבעות מוצגים"></CheckBox>
+        <ListView
+                  x:Name="list" 
                   Background="Transparent" 
-                  Grid.Row="1"
+                  Grid.Row="2"
                   SelectedItem="{Binding relativeCurrency, Mode=OneWayToSource}"
-                  
+                 VirtualizingPanel.VirtualizationMode="Recycling"
+                  VirtualizingPanel.IsVirtualizing="True"
                   Grid.Column="0"
                   ItemsSource="{Binding currenciesList}"
                   ItemTemplate="{StaticResource CurrencyItem}"
                    HorizontalAlignment="Stretch"
+                 
+              
+                   VerticalAlignment="Stretch" 
+                  Grid.ColumnSpan="3" 
+                  Grid.RowSpan="2" 
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                   VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,45,0,1" Grid.RowSpan="2"
                   >
+           
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" Background="Transparent" />
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
 
-        </ListView>
+            <!--<ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <panel:VirtualizingWrapPanel Orientation="Horizontal"  />
+                </ItemsPanelTemplate>
 
+            </ListView.ItemsPanel>-->
+
+
+        </ListView>
+        
         <ComboBox x:Name="ralativeCombo"
                 Grid.Row="0"   
                  
@@ -77,22 +94,19 @@
                   Custom:TextBoxHelper.Watermark="choose the relative currency" 
                   Custom:TextBoxHelper.UseFloatingWatermark="True" 
                   Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}" 
-                  Grid.Column="1" 
+                  Grid.Column="2" 
                   Grid.RowSpan="2">
             <ComboBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" 
-                             Orientation="Vertical"
-                             />
+                    <!--<StackPanel/>
+                    If StackPanel was used, the memory consumed was over 2GB and dead slow.
+                    -->
+                    <VirtualizingStackPanel>
+                        <!--Memory footprint is only 200 mb-->
+                    </VirtualizingStackPanel>
                 </ItemsPanelTemplate>
             </ComboBox.ItemsPanel>
-            <!--<ComboBox.SelectedItem>
-                <MultiBinding>
-                    <Binding ElementName="list" Path="SelctedItem"/>
-                    <Binding RelativeSource="{RelativeSource AncestorType=ComboBox}" Path="SelctedIndex"/>
-                    <Binding ElementName="currenciesListCollection" />
-                </MultiBinding>
-            </ComboBox.SelectedItem>-->
+
         </ComboBox>
         <TextBox  x:Name="AmountTextBox" 
                   Grid.Row="1"

@@ -51,16 +51,19 @@
                           Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True" 
-                                        Orientation="Vertical"
-                                        />
+                            <!--<StackPanel/>
+                    If StackPanel was used, the memory consumed was over 2GB and dead slow.
+                    -->
+                            <VirtualizingStackPanel>
+                                <!--Memory footprint is only 200 mb-->
+                            </VirtualizingStackPanel>
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
                 <Button Margin="10"  Command="{Binding switchCommand}" >
                     <Image Source="/PL;component/Assets/Switch_Icon.png" Height="45" Width="59" />
                 </Button>
-                <TextBlock Text="Relative:" Height="20" Margin="2" />
+                <TextBlock Text=" Relative: " Height="20" Margin="2" />
                 <ComboBox x:Name="RelativeComboBox" 
                           ItemsSource="{Binding countries.Result, IsAsync=True}" 
                           HorizontalAlignment="Left" 
@@ -75,9 +78,12 @@
                           Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True" 
-                                        Orientation="Vertical"
-                                        />
+                            <!--<StackPanel/>
+                    If StackPanel was used, the memory consumed was over 2GB and dead slow.
+                    -->
+                            <VirtualizingStackPanel>
+                                <!--Memory footprint is only 200 mb-->
+                            </VirtualizingStackPanel>
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
@@ -147,7 +153,9 @@
                                 <StackPanel Margin="5">
                                     <TextBlock  Text="{Binding Item.date, Converter={StaticResource trackballLabel}}" />
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Stock price : "  />
+                                        <TextBlock Text="Value : "  />
+                                        <TextBlock Text="{Binding ElementName=ComboBox, Path=SelectedItem.Code, Converter={StaticResource SymbolConverter} }"  />
+                                        <TextBlock Text=" "  />
                                         <TextBlock Text="{Binding ValueY}" FontWeight="Bold" />
                                     </StackPanel>
                                 </StackPanel>

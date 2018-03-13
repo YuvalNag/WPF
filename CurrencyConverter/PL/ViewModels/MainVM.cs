@@ -26,7 +26,7 @@ namespace PL.ViewModels
         {
             UC = new ObservableCollection<UserControl>();
             UC.Add(new HistoryUC());
-            UC.Add(new CountriesListUC());
+            //UC.Add(new CountriesListUC());
             selectedIndex = 0;
             switchCommand = new SwitchUCommand(this);
         }
@@ -64,7 +64,11 @@ namespace PL.ViewModels
         public void SwitchUCSelected()
         {
             if (selectedIndex == 0)
+            {
+                if (UC.Count == 1)
+                    UC.Add(new CountriesListUC());
                 selectedIndex = 1;
+            }
             else
                 selectedIndex = 0;
         }

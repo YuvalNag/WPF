@@ -68,29 +68,34 @@ namespace DAL
             using (DB_Context context = new DB_Context())
             {
 
-                //file the gap from now to the first date we have
+                //fill the gap from now to the first date we have
                 firstHistory = await context.CurrenciesByDate.OrderByDescending(t => t.date).FirstOrDefaultAsync();
-                firstHistoryDate = firstHistory.date;
+                
 
-                if (firstHistory != null && !checkIfInTheSameDay(firstHistory.date))
+                if (firstHistory != null && !checkIfInTheSameDay(DateTime.Now, firstHistory.date))
                 {
+                    firstHistoryDate = firstHistory.date;
                     await getRTRatesAsync();
                     var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
                     List<Country> Countries = await getCountriesAsync().ConfigureAwait(false);
-
-                    for (DateTime start = firstHistoryDate; DateTime.Now.AddDays(-1) > start; start = start.AddDays(1))
+                    DateTime end = DateTime.Now.AddDays(-1);
+                    for (DateTime start = firstHistoryDate;!checkIfInTheSameDay(start,end); start = start.AddDays(1))
                     {
-                        var HRate = await instance.Invoke<CurrencyLayerDotNet.Models.HistoryModel>("historical", new Dictionary<string, string> { { "date", start.ToString("yyyy-MM-dd") } }).ConfigureAwait(false);
-                        Currencies currencies = new Currencies();
-                        currencies.date = start;
-                        currencies.CurrenciesList = ConverterHRate(Countries, HRate, firstHistory);
+                        var HRate = await instance.Invoke<HistoryModel>("historical", new Dictionary<string, string> { { "date", start.ToString("yyyy-MM-dd") } }).ConfigureAwait(false);
+                        Currencies currencies = new Currencies
+                        {
+                            date = start,
+                            CurrenciesList = ConverterHRate(Countries, HRate, firstHistory)
+                        };
                         firstHistory = currencies;
                         context.CurrenciesByDate.Add(currencies);
                     }
+                    //save changes
+                    await context.SaveChangesAsync();
 
                 }
 
-                //fil the gap from the last date we have to a year
+                //fill the gap from the last date we have to a year
                 //gets the last date from DB
                 lastHistory = await context.CurrenciesByDate.OrderBy(t => t.date).FirstOrDefaultAsync();
 
@@ -102,27 +107,30 @@ namespace DAL
                 }
 
 
-                lastHistoryDate = lastHistory.date;
+                lastHistoryDate = lastHistory.date.AddDays(-1);
 
                 //fil the gap from the last date we have to a year
                 if (lastHistoryDate.AddYears(1) > DateTime.Now.AddDays(1))
                 {
                     var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
                     List<Country> Countries = await getCountriesAsync().ConfigureAwait(false);
-
-                    for (DateTime start = lastHistoryDate; start.AddYears(1) > DateTime.Now; start = start.AddDays(-1))
+                   // DateTime end = DateTime.Now.AddDays(-1);
+                    for (DateTime start = lastHistoryDate; !checkIfInTheSameDay(start.AddYears(1), lastHistoryDate); start = start.AddDays(-1))
                     {
+                       // string d = start.ToString("yyyy-MM-dd");
                         var HRate = await instance.Invoke<CurrencyLayerDotNet.Models.HistoryModel>("historical", new Dictionary<string, string> { { "date", start.ToString("yyyy-MM-dd") } }).ConfigureAwait(false);
-                        Currencies currencies = new Currencies();
-                        currencies.date = start;
-                        currencies.CurrenciesList = ConverterHRate(Countries, HRate, lastHistory);
+                        Currencies currencies = new Currencies
+                        {
+                            date = start,
+                            CurrenciesList = ConverterHRate(Countries, HRate, lastHistory)
+                        };
                         lastHistory = currencies;
                         context.CurrenciesByDate.Add(currencies);
                     }
-
+                    //save changes
+                    await context.SaveChangesAsync();
                 }
-                //save changes
-                await context.SaveChangesAsync();
+               
 
                 //get the historical dates
                 historyRates = await context.CurrenciesByDate.OrderBy(t => t.date).Select(t => new HistoryDTO() { Currency = t.CurrenciesList.FirstOrDefault(x => x.IssuedCountryCode == code), date = t.date }).ToListAsync();
@@ -188,29 +196,44 @@ namespace DAL
                     return DbRates;
                 }
 
+                //convert UNIX time to normal time
+                DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                dateTime = dateTime.AddSeconds(RTRates.Timestamp).ToLocalTime();
+
+                //check if the rt rates are realy updated
+                if(DbRates != null && dateTime == DbRates.date)
+                {
+                    context.Dispose();
+                    return DbRates;
+                }
+
                 //if the db is empty 
                 if (DbRates == null)
                 {
                     CurrenciesList = FirstEntryConverter(Countries, RTRates);
                 }
+
                 //the db is not empty
                 else
                 {
                     CurrenciesList = Converter(Countries, RTRates, DbRates);
 
                     //we save one rate per day there for delete the one thats not updated
-                    if (checkIfInTheSameDay(DbRates.date))
+                    if (checkIfInTheSameDay(DateTime.Now, DbRates.date))
+                    {
                         context.CurrenciesByDate.Remove(DbRates);
+                    }
                 }
 
-                //convert UNIX time to normal time
-                DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                dateTime = dateTime.AddSeconds(RTRates.Timestamp).ToLocalTime();
+
 
                 //create the currecy oblect to return
-                Currencies newCurrencies = new Currencies();
-                newCurrencies.CurrenciesList = CurrenciesList;
-                newCurrencies.date = dateTime;
+                Currencies newCurrencies = new Currencies
+                {
+                    CurrenciesList = CurrenciesList,
+                    date = dateTime
+                };
+
                 context.CurrenciesByDate.Add(newCurrencies);
                 await context.SaveChangesAsync().ConfigureAwait(false);
 
@@ -241,15 +264,15 @@ namespace DAL
         private bool isUpdatedInLastHour(DateTime start)
         {
 
-            DateTime time = DateTime.Now.ToLocalTime();
-            return start.AddHours(1) > DateTime.Now && checkIfInTheSameDay(start);
+           // DateTime time = DateTime.Now.ToLocalTime();
+            return start.AddHours(1) > DateTime.Now && checkIfInTheSameDay(DateTime.Now,start);
         }
 
         //check if a given date is in the current day
-        private bool checkIfInTheSameDay(DateTime start)
+        private bool checkIfInTheSameDay(DateTime first, DateTime sec)
         {
-            return start.DayOfYear == DateTime.Now.DayOfYear &&
-              start.Year == DateTime.Now.Year;
+            return sec.DayOfYear == first.DayOfYear &&
+              sec.Year == first.Year;
         }
 
         //convert from "RTModel" to "Currencies" for the first entry (ignor magnitude) 

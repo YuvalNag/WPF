@@ -12,7 +12,7 @@
     x:Class="PL.MainWindow"
     xmlns:syncfusion="http://schemas.syncfusion.com/wpf"    
     mc:Ignorable="d"
-        Title="MainWindow" SizeToContent="WidthAndHeight" >
+        Title="MainWindow" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" >
   
     <Window.DataContext>
         <VM:MainVM></VM:MainVM>
@@ -37,7 +37,7 @@
                 Content="{Binding selectedIndex, Converter={StaticResource ContentConverter }, ConverterParameter=content }" 
                 Custom:ButtonHelper.CornerRadius="100"
                 Grid.Row="1"
-                Margin="5,5,0,0" 
+                Margin="5,0,0,5" 
                 HorizontalAlignment="Left"
                 FontSize="9"/>
        
@@ -51,7 +51,7 @@
                         Grid.RowSpan="2" 
                         Height="600"
                         Width="680"  
-                        EnableTouch="True"
+                        EnableTouch="False"
                         ItemsPerPage="-1" 
                         VisualMode="Standard"
                         OpacityFraction="0">

@@ -26,7 +26,8 @@ namespace PL.Converters
                 double average = collection.Average(t => t.Currency.Value);
                 double sumOfSquaresOfDifferences = collection.Select(val => (val.Currency.Value - average) * (val.Currency.Value - average)).Sum();
                 interval= Math.Sqrt(sumOfSquaresOfDifferences / collection.Count);
-                max = max + 3 * interval;
+                max = interval==0?2: max + 3 * interval;
+                min -= interval==0?1:interval;
             }
             
             switch (kind)
@@ -34,21 +35,21 @@ namespace PL.Converters
                 case "min":
                     {
                         return min;
-                        break;
+                        
                     }
                 case "max":
                     {
                         return max;
-                        break;
+                       
                     }
                 case "interval":
                     {
                         return interval;
-                        break;
+                        
                     }
                 default:
                     return 6;
-                    break;
+                   
             }
         }
 
