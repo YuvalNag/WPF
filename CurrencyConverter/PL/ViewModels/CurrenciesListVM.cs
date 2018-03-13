@@ -14,6 +14,9 @@ namespace PL.ViewModels
 {
     class CurrenciesListVM:INotifyPropertyChanged
     {
+
+
+
         #region Properties
 
         private Currency _relativeCurrency;
@@ -144,8 +147,12 @@ namespace PL.ViewModels
         #endregion
         public event PropertyChangedEventHandler PropertyChanged;
 
+
+
+       
         public CurrenciesListVM()
         {
+            
             rTModel = new Models.CurrenciesRTModel();
             taskCurrencies=new NotifyTaskCompletion<Currencies>(ConvertToICollectionViewAsync());
         }
@@ -156,7 +163,7 @@ namespace PL.ViewModels
             string[] d = { "AED",
                          //"AFN",
                          "BTC",
-                         "ALL",
+                         //"ALL",
                          //"AMD",
                          //"ARS",
                          "AUD",
@@ -168,7 +175,7 @@ namespace PL.ViewModels
                          //"BND",
                          //"BOB",
                          "BRL",
-                         "BYR",
+                         //"BYR",
                          "BZD",
                          "CAD",
                          //"CHF",
@@ -235,7 +242,7 @@ namespace PL.ViewModels
                          //"RON",
                          //"RSD",
                          //"RUB",
-                         "RWF",
+                         //"RWF",
                          "SAR",
                          "SEK",
                          "SGD",
@@ -249,14 +256,15 @@ namespace PL.ViewModels
                          //"TWD",
                          //"UAH",
                          "USD",
-                         //"UYU",
-                         //"UZS",
-                         //"VEF",
-                         //"VND",
-                         //"XOF",
-                         //"YER",
-                         //"ZAR",
-                         "ZWL"};
+                //"UYU",
+                //"UZS",
+                //"VEF",
+                //"VND",
+                //"XOF",
+                //"YER",
+                //"ZAR",
+                //"ZWL"
+            };
             Currencies tempCurrencies = await (rTModel.GetCurrencies());
 
             Top12List = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList.Where(t => d.Contains(t.IssuedCountryCode)));

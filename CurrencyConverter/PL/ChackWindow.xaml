@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:VM="clr-namespace:PL.ViewModels"
+        
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:Converters="clr-namespace:PL.Converters" x:Class="PL.ChackWindow"
         mc:Ignorable="d"
@@ -79,6 +81,11 @@
         </ListView>
         <TextBox Name="c" HorizontalAlignment="Left" Height="23" Margin="199,9,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="93"/>-->
         <ToggleButton Content="hjh"></ToggleButton>
+        <UserControls:ColumnsChartUS>
+            <UserControls:ColumnsChartUS.DataContext>
+                <VM:CurrenciesListVM></VM:CurrenciesListVM>
+            </UserControls:ColumnsChartUS.DataContext>
+        </UserControls:ColumnsChartUS>
     </Grid>
 </Window>
 <!--<DataTemplate >

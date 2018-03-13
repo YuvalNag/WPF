@@ -102,8 +102,8 @@
     <Compile Include="CustomPanel\VirtualizingWrapPanel.cs" />
     <Compile Include="Models\CurrenciesRTModel.cs" />
     <Compile Include="Models\HIstoryModel.cs" />
-    <Compile Include="UserControls\ConverterUC.xaml.cs">
-      <DependentUpon>ConverterUC.xaml</DependentUpon>
+    <Compile Include="UserControls\ColumnsChartUS.xaml.cs">
+      <DependentUpon>ColumnsChartUS.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\CurrenciesListUC.xaml.cs">
       <DependentUpon>CurrenciesListUC.xaml</DependentUpon>
@@ -155,7 +155,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\ConverterUC.xaml">
+    <Page Include="UserControls\ColumnsChartUS.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
