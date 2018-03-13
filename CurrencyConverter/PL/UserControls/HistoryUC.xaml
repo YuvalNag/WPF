@@ -19,7 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="0,0,20,0">
+    <Grid >
 
         <Grid.DataContext>
             <local:HistoryVM/>
@@ -34,12 +34,13 @@
             <RowDefinition Height="20*"/>
 
         </Grid.RowDefinitions>
-        <Grid Grid.Row="1" Margin="50,10,0,0" >
-            <StackPanel Orientation="Horizontal">
+        <Grid Grid.Row="1"  >
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <TextBlock Text="State:" Height="20" Margin="2" />
                 <ComboBox x:Name="ComboBox" 
                           ItemsSource="{Binding countries.Result, IsAsync=True}" 
                           HorizontalAlignment="Left" 
+                          IsEnabled="{Binding stockPriceDetails.IsCompleted,FallbackValue=false}"
                           Margin="10,5,0,0" 
                           SelectedItem="{Binding country}"
                           VerticalAlignment="Top"
@@ -51,16 +52,15 @@
                           Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <!--<StackPanel/>
-                    If StackPanel was used, the memory consumed was over 2GB and dead slow.
-                    -->
+                     
                             <VirtualizingStackPanel>
-                                <!--Memory footprint is only 200 mb-->
+                                
                             </VirtualizingStackPanel>
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
-                <Button Margin="10"  Command="{Binding switchCommand}" >
+                <Button Margin="10"  Command="{Binding switchCommand}" 
+                        IsEnabled="{Binding stockPriceDetails.IsCompleted,FallbackValue=false}">
                     <Image Source="/PL;component/Assets/Switch_Icon.png" Height="45" Width="59" />
                 </Button>
                 <TextBlock Text=" Relative: " Height="20" Margin="2" />
@@ -68,6 +68,7 @@
                           ItemsSource="{Binding countries.Result, IsAsync=True}" 
                           HorizontalAlignment="Left" 
                           Margin="10,5,0,0" 
+                          IsEnabled="{Binding stockPriceDetails.IsCompleted,FallbackValue=false}"
                           VerticalAlignment="Top"
                           ItemTemplate="{StaticResource CurrencyComboBoxItem}"
                           SelectedItem="{Binding raltiveCountry}" 
@@ -91,9 +92,9 @@
             </StackPanel>
         </Grid>
 
-        <chart:SfChart AreaBorderThickness="0,1,1,1" x:Name="Chart" Grid.Row="2">
+        <chart:SfChart AreaBorderThickness="0,1,1,1" x:Name="Chart" Grid.Row="2" Margin="0,0,15,0">
             <chart:SfChart.Behaviors>
-                <chart:ChartZoomPanBehavior/>
+                <chart:ChartZoomPanBehavior />
                 <chart:ChartTrackBallBehavior ShowLine="True" 
                                               UseSeriesPalette="False"  
                                               LineStyle="{StaticResource TrackballLineStyle}"
@@ -138,7 +139,7 @@
                 </chart:NumericalAxis>
             </chart:SfChart.SecondaryAxis>
 
-            <chart:AreaSeries Name="series" ItemsSource="{Binding stockPriceDetails.Result}" XBindingPath="date" YBindingPath="Currency.Value">
+            <chart:AreaSeries Name="series" ItemsSource="{Binding stockPriceDetails.Result}" XBindingPath="date" YBindingPath="Currency.Value" Margin="0,0,50,0">
 
                 <chart:AreaSeries.Interior>
                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03" Opacity="0.8">
@@ -166,7 +167,7 @@
             </chart:AreaSeries>
         </chart:SfChart>
 
-        <Grid Grid.Row="3" Margin="75,0,0,10">
+        <Grid Grid.Row="3" >
 
             <chart:SfDateTimeRangeNavigator x:Name="RangeNavigator" 
                                             ShowToolTip="False"  
@@ -176,7 +177,7 @@
                                             XBindingPath="date" 
                                             ViewRangeStart="1/1/207"
                                             ViewRangeEnd="1/1/2019"  
-                                            ScrollbarVisibility="Hidden"
+                                            ScrollbarVisibility="Hidden" Margin="50,0,25,5"
                                              >
                 <chart:SfDateTimeRangeNavigator.Content >
 

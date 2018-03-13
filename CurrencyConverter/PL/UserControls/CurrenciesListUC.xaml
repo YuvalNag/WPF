@@ -41,7 +41,12 @@
                  HorizontalAlignment="Stretch"
                  Margin="10"
                  VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-        <CheckBox Content="show top 12" IsChecked="{Binding showTop12}" Grid.Row="1" Grid.Column="1" Margin="5,0" ToolTip="הביצועים לא כלכך טובים כאשר כל המטבעות מוצגים"></CheckBox>
+        <CheckBox Content="show top 12" 
+                             IsChecked="{Binding showTop12}"
+                             Grid.Row="1"
+                             Grid.Column="1" 
+                             Margin="5,0" 
+                             ToolTip="הביצועים לא כלכך טובים כאשר כל המטבעות מוצגים"/>
         <ListView
                   x:Name="list" 
                   Background="Transparent" 
@@ -98,25 +103,23 @@
                   Grid.RowSpan="2">
             <ComboBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <!--<StackPanel/>
-                    If StackPanel was used, the memory consumed was over 2GB and dead slow.
-                    -->
+                  
                     <VirtualizingStackPanel>
-                        <!--Memory footprint is only 200 mb-->
+                      
                     </VirtualizingStackPanel>
                 </ItemsPanelTemplate>
             </ComboBox.ItemsPanel>
 
         </ComboBox>
-        <TextBox  x:Name="AmountTextBox" 
+        <Custom:NumericUpDown  x:Name="AmountTextBox" 
                   Grid.Row="1"
                   Grid.Column="0"
-                    
+                    Minimum="1"
                   Custom:TextBoxHelper.Watermark="Amount" 
                   Custom:TextBoxHelper.UseFloatingWatermark="True"
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Center"
-                      Margin="10" />
+                      Margin="10"  />
 
         <ProgressBar Visibility="{Binding taskCurrencies.IsNotCompleted, Converter={StaticResource boolToVis}}" Grid.Row="3" IsIndeterminate="True" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="updating...." Grid.ColumnSpan="2" />
     </Grid>

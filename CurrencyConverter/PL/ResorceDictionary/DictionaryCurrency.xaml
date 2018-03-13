@@ -67,7 +67,7 @@
                              <MultiBinding  Converter="{StaticResource ConvertValuse}" Mode="OneWay">
                                 <Binding   />
                                  <Binding  ElementName="ralativeCombo" Path="SelectedItem" />
-                                <Binding ElementName="AmountTextBox"  Path="Text"/>
+                                <Binding ElementName="AmountTextBox"  Path="Value"/>
                              </MultiBinding>
                         </Run.Text>
                     </Run>
