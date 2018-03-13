@@ -39,6 +39,9 @@ namespace BL
         {
             return new DAL_imp().getRTRatesAsync();
         }
+<<<<<<< HEAD
+        
+=======
 
         //private List<Object> FilterByCodeCountry(List<Object> originaList,Predicate<Object> predicate)
         //{
@@ -55,5 +58,6 @@ namespace BL
         //{
 
         //}
+>>>>>>> 39d8c9a1b5e19bb3ecf9916986af8c3eb8519c9d
     }
 }
