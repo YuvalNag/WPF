@@ -46,8 +46,8 @@
             <chart:SfChart.Header>
                 <TextBlock FontSize="22"   Foreground="Black" FontFamily="Segoe UI" 
                            Margin="0,-10,0,5"> 
-                    <Run Text="Stock relative to "/>
                     <Run Text="{Binding relativeCurrency.IssuedCountryName}"/>
+                    <Run Text="Stock relative to "/>
                 </TextBlock>
             </chart:SfChart.Header>
 
@@ -60,12 +60,13 @@
                                     EnableAutoIntervalOnZooming="True"
                                      AxisLineStyle="{StaticResource AxisStyle1}" 
                                      MajorTickLineStyle="{StaticResource AxisStyle}"
-                                    EnableScrollBar="True" 
                                     LabelRotationAngle="45" 
                                     LabelsIntersectAction="MultipleRows"
                                      MultiLevelLabelsBorderType="Rectangle" 
                                     ShowTrackBallInfo="True"/>
                 <!--ZoomPosition="0.5"
+                                    EnableScrollBar="True" 
+                
                                     ZoomFactor="0.18"-->
             </chart:SfChart.PrimaryAxis>
 
@@ -74,7 +75,7 @@
                                      Minimum="{Binding Path=currenciesListCollection, Converter={StaticResource MinMaxConverter}, ConverterParameter=min}"
                                      Maximum="{Binding Path=currenciesListCollection, Converter={StaticResource MinMaxConverter}, ConverterParameter=max}"
                                      Interval="{Binding Path=currenciesListCollection, Converter={StaticResource MinMaxConverter}, ConverterParameter=interval}"
-                                     Header="Number of items sold(in %)" 
+                                     Header="Values" 
                                      Foreground="Black"
                                      EnableScrollBar="True"
                                     x:Name="YAxis"
@@ -84,7 +85,7 @@
                                      MajorTickLineStyle="{StaticResource AxisStyle}"/>
             </chart:SfChart.SecondaryAxis>
 
-            <chart:ScatterSeries EnableAnimation="True" Palette="Metro"   LegendIcon="Circle" SortBy="X" IsSortData="True" 
+            <chart:ScatterSeries EnableAnimation="True" Palette="Metro"   LegendIcon="Circle"  
                                 ItemsSource="{Binding currenciesListCollection}"  XBindingPath="IssuedCountryCode" 
                                 YBindingPath="Value" Label="Sneakers sold" ShowTooltip="True" >
                 <chart:ScatterSeries.AdornmentsInfo>
@@ -93,7 +94,7 @@
                         <chart:ChartAdornmentInfo.LabelTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <Image  Width="30" Height="30">
+                                    <Image  Width="40" Height="40">
                                         <Image.Source>
                                             <MultiBinding Converter="{StaticResource CountryCodeToImgSourceConverter }" FallbackValue="{StaticResource DefaultImage}">
                                                 <Binding />

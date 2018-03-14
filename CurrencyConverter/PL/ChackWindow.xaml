@@ -10,8 +10,8 @@
     xmlns:Converters="clr-namespace:PL.Converters" x:Class="PL.ChackWindow"
         mc:Ignorable="d"
         Title="ChackWindow" SizeToContent="WidthAndHeight">
-    <Window.Resources>
-        <!--<local:ConverterParameter x:Key="con"/>-->
+    <!--<Window.Resources>
+        --><!--<local:ConverterParameter x:Key="con"/>--><!--
 
         <Converters:CountryCodeToImgSourceConverter x:Key="CountryCodeToImgSourceConverter" />
         <Converters:DirectionToBackgroundConverter x:Key="DirectionToBackgroundConverter" />
@@ -45,20 +45,20 @@
                         </Run.Text>
                     </Run>
                 </TextBlock>
-                
+
                 <TextBlock  Grid.ColumnSpan="3" Grid.Row="1" TextWrapping="Wrap"  Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
                    
                         <Run Text="{Binding IssuedCountryCode }" />
                    <Run Text="-" />
                     <Run Text="{Binding IssuedCountryName }" />
-               
+
 
                 </TextBlock>
-                
+
             </Grid>
         </DataTemplate>
-    </Window.Resources>
-    <Grid>
+    </Window.Resources>-->
+    <StackPanel>
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -73,20 +73,22 @@
                  HorizontalAlignment="Stretch"  >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    --><!--<WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"/>--><!--
+                    -->
+        <!--<WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"/>-->
+        <!--
 
                     <WrapPanel Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>
         <TextBox Name="c" HorizontalAlignment="Left" Height="23" Margin="199,9,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="93"/>-->
-        <ToggleButton Content="hjh"></ToggleButton>
-        <UserControls:ColumnsChartUS>
-            <UserControls:ColumnsChartUS.DataContext>
+        <ToggleButton Content="switch" Width="44" Custom:ButtonHelper.CornerRadius="50" Height="47"/>
+        <UserControls:RTListUC>
+            <UserControls:RTListUC.DataContext>
                 <VM:CurrenciesListVM></VM:CurrenciesListVM>
-            </UserControls:ColumnsChartUS.DataContext>
-        </UserControls:ColumnsChartUS>
-    </Grid>
+            </UserControls:RTListUC.DataContext>
+        </UserControls:RTListUC>
+    </StackPanel>
 </Window>
 <!--<DataTemplate >
     <Border BorderBrush="Blue">

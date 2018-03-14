@@ -111,10 +111,14 @@
     <Compile Include="UserControls\HistoryUC.xaml.cs">
       <DependentUpon>HistoryUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\RTListUC.xaml.cs">
+      <DependentUpon>RTListUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\BaseVM.cs" />
     <Compile Include="ViewModels\CurrenciesListVM.cs" />
     <Compile Include="ViewModels\CoverterVM.cs" />
     <Compile Include="ViewModels\HistoryVM.cs" />
+    <Compile Include="ViewModels\ICurrenciesListVM.cs" />
     <Compile Include="ViewModels\IHistoryVM.cs" />
     <Compile Include="ViewModels\IMainVM.cs" />
     <Compile Include="ViewModels\MainVM.cs" />
@@ -164,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\HistoryUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\RTListUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

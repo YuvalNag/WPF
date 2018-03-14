@@ -19,6 +19,7 @@ namespace PL.Converters
             target = values[1] as Currency;
             //String factor;
             //factor = values[2] as String;
+
             double dfactor = values[2]==null?0:(double)values[2];
             if (source != null && target != null)
             {

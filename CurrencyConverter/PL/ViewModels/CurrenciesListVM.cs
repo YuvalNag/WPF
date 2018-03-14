@@ -1,5 +1,6 @@
 ﻿
 using DP;
+using PL.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,17 +9,46 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace PL.ViewModels
 {
-    class CurrenciesListVM:INotifyPropertyChanged
+    class CurrenciesListVM : INotifyPropertyChanged, ICurrenciesListVM
     {
 
 
 
         #region Properties
 
+        private int _selectedUC;
+        public int selectedUC
+        {
+            set
+            {
+                _selectedUC = value;
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("selectedUC"));
+            }
+            get
+            {
+                return _selectedUC;
+            }
+        }
+
+        private ObservableCollection<UserControl> _UC;
+        public ObservableCollection<UserControl> UC
+        {
+            get
+            {
+                return _UC;
+            }
+            set
+            {
+                _UC = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UC"));
+            }
+        }
         private Currency _relativeCurrency;
         public Currency relativeCurrency
         {
@@ -155,6 +185,9 @@ namespace PL.ViewModels
             
             rTModel = new Models.CurrenciesRTModel();
             taskCurrencies=new NotifyTaskCompletion<Currencies>(ConvertToICollectionViewAsync());
+            UC = new ObservableCollection<UserControl>();
+            UC.Add(new ColumnsChartUS());
+
         }
 
         //get in the backround the 
@@ -295,6 +328,19 @@ namespace PL.ViewModels
             if (String.IsNullOrWhiteSpace(FilterString) || currency == null)
                 return true;
             return currency.IssuedCountryName.Contains(FilterString);
+        }
+
+        public void SwitchRTListAndRTChart()
+        {
+         if (selectedUC == 0)
+            {
+                if (UC.Count == 1)
+                    UC.Add(new ColumnsChartUS());
+                selectedUC = 1;
+            }
+            else
+                selectedUC = 0;
+
         }
     }
 }
