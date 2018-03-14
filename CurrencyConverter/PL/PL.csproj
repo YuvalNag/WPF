@@ -498,5 +498,8 @@
     <Resource Include="FlagsImages\‏‏CUP.png" />
     <Resource Include="FlagsImages\‏‏ZMK.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="System\Windows\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

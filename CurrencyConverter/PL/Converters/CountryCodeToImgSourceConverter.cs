@@ -5,10 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace PL.Converters
 {
@@ -27,8 +30,19 @@ namespace PL.Converters
             if (name == null)
                 return "";
 
+         
+            ImageSourceConverter conv = new ImageSourceConverter();
+
+            //concatenate the values
+
             string n = name[index].IssuedCountryCode;
-            return @"/PL;component/FlagsImages/" +n + ".png";
+            
+            bool g = File.Exists(@"/FlagsImages/" + name[index].IssuedCountryCode + ".png");
+            //return ImageSource from filename
+            BitmapImage bitmapImage= new BitmapImage(new Uri(@"/PL;component/FlagsImages/" + name[index].IssuedCountryCode + ".png", UriKind.RelativeOrAbsolute));
+            return bitmapImage;
+
+          //  return @"/PL;component/FlagsImages/" + name[index].IssuedCountryCode + ".png"; ;
            
 
         }

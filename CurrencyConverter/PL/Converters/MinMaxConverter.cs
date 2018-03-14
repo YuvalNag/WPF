@@ -35,13 +35,14 @@ namespace PL.Converters
             double interval = 0.1;
             if (collection != null)
             {
+               // collection = new ObservableCollection<Currency>(collection.Where(t => t.Value <= 20));
                 min = collection.Min(t => t.Value);
                 max = collection.Max(t => t.Value);
                 double average = collection.Average(t => t.Value);
                 double sumOfSquaresOfDifferences = collection.Select(val => (val.Value - average) * (val.Value - average)).Sum();
                 interval = Math.Sqrt(sumOfSquaresOfDifferences / collection.Count);
-                max = interval == 0 ? 2 : max + 3 * interval;
-                min -= interval == 0 ? 1 : interval;
+                max = interval == 0 ? 2 : max;
+                min = interval == 0 ? 1 : min ;
             }
 
             switch (kind)

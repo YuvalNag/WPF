@@ -16,6 +16,8 @@
         <Grid.Resources>
             <Converters:FlagConverter x:Key="FlagConverter"/>
             <Converters:MinMaxConverter x:Key="MinMaxConverter"/>
+            <BitmapImage x:Key="DefaultImage" UriSource="/PL;component/FlagsImages/AFN.png" />
+
             <Converters:CountryCodeToImgSourceConverter x:Key="CountryCodeToImgSourceConverter"/>
 
 
@@ -50,10 +52,21 @@
             </chart:SfChart.Header>
 
             <chart:SfChart.PrimaryAxis>
-                <chart:CategoryAxis x:Name="XAxis"  Header="Country" Foreground="Black"  FontSize="20"                                   
+                <chart:CategoryAxis EnableScrollBarResizing="True"
+                                    x:Name="XAxis"
+                                    Header="Country" 
+                                    Foreground="Black"  
+                                    FontSize="20"
+                                    EnableAutoIntervalOnZooming="True"
                                      AxisLineStyle="{StaticResource AxisStyle1}" 
-                                     MajorTickLineStyle="{StaticResource AxisStyle}" >
-                </chart:CategoryAxis>
+                                     MajorTickLineStyle="{StaticResource AxisStyle}"
+                                    EnableScrollBar="True" 
+                                    LabelRotationAngle="45" 
+                                    LabelsIntersectAction="MultipleRows"
+                                     MultiLevelLabelsBorderType="Rectangle" 
+                                    ShowTrackBallInfo="True"/>
+                <!--ZoomPosition="0.5"
+                                    ZoomFactor="0.18"-->
             </chart:SfChart.PrimaryAxis>
 
             <chart:SfChart.SecondaryAxis>
@@ -61,16 +74,20 @@
                                      Minimum="{Binding Path=currenciesListCollection, Converter={StaticResource MinMaxConverter}, ConverterParameter=min}"
                                      Maximum="{Binding Path=currenciesListCollection, Converter={StaticResource MinMaxConverter}, ConverterParameter=max}"
                                      Interval="{Binding Path=currenciesListCollection, Converter={StaticResource MinMaxConverter}, ConverterParameter=interval}"
-                                     Header="Number of items sold(in %)" Foreground="Black"
+                                     Header="Number of items sold(in %)" 
+                                     Foreground="Black"
+                                     EnableScrollBar="True"
+                                    x:Name="YAxis"
+                                     
                                      LabelTemplate="{StaticResource labelTemplate}" 
                                      AxisLineStyle="{StaticResource AxisStyle}"
                                      MajorTickLineStyle="{StaticResource AxisStyle}"/>
             </chart:SfChart.SecondaryAxis>
 
-            <chart:BubbleSeries EnableAnimation="True" Palette="Metro"   LegendIcon="Circle" Size="Value" SortBy="X" IsSortData="True" 
+            <chart:ScatterSeries EnableAnimation="True" Palette="Metro"   LegendIcon="Circle" SortBy="X" IsSortData="True" 
                                 ItemsSource="{Binding currenciesListCollection}"  XBindingPath="IssuedCountryCode" 
                                 YBindingPath="Value" Label="Sneakers sold" ShowTooltip="True" >
-                <chart:BubbleSeries.AdornmentsInfo>
+                <chart:ScatterSeries.AdornmentsInfo>
                     <chart:ChartAdornmentInfo AdornmentsPosition="Top" HorizontalAlignment="Center"  SegmentLabelContent="XValue" 
                                               VerticalAlignment="Center" ShowLabel="True" ShowMarker="True">
                         <chart:ChartAdornmentInfo.LabelTemplate>
@@ -78,7 +95,7 @@
                                 <Grid>
                                     <Image  Width="30" Height="30">
                                         <Image.Source>
-                                            <MultiBinding Converter="{StaticResource CountryCodeToImgSourceConverter }">
+                                            <MultiBinding Converter="{StaticResource CountryCodeToImgSourceConverter }" FallbackValue="{StaticResource DefaultImage}">
                                                 <Binding />
                                                 <Binding ElementName="XAxis" />
                                             </MultiBinding>
@@ -88,9 +105,11 @@
                             </DataTemplate>
                         </chart:ChartAdornmentInfo.LabelTemplate>
                     </chart:ChartAdornmentInfo>
-                </chart:BubbleSeries.AdornmentsInfo>
-            </chart:BubbleSeries>
+                </chart:ScatterSeries.AdornmentsInfo>
+            </chart:ScatterSeries>
 
         </chart:SfChart>
+        <TextBlock x:Name="zoomp" HorizontalAlignment="Left" Margin="512,0,0,0" TextWrapping="Wrap" Text="{Binding ElementName=YAxis, Path=ZoomPosition, Mode=OneWay}" VerticalAlignment="Top"/>
+        <TextBlock x:Name="zoomf" Text="{Binding ElementName=YAxis, Path=ZoomFactor, Mode=OneWay}" HorizontalAlignment="Left" Margin="561,21,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
     </Grid>
 </UserControl>
