@@ -26,7 +26,7 @@ namespace PL.Converters
                 return "";
             int index = int.Parse((string)values[0]);
 
-            ObservableCollection<Currency> name = ((values[1] as CategoryAxis).DataContext as CurrenciesListVM).currenciesListCollection;
+            ObservableCollection<Currency> name = ((values[1] as CategoryAxis).DataContext as CurrenciesListVM).relativeCurrenciesListCollection;
             if (name == null)
                 return "";
 

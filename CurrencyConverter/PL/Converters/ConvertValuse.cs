@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace PL.Converters
@@ -20,8 +21,8 @@ namespace PL.Converters
             //String factor;
             //factor = values[2] as String;
 
-            double dfactor = values[2]==null?0:(double)values[2];
-            if (source != null && target != null)
+            double dfactor = values[2]==null || DependencyProperty.UnsetValue== values[2] ? 0:(double)values[2];
+            if (source != null && DependencyProperty.UnsetValue != target&& target != null)
             {
                 double result= (source.Value / target.Value);
                 if(result<0.0000001)

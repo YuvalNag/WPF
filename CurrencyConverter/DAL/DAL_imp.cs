@@ -78,8 +78,8 @@ namespace DAL
                     await getRTRatesAsync();
                     var instance = new CurrencyLayerDotNet.CurrencyLayerApi();
                     List<Country> Countries = await getCountriesAsync().ConfigureAwait(false);
-                    DateTime end = DateTime.Now.AddDays(-1);
-                    for (DateTime start = firstHistoryDate;!checkIfInTheSameDay(start,end); start = start.AddDays(1))
+                     DateTime end = DateTime.Now;
+                    for (DateTime start = firstHistoryDate.AddDays(1);!checkIfInTheSameDay(start,end); start = start.AddDays(1))
                     {
                         var HRate = await instance.Invoke<HistoryModel>("historical", new Dictionary<string, string> { { "date", start.ToString("yyyy-MM-dd") } }).ConfigureAwait(false);
                         Currencies currencies = new Currencies

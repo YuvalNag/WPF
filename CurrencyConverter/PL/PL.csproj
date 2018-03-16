@@ -114,7 +114,6 @@
     <Compile Include="UserControls\RTListUC.xaml.cs">
       <DependentUpon>RTListUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\BaseVM.cs" />
     <Compile Include="ViewModels\CurrenciesListVM.cs" />
     <Compile Include="ViewModels\CoverterVM.cs" />
     <Compile Include="ViewModels\HistoryVM.cs" />
@@ -508,6 +507,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="System\Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FlagsImages\BTC.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,41 +14,41 @@ using System.Windows.Data;
 
 namespace PL.ViewModels
 {
-    class CurrenciesListVM : INotifyPropertyChanged, ICurrenciesListVM
+    class CurrenciesListVM : INotifyPropertyChanged/*, ICurrenciesListVM*/
     {
 
 
 
         #region Properties
 
-        private int _selectedUC;
-        public int selectedUC
-        {
-            set
-            {
-                _selectedUC = value;
+        //private int _selectedUC;
+        //public int selectedUC
+        //{
+        //    set
+        //    {
+        //        _selectedUC = value;
 
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("selectedUC"));
-            }
-            get
-            {
-                return _selectedUC;
-            }
-        }
+        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("selectedUC"));
+        //    }
+        //    get
+        //    {
+        //        return _selectedUC;
+        //    }
+        //}
 
-        private ObservableCollection<UserControl> _UC;
-        public ObservableCollection<UserControl> UC
-        {
-            get
-            {
-                return _UC;
-            }
-            set
-            {
-                _UC = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UC"));
-            }
-        }
+        //private ObservableCollection<UserControl> _UC;
+        //public ObservableCollection<UserControl> UC
+        //{
+        //    get
+        //    {
+        //        return _UC;
+        //    }
+        //    set
+        //    {
+        //        _UC = value;
+        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UC"));
+        //    }
+        //}
         private Currency _relativeCurrency;
         public Currency relativeCurrency
         {
@@ -66,37 +66,36 @@ namespace PL.ViewModels
 
             }
         }
-        private bool _showTop12;
-        public bool showTop12
+        private bool _showTop15;
+        public bool showTop15
         {
             get
             {
-                return _showTop12;
+                return _showTop15;
             }
             set
             {
 
-                _showTop12 = value;
+                _showTop15 = value;
               
-                    if (_showTop12)
+                    if (_showTop15)
                     {
 
                         currenciesList = Top12CollectioView;
-                        FilterString = _filterString;
-                    
-                        currenciesListCollection = Top12List;
+                    currenciesList.Refresh();
+                    relativeCurrenciesListCollection = Top12List;
 
                     }
                     else
                     {
 
                         currenciesList = allCollectioView;
-                        FilterString = _filterString;
-                        currenciesListCollection = allList;
+                        currenciesList.Refresh();
+                        relativeCurrenciesListCollection = allList;
 
                     }
                
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("showTop12"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("showTop15"));
 
             }
         }
@@ -116,21 +115,22 @@ namespace PL.ViewModels
             }
         }
 
-        private ObservableCollection<Currency> _currenciesListCollection;
-        public ObservableCollection<Currency> currenciesListCollection
+        private ObservableCollection<Currency> _relativeCurrenciesListCollection;
+        public ObservableCollection<Currency> relativeCurrenciesListCollection
         {
             get
             {
-                return _currenciesListCollection;
+                return _relativeCurrenciesListCollection;
             }
             set
             {
-                _currenciesListCollection = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("currenciesListCollection"));
+                _relativeCurrenciesListCollection = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("relativeCurrenciesListCollection"));
 
             }
         }
 
+        //a task prop for progress bar
         private NotifyTaskCompletion<Currencies> _taskCurrencies;
         public NotifyTaskCompletion<Currencies> taskCurrencies
         {
@@ -185,8 +185,8 @@ namespace PL.ViewModels
             
             rTModel = new Models.CurrenciesRTModel();
             taskCurrencies=new NotifyTaskCompletion<Currencies>(ConvertToICollectionViewAsync());
-            UC = new ObservableCollection<UserControl>();
-            UC.Add(new ColumnsChartUS());
+            //UC = new ObservableCollection<UserControl>();
+            //UC.Add(new ColumnsChartUS());
 
         }
 
@@ -217,18 +217,18 @@ namespace PL.ViewModels
                          //"COP",
                          //"CRC",
                          //"CSD",
-                         //"CZK",
+                         "CZK",
                          //"DKK",
                          //"DOP",
                          //"DZD",
                          //"EEK",
                          //"EGP",
                          //"ETB",
-                         //"EUR",
-                         //"GBP",
+                         "EUR",
+                         "GBP",
                          //"GEL",
                          //"GTQ",
-                         //"HKD",
+                         "HKD",
                          //"HNL",
                          //"HRK",
                          //"HUF",
@@ -255,61 +255,23 @@ namespace PL.ViewModels
                          //"LYD",
                          //"MAD",
                          //"MKD",
-                         //"MNT",
-                         //"MOP",
-                         //"MVR",
-                         //"MXN",
-                         //"MYR",
-                         //"NIO",
-                         //"NOK",
-                         //"NPR",
-                         //"NZD",
-                         //"OMR",
-                         //"PAB",
-                         //"PEN",
-                         //"PHP",
-                         //"PKR",
-                         //"PLN",
-                         //"PYG",
-                         //"QAR",
-                         //"RON",
-                         //"RSD",
-                         //"RUB",
-                         //"RWF",
-                         "SAR",
-                         "SEK",
-                         "SGD",
-                         //"SYP",
-                         //"THB",
-                         //"TJS",
-                         //"TMT",
-                         //"TND",
-                         //"TRY",
-                         //"TTD",
-                         //"TWD",
-                         //"UAH",
-                         "USD",
-                //"UYU",
-                //"UZS",
-                //"VEF",
-                //"VND",
-                //"XOF",
-                //"YER",
-                //"ZAR",
-                //"ZWL"
+                         //"MNT","MOP","MVR","MXN","MYR","NIO","NOK","NPR","NZD","OMR","PAB","PEN","PHP","PKR","PLN","PYG","QAR","RON","RSD","RUB","RWF",
+                         "SAR", "SEK","SGD",
+                         //"SYP","THB","TJS","TMT","TND","TRY","TTD","TWD","UAH",
+                         "USD",// "UYU","UZS","VEF","VND","XOF","YER","ZAR","ZWL"
             };
             Currencies tempCurrencies = await (rTModel.GetCurrencies());
-
-            Top12List = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList.Where(t => d.Contains(t.IssuedCountryCode)));
-            Top12CollectioView=CollectionViewSource.GetDefaultView( new ObservableCollection<Currency>(Top12List));
-            Top12CollectioView.Filter = CurrenciesFilter;
-
             allList = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
             allCollectioView = CollectionViewSource.GetDefaultView(new ObservableCollection<Currency>(allList));
             allCollectioView.Filter = CurrenciesFilter;
 
+            string[] currenciescodes = {  "AED", "BTC", "ILS", "EUR", "BRL", "AUD", "BZD", "CAD", "GBP", "CZK", "HKD", "SAR", "SEK", "SGD", "USD" };
+            tempCurrencies = await (rTModel.GetCurrencies(currenciescodes));
+            Top12List = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
+            Top12CollectioView = CollectionViewSource.GetDefaultView(new ObservableCollection<Currency>(Top12List));
+            Top12CollectioView.Filter = CurrenciesFilter;
 
-            showTop12 = true;
+            showTop15 = true;
            
             return tempCurrencies;
 
@@ -327,20 +289,20 @@ namespace PL.ViewModels
             Currency currency = item as Currency;
             if (String.IsNullOrWhiteSpace(FilterString) || currency == null)
                 return true;
-            return currency.IssuedCountryName.Contains(FilterString);
+            return currency.IssuedCountryName.ToLower().Contains(FilterString.ToLower());
         }
 
-        public void SwitchRTListAndRTChart()
-        {
-         if (selectedUC == 0)
-            {
-                if (UC.Count == 1)
-                    UC.Add(new ColumnsChartUS());
-                selectedUC = 1;
-            }
-            else
-                selectedUC = 0;
+    //    public void SwitchRTListAndRTChart()
+    //    {
+    //     if (selectedUC == 0)
+    //        {
+    //            if (UC.Count == 1)
+    //                UC.Add(new ColumnsChartUS());
+    //            selectedUC = 1;
+    //        }
+    //        else
+    //            selectedUC = 0;
 
-        }
+    //    }
     }
 }

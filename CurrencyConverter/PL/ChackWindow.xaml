@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         xmlns:VM="clr-namespace:PL.ViewModels"
+        x:Name="myWindow"
         
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:Converters="clr-namespace:PL.Converters" x:Class="PL.ChackWindow"
         mc:Ignorable="d"
         Title="ChackWindow" SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <VM:CurrenciesListVM x:Key="asd"></VM:CurrenciesListVM>
+    </Window.Resources>
     <!--<Window.Resources>
         --><!--<local:ConverterParameter x:Key="con"/>--><!--
 
@@ -83,11 +87,9 @@
         </ListView>
         <TextBox Name="c" HorizontalAlignment="Left" Height="23" Margin="199,9,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="93"/>-->
         <ToggleButton Content="switch" Width="44" Custom:ButtonHelper.CornerRadius="50" Height="47"/>
-        <UserControls:RTListUC>
-            <UserControls:RTListUC.DataContext>
-                <VM:CurrenciesListVM></VM:CurrenciesListVM>
-            </UserControls:RTListUC.DataContext>
+        <UserControls:RTListUC  x:Name="a" itemSource="{Binding currenciesListCollection, UpdateSourceTrigger=PropertyChanged}"  >
         </UserControls:RTListUC>
+        <TextBox Height="23" Name="sd" TextWrapping="Wrap" Text="2" Width="120"/>
     </StackPanel>
 </Window>
 <!--<DataTemplate >

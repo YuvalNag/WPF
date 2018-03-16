@@ -41,8 +41,8 @@
                  HorizontalAlignment="Stretch"
                  Margin="10"
                  VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-        <CheckBox Content="show top 12" 
-                             IsChecked="{Binding showTop12}"
+        <CheckBox Content="show top 15" 
+                             IsChecked="{Binding showTop15}"
                              Grid.Row="1"
                              Grid.Column="1" 
                              Margin="5,0" 
@@ -85,7 +85,7 @@
         <ComboBox x:Name="ralativeCombo"
                 Grid.Row="0"   
                  
-                ItemsSource="{Binding currenciesListCollection}" 
+                ItemsSource="{Binding relativeCurrenciesListCollection}" 
                   HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                   Margin="10" 
@@ -121,6 +121,11 @@
                       VerticalAlignment="Center"
                       Margin="10"  />
 
-        <ProgressBar Visibility="{Binding taskCurrencies.IsNotCompleted, Converter={StaticResource boolToVis}}" Grid.Row="3" IsIndeterminate="True" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="updating...." Grid.ColumnSpan="2" />
+        <ProgressBar Visibility="{Binding taskCurrencies.IsNotCompleted, Converter={StaticResource boolToVis}}" 
+                     Grid.Row="3"
+                     IsIndeterminate="True" 
+                     TextOptions.TextHintingMode="Animated" 
+                     AutomationProperties.HelpText="updating...." 
+                     Grid.ColumnSpan="3" />
     </Grid>
 </UserControl>

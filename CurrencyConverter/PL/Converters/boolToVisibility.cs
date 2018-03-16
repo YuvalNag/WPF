@@ -13,11 +13,14 @@ namespace PL.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool vis=(bool)value;
-            if (vis)
-                return Visibility.Visible;
-            else
-                return Visibility.Collapsed;
+            
+                bool vis = (bool)value;
+                if (vis)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            
+
         }
 
        

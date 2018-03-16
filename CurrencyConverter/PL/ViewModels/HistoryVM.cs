@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace PL.ViewModels
 {
-    public class HistoryVM : INotifyPropertyChanged, IHistoryVM,BaseVM
+    public class HistoryVM : INotifyPropertyChanged, IHistoryVM
     {
         private ICommand _switchCommand;
         public ICommand switchCommand {
@@ -24,17 +24,17 @@ namespace PL.ViewModels
             }
         }
         
-        private NotifyTaskCompletion<ObservableCollection<HistoryDTO>> _stockPriceDetails;
-        public NotifyTaskCompletion<ObservableCollection<HistoryDTO>> stockPriceDetails
+        private NotifyTaskCompletion<ObservableCollection<HistoryDTO>> _historyRates;
+        public NotifyTaskCompletion<ObservableCollection<HistoryDTO>> historyRates
         {
             set
             {
-                _stockPriceDetails = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("stockPriceDetails"));
+                _historyRates = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("historyRates"));
             }
             get
             {
-                return _stockPriceDetails;
+                return _historyRates;
             }
         }
         private NotifyTaskCompletion<ObservableCollection<Country>> _countries;
@@ -67,7 +67,7 @@ namespace PL.ViewModels
             set
             {
                 _country = value;
-                stockPriceDetails = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(ConvertStockToObservableCollection());
+                historyRates = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(ConvertHistoryToObservableCollection());
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("country"));
                 
             }
@@ -83,7 +83,7 @@ namespace PL.ViewModels
             set
             {
                 _raltiveCountry = value;
-                stockPriceDetails = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(ConvertStockToObservableCollection());
+                historyRates = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(ConvertHistoryToObservableCollection());
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("raltiveCountry"));
 
             }
@@ -119,13 +119,15 @@ namespace PL.ViewModels
         {
             Country tempRelative = raltiveCountry;
             Country tempsource = country;
+            
+            //skip the property 
             _country = tempRelative;
             raltiveCountry = tempsource;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("country"));
            
 
         }
-        private async Task<ObservableCollection<HistoryDTO>> ConvertStockToObservableCollection()
+        private async Task<ObservableCollection<HistoryDTO>> ConvertHistoryToObservableCollection()
         {
             List<HistoryDTO> tempCurrencies;
             if (raltiveCountry != null)
