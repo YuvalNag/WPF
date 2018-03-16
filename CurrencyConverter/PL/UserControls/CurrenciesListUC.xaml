@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:PL.UserControls"
              xmlns:panel="clr-namespace:PL.CustomPanel"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
-             x:Class="PL.UserControls.CountriesListUC"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+    x:Class="PL.UserControls.CountriesListUC"
              mc:Ignorable="d" 
              Height="600" Width="680" Background="White">
     <UserControl.Resources>
@@ -81,10 +82,10 @@
 
 
         </ListView>
-        
+
         <ComboBox x:Name="ralativeCombo"
                 Grid.Row="0"   
-                 
+               
                 ItemsSource="{Binding relativeCurrenciesListCollection}" 
                   HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"

@@ -35,14 +35,14 @@
             <RowDefinition Height="20*"/>
 
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" FontSize="20"    
-                           FontFamily="Segoe UI"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10">History rates</TextBlock>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
+        <TextBlock Grid.Row="1" FontSize="20"     
+                           FontFamily="Segoe UI"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10" FontWeight="Bold" Foreground="#FFA4DAFB">HISTORY RATES</TextBlock>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
                 <TextBlock Text="State:" Height="20" Margin="2" />
                 <ComboBox x:Name="ComboBox" 
                           ItemsSource="{Binding countries.Result, IsAsync=True}" 
                           HorizontalAlignment="Left" 
-                          IsEnabled="{Binding stockPriceDetails.IsCompleted,FallbackValue=false}"
+                          IsEnabled="{Binding historyRates.IsCompleted,FallbackValue=false}"
                           Margin="10,5,0,0" 
                           SelectedItem="{Binding country}"
                           VerticalAlignment="Top"
@@ -62,7 +62,7 @@
                     </ComboBox.ItemsPanel>
                 </ComboBox>
                 <Button Margin="10"  Command="{Binding switchCommand}" 
-                        IsEnabled="{Binding stockPriceDetails.IsCompleted,FallbackValue=false}">
+                        IsEnabled="{Binding historyRates.IsCompleted,FallbackValue=false}">
                     <Image Source="/PL;component/Assets/Switch_Icon.png" Height="45" Width="59" />
                 </Button>
                 <TextBlock Text=" Relative: " Height="20" Margin="2" />
@@ -70,7 +70,7 @@
                           ItemsSource="{Binding countries.Result, IsAsync=True}" 
                           HorizontalAlignment="Left" 
                           Margin="10,5,0,0" 
-                          IsEnabled="{Binding stockPriceDetails.IsCompleted,FallbackValue=false}"
+                          IsEnabled="{Binding historyRates.IsCompleted,FallbackValue=false}"
                           VerticalAlignment="Top"
                           ItemTemplate="{StaticResource CurrencyComboBoxItem}"
                           SelectedItem="{Binding raltiveCountry}" 
@@ -92,7 +92,7 @@
             </StackPanel>
        
         
-        <chart:SfChart AreaBorderThickness="0,1,1,1" x:Name="Chart" Grid.Row="2" Margin="0,0,15,0">
+        <chart:SfChart AreaBorderThickness="0,1,1,1" x:Name="Chart" Grid.Row="3" Margin="0,10,15,0">
             <chart:SfChart.Behaviors>
                 <chart:ChartZoomPanBehavior />
                 <chart:ChartTrackBallBehavior ShowLine="True" 
@@ -121,9 +121,9 @@
             </chart:SfChart.PrimaryAxis>
 
             <chart:SfChart.SecondaryAxis>
-                <chart:NumericalAxis Minimum="{Binding Path=stockPriceDetails.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=min}"
-                                     Maximum="{Binding Path=stockPriceDetails.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=max}"
-                                     Interval="{Binding Path=stockPriceDetails.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=interval}"
+                <chart:NumericalAxis Minimum="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=min}"
+                                     Maximum="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=max}"
+                                     Interval="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=interval}"
                                      StartRangeFromZero="False" x:Name="axis2"   
                                      HeaderTemplate="{StaticResource headerTemplate}" 
                                      LabelTemplate="{StaticResource labelTemplate}" 
@@ -139,7 +139,7 @@
             </chart:SfChart.SecondaryAxis>
 
             <chart:AreaSeries Name="series" 
-                              ItemsSource="{Binding stockPriceDetails.Result}" 
+                              ItemsSource="{Binding historyRates.Result}" 
                               XBindingPath="date"
                               YBindingPath="Currency.Value" 
                               Margin="0,0,50,0">
@@ -170,12 +170,13 @@
             </chart:AreaSeries>
         </chart:SfChart>
 
-        <Grid Grid.Row="3" >
+        
 
-            <chart:SfDateTimeRangeNavigator x:Name="RangeNavigator" 
+            <chart:SfDateTimeRangeNavigator  Grid.Row="4"
+                                            x:Name="RangeNavigator" 
                                             ShowToolTip="False"  
                                             ShowGridLines="False" 
-                                            ItemsSource="{Binding stockPriceDetails.Result}" 
+                                            ItemsSource="{Binding historyRates.Result}" 
                                             HigherBarTickLineStyle="{StaticResource highertickline}" 
                                             XBindingPath="date" 
                                             ViewRangeStart="1/1/2000"
@@ -193,13 +194,13 @@
                         </chart:SfChart.PrimaryAxis>
 
                         <chart:SfChart.SecondaryAxis>
-                            <chart:NumericalAxis Minimum="{Binding Path=stockPriceDetails.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=min}"
-                                     Maximum="{Binding Path=stockPriceDetails.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=max}"
-                                     Interval="{Binding Path=stockPriceDetails.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=interval}" ShowGridLines="False" StartRangeFromZero="False" 
+                            <chart:NumericalAxis Minimum="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=min}"
+                                     Maximum="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=max}"
+                                     Interval="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=interval}" ShowGridLines="False" StartRangeFromZero="False" 
                                                          Visibility="Collapsed" />
                         </chart:SfChart.SecondaryAxis>
 
-                        <chart:AreaSeries x:Name="SeriesInRangenavigator"  ItemsSource="{Binding stockPriceDetails.Result}" 
+                        <chart:AreaSeries x:Name="SeriesInRangenavigator"  ItemsSource="{Binding historyRates.Result}" 
                                               XBindingPath="date" YBindingPath="Currency.Value" >
                             <chart:AreaSeries.Interior>
                                 <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
@@ -231,7 +232,7 @@
                     <chart:ThumbStyle SymbolTemplate="{StaticResource symboltemplate}"/>
                 </chart:SfDateTimeRangeNavigator.LeftThumbStyle>
             </chart:SfDateTimeRangeNavigator>
-        </Grid>
-        <ProgressBar  Visibility="{Binding stockPriceDetails.IsNotCompleted, Converter={StaticResource boolToVis}}" Grid.Row="0" IsIndeterminate="True" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="updating...." />
+        
+        <ProgressBar  Visibility="{Binding historyRates.IsNotCompleted, Converter={StaticResource boolToVis}}" Grid.Row="0" IsIndeterminate="True" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="updating...." />
     </Grid>
 </UserControl>
