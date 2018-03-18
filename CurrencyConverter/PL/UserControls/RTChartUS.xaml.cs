@@ -17,12 +17,13 @@ using System.Windows.Shapes;
 namespace PL.UserControls
 {
     /// <summary>
-    /// Interaction logic for CountriesListUC.xaml
+    /// Interaction logic for ColumnsChartUS.xaml
     /// </summary>
-    public partial class CurrenciesListUC : UserControl
+    public partial class RTChartUS : UserControl
     {
 
-        private CurrenciesListVM currenciesListVM { get; set; }
+
+        public CurrenciesListVM currenciesListVM { get; set; }
 
         public string filterString
         {
@@ -32,20 +33,21 @@ namespace PL.UserControls
 
         // Using a DependencyProperty as the backing store for filterString.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty filterStringProperty =
-            DependencyProperty.Register("filterString", typeof(string), typeof(CurrenciesListUC), new FrameworkPropertyMetadata(){DefaultValue=null, DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged, BindsTwoWayByDefault = true ,PropertyChangedCallback=filterStringChangedCallback});
+            DependencyProperty.Register("filterString", typeof(string), typeof(RTChartUS), new FrameworkPropertyMetadata() { DefaultValue = null, DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged, BindsTwoWayByDefault = true, PropertyChangedCallback = filterStringChangedCallback });
 
         private static void filterStringChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-           ((CurrenciesListUC)d).currenciesListVM.FilterString = e.NewValue.ToString();
+            ((RTChartUS)d).currenciesListVM.FilterString = e.NewValue.ToString();
         }
 
-        
 
-        public CurrenciesListUC()
+
+        public RTChartUS()
         {
             InitializeComponent();
             currenciesListVM = new CurrenciesListVM();
             this.DataContext = currenciesListVM;
         }
+       
     }
 }

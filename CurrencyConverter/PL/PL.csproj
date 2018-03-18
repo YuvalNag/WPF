@@ -102,8 +102,8 @@
     <Compile Include="CustomPanel\VirtualizingWrapPanel.cs" />
     <Compile Include="Models\CurrenciesRTModel.cs" />
     <Compile Include="Models\HIstoryModel.cs" />
-    <Compile Include="UserControls\ColumnsChartUS.xaml.cs">
-      <DependentUpon>ColumnsChartUS.xaml</DependentUpon>
+    <Compile Include="UserControls\RTChartUS.xaml.cs">
+      <DependentUpon>RTChartUS.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\CurrenciesListUC.xaml.cs">
       <DependentUpon>CurrenciesListUC.xaml</DependentUpon>
@@ -114,14 +114,18 @@
     <Compile Include="UserControls\RTListUC.xaml.cs">
       <DependentUpon>RTListUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\SearchUC.xaml.cs">
+      <DependentUpon>SearchUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\CurrenciesListVM.cs" />
     <Compile Include="ViewModels\CoverterVM.cs" />
     <Compile Include="ViewModels\HistoryVM.cs" />
     <Compile Include="ViewModels\ICurrenciesListVM.cs" />
     <Compile Include="ViewModels\IHistoryVM.cs" />
-    <Compile Include="ViewModels\IMainVM.cs" />
+    <Compile Include="ViewModels\ISwitchUC.cs" />
     <Compile Include="ViewModels\MainVM.cs" />
     <Compile Include="ViewModels\NotifyTaskCompletion.cs" />
+    <Compile Include="ViewModels\SearchvM.cs" />
     <Page Include="ChackWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,7 +162,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\ColumnsChartUS.xaml">
+    <Page Include="UserControls\RTChartUS.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\RTListUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="UserControls\SearchUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

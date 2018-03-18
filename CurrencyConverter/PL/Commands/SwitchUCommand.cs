@@ -10,10 +10,10 @@ namespace PL.Commands
 {
     class SwitchUCommand : ICommand
     {
-        public IMainVM MainVM { get; set; }
-        public SwitchUCommand(IMainVM MainVM)
+        public ISwitchUC switchUC { get; set; }
+        public SwitchUCommand(ISwitchUC switchUC)
         {
-            this.MainVM = MainVM;
+            this.switchUC = switchUC;
         }
 
         public bool CanExecute(object parameter)
@@ -23,7 +23,7 @@ namespace PL.Commands
 
         public void Execute(object parameter)
         {
-            MainVM.SwitchUCSelected();
+            switchUC.SwitchUCSelected();
         }
 
         public event EventHandler CanExecuteChanged

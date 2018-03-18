@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace PL.UserControls
 {
     /// <summary>
-    /// Interaction logic for ColumnsChartUS.xaml
+    /// Interaction logic for SearchUC.xaml
     /// </summary>
-    public partial class ColumnsChartUS : UserControl
+    public partial class SearchUC : UserControl
     {
-        public ColumnsChartUS()
+        public SearchUC()
         {
             InitializeComponent();
         }

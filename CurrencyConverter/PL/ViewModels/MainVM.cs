@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace PL.ViewModels
 {
-    public class MainVM : INotifyPropertyChanged, IMainVM
+    public class MainVM : INotifyPropertyChanged, ISwitchUC
     {
         private ObservableCollection<UserControl> _UC;
         public ObservableCollection<UserControl> UC
@@ -66,7 +66,7 @@ namespace PL.ViewModels
             if (selectedIndex == 0)
             {
                 if (UC.Count == 1)
-                    UC.Add(new CountriesListUC());
+                    UC.Add(new SearchUC());
                 selectedIndex = 1;
             }
             else

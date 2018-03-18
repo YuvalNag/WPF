@@ -87,8 +87,8 @@
         </ListView>
         <TextBox Name="c" HorizontalAlignment="Left" Height="23" Margin="199,9,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="93"/>-->
         <ToggleButton Content="switch" Width="44" Custom:ButtonHelper.CornerRadius="50" Height="47"/>
-        <UserControls:RTListUC  x:Name="a" itemSource="{Binding currenciesListCollection, UpdateSourceTrigger=PropertyChanged}"  >
-        </UserControls:RTListUC>
+        <!--<UserControls:RTListUC  x:Name="a" itemSource="{Binding currenciesListCollection, UpdateSourceTrigger=PropertyChanged}"  >
+        </UserControls:RTListUC>-->
         <TextBox Height="23" Name="sd" TextWrapping="Wrap" Text="2" Width="120"/>
     </StackPanel>
 </Window>

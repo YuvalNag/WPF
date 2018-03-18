@@ -7,9 +7,9 @@
              xmlns:panel="clr-namespace:PL.CustomPanel"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-    x:Class="PL.UserControls.CountriesListUC"
+    x:Class="PL.UserControls.CurrenciesListUC"
              mc:Ignorable="d" 
-             Height="600" Width="680" Background="White">
+             Height="564" Width="680" Background="White">
     <UserControl.Resources>
         <ResourceDictionary >
             <ResourceDictionary.MergedDictionaries>
@@ -33,20 +33,11 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-  
-            <TextBox Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
-                 Grid.Row="0"  
-                 Text="{Binding FilterString, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}" 
-                 Custom:TextBoxHelper.UseFloatingWatermark="True"  
-                 Custom:TextBoxHelper.Watermark="search"
-                 HorizontalAlignment="Stretch"
-                 Margin="10"
-                 VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-        <CheckBox Content="show top 15" 
+        <CheckBox HorizontalAlignment="Center" Content="show top 15" 
                              IsChecked="{Binding showTop15}"
                              Grid.Row="1"
-                             Grid.Column="1" 
-                             Margin="5,0" 
+                             Grid.Column="0" 
+                             Margin="5" 
                              ToolTip="הביצועים לא כלכך טובים כאשר כל המטבעות מוצגים"/>
         <ListView
                   x:Name="list" 
@@ -113,8 +104,8 @@
 
         </ComboBox>
         <Custom:NumericUpDown  x:Name="AmountTextBox" 
-                  Grid.Row="1"
-                  Grid.Column="0"
+                  Grid.Row="0"
+                  Grid.ColumnSpan="2"
                     Minimum="1"
                   Custom:TextBoxHelper.Watermark="Amount" 
                   Custom:TextBoxHelper.UseFloatingWatermark="True"

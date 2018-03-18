@@ -14,41 +14,13 @@ using System.Windows.Data;
 
 namespace PL.ViewModels
 {
-    class CurrenciesListVM : INotifyPropertyChanged/*, ICurrenciesListVM*/
+   public class CurrenciesListVM : INotifyPropertyChanged/*, ICurrenciesListVM*/
     {
 
 
 
         #region Properties
 
-        //private int _selectedUC;
-        //public int selectedUC
-        //{
-        //    set
-        //    {
-        //        _selectedUC = value;
-
-        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("selectedUC"));
-        //    }
-        //    get
-        //    {
-        //        return _selectedUC;
-        //    }
-        //}
-
-        //private ObservableCollection<UserControl> _UC;
-        //public ObservableCollection<UserControl> UC
-        //{
-        //    get
-        //    {
-        //        return _UC;
-        //    }
-        //    set
-        //    {
-        //        _UC = value;
-        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UC"));
-        //    }
-        //}
         private Currency _relativeCurrency;
         public Currency relativeCurrency
         {
@@ -292,17 +264,6 @@ namespace PL.ViewModels
             return currency.IssuedCountryName.ToLower().Contains(FilterString.ToLower());
         }
 
-    //    public void SwitchRTListAndRTChart()
-    //    {
-    //     if (selectedUC == 0)
-    //        {
-    //            if (UC.Count == 1)
-    //                UC.Add(new ColumnsChartUS());
-    //            selectedUC = 1;
-    //        }
-    //        else
-    //            selectedUC = 0;
-
-    //    }
+    
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace PL.ViewModels
 {
-    interface IMainVM
+    interface ISwitchUC
     {
         void SwitchUCSelected();
     }
