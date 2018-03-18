@@ -12,9 +12,9 @@ using System.Windows.Input;
 
 namespace PL.ViewModels 
 {
-    class SearchvM: INotifyPropertyChanged, ISwitchUC
+    class SearchVM: INotifyPropertyChanged, ISwitchUC
     {
-        public SearchvM()
+        public SearchVM()
         {
             
             selectedUC = new CurrenciesListUC();

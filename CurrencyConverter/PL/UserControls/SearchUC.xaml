@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="680" Background="White">
     <UserControl.DataContext>
-        <VM:SearchvM/>
+        <VM:SearchVM/>
     </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>

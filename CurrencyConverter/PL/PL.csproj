@@ -112,14 +112,13 @@
       <DependentUpon>SearchUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CurrenciesListVM.cs" />
-    <Compile Include="ViewModels\CoverterVM.cs" />
     <Compile Include="ViewModels\HistoryVM.cs" />
     <Compile Include="ViewModels\ICurrenciesListVM.cs" />
     <Compile Include="ViewModels\IHistoryVM.cs" />
     <Compile Include="ViewModels\ISwitchUC.cs" />
     <Compile Include="ViewModels\MainVM.cs" />
     <Compile Include="ViewModels\NotifyTaskCompletion.cs" />
-    <Compile Include="ViewModels\SearchvM.cs" />
+    <Compile Include="ViewModels\SearchVM.cs" />
     <Page Include="CurrancyItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
