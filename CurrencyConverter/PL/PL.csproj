@@ -97,9 +97,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ChackWindow.xaml.cs">
-      <DependentUpon>ChackWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Commands\SwitchCurrencyCommand.cs" />
     <Compile Include="Commands\SwitchUCommand.cs" />
     <Compile Include="ConverterParameter.cs" />
@@ -129,9 +126,6 @@
     <Compile Include="UserControls\HistoryUC.xaml.cs">
       <DependentUpon>HistoryUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\RTListUC.xaml.cs">
-      <DependentUpon>RTListUC.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\SearchUC.xaml.cs">
       <DependentUpon>SearchUC.xaml</DependentUpon>
     </Compile>
@@ -144,10 +138,6 @@
     <Compile Include="ViewModels\MainVM.cs" />
     <Compile Include="ViewModels\NotifyTaskCompletion.cs" />
     <Compile Include="ViewModels\SearchvM.cs" />
-    <Page Include="ChackWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="CurrancyItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -191,10 +181,6 @@
     <Page Include="UserControls\HistoryUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\RTListUC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="UserControls\SearchUC.xaml">
       <SubType>Designer</SubType>
