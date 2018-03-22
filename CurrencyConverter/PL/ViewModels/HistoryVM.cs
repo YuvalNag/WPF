@@ -57,18 +57,18 @@ namespace PL.ViewModels
         
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private Country _country;
-        public Country country
+        private Country _baseCountry;
+        public Country baseCountry
         {
             get
             {
-                return _country;
+                return _baseCountry;
             }
             set
             {
-                _country = value;
+                _baseCountry = value;
                 historyRates = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(ConvertHistoryToObservableCollection());
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("country"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("baseCountry"));
                 
             }
         }
@@ -104,7 +104,7 @@ namespace PL.ViewModels
             List<Country> countriesTemp = await  hModel.GetCountries();
 
             //update the country and relative country
-            country = countriesTemp.Find(t => String.Equals(t.Code, "ILS"));
+            baseCountry = countriesTemp.Find(t => String.Equals(t.Code, "ILS"));
 
             //skip the property  
             _raltiveCountry = countriesTemp.Find(t => String.Equals(t.Code,"USD"));
@@ -118,12 +118,12 @@ namespace PL.ViewModels
         public void SwitchSourceCurrencyAndRelative()
         {
             Country tempRelative = raltiveCountry;
-            Country tempsource = country;
+            Country tempsource = baseCountry;
             
             //skip the property 
-            _country = tempRelative;
+            _baseCountry = tempRelative;
             raltiveCountry = tempsource;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("country"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("baseCountry"));
            
 
         }
@@ -131,9 +131,9 @@ namespace PL.ViewModels
         {
             List<HistoryDTO> tempCurrencies;
             if (raltiveCountry != null)
-                   tempCurrencies = await hModel.GetCurrenciesR(country.Code,raltiveCountry.Code);
+                   tempCurrencies = await hModel.GetHRates(baseCountry.Code,raltiveCountry.Code);
             else
-                tempCurrencies = await hModel.GetCurrenciesR(country.Code);
+                tempCurrencies = await hModel.GetHRates(baseCountry.Code);
 
             return new ObservableCollection<HistoryDTO>(tempCurrencies);
             

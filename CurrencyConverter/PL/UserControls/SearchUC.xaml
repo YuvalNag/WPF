@@ -23,7 +23,7 @@
 
         <TextBox Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
             Grid.Row="0"  
-            Text="{Binding Content.filterString, ElementName=uc,  UpdateSourceTrigger=PropertyChanged}" 
+            Text="{Binding Content.DataContext.FilterString, ElementName=uc,  UpdateSourceTrigger=PropertyChanged}" 
             mah:TextBoxHelper.UseFloatingWatermark="True"  
             mah:TextBoxHelper.Watermark="search"
             VerticalAlignment="Center" Margin="5" />

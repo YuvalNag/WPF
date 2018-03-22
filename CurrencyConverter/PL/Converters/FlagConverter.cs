@@ -13,7 +13,9 @@ namespace PL.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string name = value as string;
-            return @"/PL;component/FlagsImages/"+name+".png";
+            return @"/Currency Converter;component/FlagsImages/" + name+".png";
+            
+
 
 
         }
@@ -23,4 +25,4 @@ namespace PL.Converters
             throw new NotImplementedException();
         }
     }
-}//YValues ActualXValues
+}

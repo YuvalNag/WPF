@@ -15,15 +15,12 @@ namespace BL
         {
          return new DAL_imp().getCountriesAsync();
         }
-        public Task<List<HistoryDTO>> getHRatesAsync(string countryCode)
-        {
-            return null;
-        }
+      
         public async Task<List<HistoryDTO>> getHRatesAsync(string sourceCountryCode, string targetCountryCode="USD")
         {
             IDAL dal = new DAL_imp();
             List<HistoryDTO> listSource = await dal.getHRatesAsync(sourceCountryCode);
-            if (!String.Equals(targetCountryCode,"USD"))
+            if (targetCountryCode != "USD")
             {
                 List<HistoryDTO> listTarget = await dal.getHRatesAsync(targetCountryCode);
                 for (int i = 0; i < listSource.Count; i++)

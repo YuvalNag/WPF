@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+          
+    
     xmlns:Converters="clr-namespace:PL.Converters"
 
     xmlns:VM="clr-namespace:PL.ViewModels"
@@ -12,7 +14,7 @@
     x:Class="PL.MainWindow"
     xmlns:syncfusion="http://schemas.syncfusion.com/wpf"    
     mc:Ignorable="d"
-        Title="MainWindow" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" >
+        Title="Currency Converter" Icon="Assets/appIcon.png" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" IconBitmapScalingMode="Linear" >
   
     <Window.DataContext>
         <VM:MainVM></VM:MainVM>

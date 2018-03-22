@@ -12,9 +12,9 @@ namespace PL.Models
     {
         private Currencies localCurencies { get; set; }
 
-        public async Task<Currencies> GetCurrencies(string[] currenciesToReturn=null)
+        public  Task<Currencies> GetCurrencies(string[] currenciesToReturn=null)
         { 
-            return  await Task.Run(async ()=> {
+            return   Task.Run(async ()=> {
                 if (localCurencies == null)
                     localCurencies = await new BL_imp().getRTRatesAsync();     
                 if(currenciesToReturn != null)

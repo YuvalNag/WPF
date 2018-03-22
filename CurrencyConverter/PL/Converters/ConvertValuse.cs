@@ -21,14 +21,11 @@ namespace PL.Converters
             //String factor;
             //factor = values[2] as String;
 
-            double dfactor = values[2]==null || DependencyProperty.UnsetValue== values[2] ? 0:(double)values[2];
-            if (source != null && DependencyProperty.UnsetValue != target&& target != null)
+            double dfactor = (values[2]==null) ? 1:(double)values[2];
+            if (source != null &&/* DependencyProperty.UnsetValue != target&&*/ target != null)
             {
                 double result= (source.Value / target.Value);
-                if(result<0.0000001)
-                    result = Math.Round(result, 10);
-                else
-                    result = Math.Round(result, 5);
+               
                 //if (!(source.IssuedCountryCode == "BTC"))
                 //    result= Math.Round((source.Value / target.Value), 3);
                 //else
@@ -38,17 +35,25 @@ namespace PL.Converters
                 //    double.TryParse(factor, out dfactor)&&
                 //    dfactor>0)
 
-                if (dfactor> 0)
-                    return (result * (double)values[2]).ToString();
+                if (dfactor> 1)
                 
+                    result= (result * dfactor);
+
+
+
+                if (result < 0.0000001)
+                    result = Math.Round(result, 10);
                 else
-                    return result.ToString();
+                    result = Math.Round(result, 5);
+
+                return result.ToString();
             }
 
             if (source != null)
                 if (source.Value < 0.0000001)
                     return Math.Round(source.Value, 7);
-                else return source.Value;
+                else
+                    return source.Value;
 
             return "0";
 

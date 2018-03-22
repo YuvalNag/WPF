@@ -21,7 +21,7 @@ namespace PL.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Currency currency = (value as ChartAdornment).Item as Currency;
-            return @"/PL;component/FlagsImages/" + currency.IssuedCountryCode + ".png";
+            return @"/Currency Converter;component/FlagsImages/" + currency.IssuedCountryCode + ".png";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -9,7 +9,7 @@
     <converters:boolToVisibility x:Key="boolToVis" />
     <converters:FlagConverter x:Key="FlagConverter"/>
     <converters:IssuedCountryCodeToCountrySymbolConverter x:Key="SymbolConverter"/>
-    <BitmapImage x:Key="DefaultImage" UriSource="/PL;component/FlagsImages/AFN.png" />
+    <BitmapImage x:Key="DefaultImage" UriSource="/Currency Converter;component/FlagsImages/AFN.png" />
 
     <DataTemplate x:Key="CurrencyComboBoxItem">
         <Grid Background="#8C008000" Width="150" Height="50">

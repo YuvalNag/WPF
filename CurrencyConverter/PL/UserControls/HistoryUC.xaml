@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PL.ViewModels"
-             xml:lang="en-US"
+             
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
              mc:Ignorable="d"
@@ -14,7 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary  >
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/PL;component/ResorceDictionary/ChartDictionary.xaml"  />
+                <ResourceDictionary Source="/Currency Converter;component/ResorceDictionary/ChartDictionary.xaml"  />
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -38,18 +38,18 @@
         <TextBlock Grid.Row="1" FontSize="20"     
                            FontFamily="Segoe UI"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10" FontWeight="Bold" Foreground="#FFA4DAFB">HISTORY RATES</TextBlock>
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
-                <TextBlock Text="State:" Height="20" Margin="2" />
+                <TextBlock Text="Currency: " Height="20" Margin="2" />
                 <ComboBox x:Name="ComboBox" 
                           ItemsSource="{Binding countries.Result, IsAsync=True}" 
                           HorizontalAlignment="Left" 
                           IsEnabled="{Binding historyRates.IsCompleted,FallbackValue=false}"
                           Margin="10,5,0,0" 
-                          SelectedItem="{Binding country}"
+                          SelectedItem="{Binding baseCountry}"
                           VerticalAlignment="Top"
                           ItemTemplate="{StaticResource CurrencyComboBoxItem}"
                           Cursor="Hand" 
                           ScrollViewer.CanContentScroll="True"
-                          Custom:TextBoxHelper.Watermark="choose the relative currency" 
+                          Custom:TextBoxHelper.Watermark="choose the currency to show" 
                           Custom:TextBoxHelper.UseFloatingWatermark="True" 
                           Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
                     <ComboBox.ItemsPanel>
@@ -63,7 +63,7 @@
                 </ComboBox>
                 <Button Margin="10"  Command="{Binding switchCommand}" 
                         IsEnabled="{Binding historyRates.IsCompleted,FallbackValue=false}">
-                    <Image Source="/PL;component/Assets/Switch_Icon.png" Height="45" Width="59" />
+                <Image Source="/Currency Converter;component/Assets/Switch_Icon.png" Height="45" Width="59" />
                 </Button>
                 <TextBlock Text=" Relative: " Height="20" Margin="2" />
                 <ComboBox x:Name="RelativeComboBox" 
@@ -132,13 +132,14 @@
                                      MajorTickLineStyle="{StaticResource AxisStyle}">
                     <chart:NumericalAxis.PostfixLabelTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding country.Code}"/>
+                            <TextBlock Text="{Binding baseCountry.Code}"/>
                         </DataTemplate>
                     </chart:NumericalAxis.PostfixLabelTemplate>
                 </chart:NumericalAxis>
             </chart:SfChart.SecondaryAxis>
 
             <chart:AreaSeries Name="series" 
+                              EnableAnimation="True"
                               ItemsSource="{Binding historyRates.Result}" 
                               XBindingPath="date"
                               YBindingPath="Currency.Value" 
@@ -170,26 +171,29 @@
             </chart:AreaSeries>
         </chart:SfChart>
 
-        
 
-            <chart:SfDateTimeRangeNavigator  Grid.Row="4"
+
+        <chart:SfDateTimeRangeNavigator  
+                                            Grid.Row="4"
                                             x:Name="RangeNavigator" 
-                                            ShowToolTip="False"  
+                                             
                                             ShowGridLines="False" 
                                             ItemsSource="{Binding historyRates.Result}" 
                                             HigherBarTickLineStyle="{StaticResource highertickline}" 
                                             XBindingPath="date" 
-                                            ViewRangeStart="1/1/2000"
-                                            ViewRangeEnd="1/1/2020"  
+                                            
+                                              
+                                             ShowToolTip="true" 
+                                             ToolTipLabelFormat ="MMM/dd/yyyy"
                                             
                                             ScrollbarVisibility="Hidden" Margin="50,0,25,5"
                                              >
-                <chart:SfDateTimeRangeNavigator.Content >
+            <chart:SfDateTimeRangeNavigator.Content >
 
-                    <chart:SfChart AreaBorderThickness="0,1,0,0">
+                <chart:SfChart xml:lang="en-US" AreaBorderThickness="0,1,0,0">
                         <chart:SfChart.PrimaryAxis>
                             <chart:DateTimeAxis  ShowGridLines="False"
-                                                 LabelFormat="MMM/dd/yyyy" 
+                                                 
                                                   Visibility="Collapsed" />
                         </chart:SfChart.PrimaryAxis>
 
@@ -200,8 +204,11 @@
                                                          Visibility="Collapsed" />
                         </chart:SfChart.SecondaryAxis>
 
-                        <chart:AreaSeries x:Name="SeriesInRangenavigator"  ItemsSource="{Binding historyRates.Result}" 
-                                              XBindingPath="date" YBindingPath="Currency.Value" >
+                        <chart:AreaSeries x:Name="SeriesInRangenavigator"  
+                                          ItemsSource="{Binding historyRates.Result}" 
+                                          XBindingPath="date" 
+                                          YBindingPath="Currency.Value" 
+                                          EnableAnimation="True">
                             <chart:AreaSeries.Interior>
                                 <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                                     <GradientStop Color="LightSkyBlue" Offset="0"/>
@@ -220,8 +227,9 @@
                 </chart:SfDateTimeRangeNavigator.LowerLevelBarStyle>
 
                 <chart:SfDateTimeRangeNavigator.Intervals>
-                    <chart:Interval IntervalType="Year" />
-                    <chart:Interval IntervalType="Month"/>
+                <chart:Interval IntervalType="Month"/>
+                <chart:Interval IntervalType="Year" />
+                    
                 </chart:SfDateTimeRangeNavigator.Intervals>
 
                 <chart:SfDateTimeRangeNavigator.RightThumbStyle>

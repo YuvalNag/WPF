@@ -7,13 +7,13 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PL")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Currency converter")]
+[assembly: AssemblyDescription("a tiny app for currencies")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PL")]
+[assembly: AssemblyCompany("Y&N")]
+[assembly: AssemblyProduct("Currency converter")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Y&N")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
