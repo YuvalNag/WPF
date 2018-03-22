@@ -5,11 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PL.UserControls"
              xmlns:panel="clr-namespace:PL.CustomPanel"
+             xmlns:VM="clr-namespace:PL.ViewModels"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-    x:Class="PL.UserControls.CurrenciesListUC"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             x:Class="PL.UserControls.CurrenciesListUC"
              mc:Ignorable="d" 
-             Height="564" Width="680" Background="White">
+             Height="564" 
+             Width="680" 
+             Background="White">
+
+    <UserControl.DataContext>
+        <VM:CurrenciesListVM/>
+    </UserControl.DataContext>
+
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="Loaded">
             <BeginStoryboard>
@@ -21,6 +29,7 @@
             </BeginStoryboard>
         </EventTrigger>
     </UserControl.Triggers>
+    
     <UserControl.Resources>
         <ResourceDictionary >
             <ResourceDictionary.MergedDictionaries>
@@ -29,9 +38,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <!--<Grid.Background>
-            <ImageBrush ImageSource="/PL;component/Assets/TileBackground.png" Stretch="UniformToFill"/>
-        </Grid.Background>-->
+       
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -41,7 +48,6 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <CheckBox HorizontalAlignment="Center" Content="show top 15" 
@@ -50,50 +56,13 @@
                              Grid.Column="0" 
                              Margin="5" 
                              ToolTip="הביצועים לא כלכך טובים כאשר כל המטבעות מוצגים"/>
-        <ListView
-                  x:Name="list" 
-                  Background="Transparent" 
-                  Grid.Row="2"
-                  SelectedItem="{Binding relativeCurrency, Mode=OneWayToSource}"
-                 VirtualizingPanel.VirtualizationMode="Recycling"
-                  VirtualizingPanel.IsVirtualizing="True"
-                  Grid.Column="0"
-                  ItemsSource="{Binding currenciesList}"
-                  ItemTemplate="{StaticResource CurrencyItem}"
-                   HorizontalAlignment="Stretch"
-                 
-              
-                   VerticalAlignment="Stretch" 
-                  Grid.ColumnSpan="3" 
-                  Grid.RowSpan="2" 
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                  >
-           
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-
-            <!--<ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <panel:VirtualizingWrapPanel Orientation="Horizontal"  />
-                </ItemsPanelTemplate>
-
-            </ListView.ItemsPanel>-->
-
-
-        </ListView>
+       
 
         <ComboBox x:Name="ralativeCombo"
-                Grid.Row="0"   
-               
-                ItemsSource="{Binding relativeCurrenciesListCollection}" 
+                  ItemsSource="{Binding relativeCurrenciesListCollection}" 
                   HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
                   Margin="10" 
-                   
-                  
                   SelectedItem="{Binding relativeCurrency, Mode=OneWay}"
                   ItemTemplate="{StaticResource CurrencyComboBoxItem}"
                   SelectedIndex="0" 
@@ -104,25 +73,22 @@
                   Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}" 
                   Grid.Column="1" 
                   Grid.RowSpan="2">
+                
             <ComboBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                  
-                    <VirtualizingStackPanel>
-                      
-                    </VirtualizingStackPanel>
-                </ItemsPanelTemplate>
+                     <ItemsPanelTemplate>
+                         <VirtualizingStackPanel>
+                         </VirtualizingStackPanel>
+                     </ItemsPanelTemplate>
             </ComboBox.ItemsPanel>
-
         </ComboBox>
+            
         <Custom:NumericUpDown  x:Name="AmountTextBox" 
-                  Grid.Row="0"
-                  
-                    Minimum="1"
-                  Custom:TextBoxHelper.Watermark="Amount" 
-                  Custom:TextBoxHelper.UseFloatingWatermark="True"
-                      HorizontalAlignment="Stretch" 
-                      VerticalAlignment="Center"
-                      Margin="10"  />
+                               Minimum="1"
+                               Custom:TextBoxHelper.Watermark="Amount" 
+                               Custom:TextBoxHelper.UseFloatingWatermark="True"
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Center"
+                               Margin="10"  />
 
         <ProgressBar Visibility="{Binding taskCurrencies.IsNotCompleted, Converter={StaticResource boolToVis}}" 
                      Grid.Row="3"
@@ -130,5 +96,28 @@
                      TextOptions.TextHintingMode="Animated" 
                      AutomationProperties.HelpText="updating...." 
                      Grid.ColumnSpan="3" />
+      
+        
+        <ListView x:Name="list" 
+                  Background="Transparent" 
+                  Grid.Row="2"
+                  SelectedItem="{Binding relativeCurrency, Mode=OneWayToSource}"
+                  ItemsSource="{Binding currenciesList}"
+                  ItemTemplate="{StaticResource CurrencyItem}"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch" 
+                  Grid.ColumnSpan="3" 
+                  Grid.RowSpan="2" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True"
+                               Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+
+        </ListView>
     </Grid>
 </UserControl>

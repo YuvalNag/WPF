@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Converters="clr-namespace:PL.Converters"
+                    xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
+                    xmlns:local="clr-namespace:PL.ResorceDictionary">
+    
+    <Converters:boolToVisibility x:Key="boolToVis" />
+    <Converters:FlagConverter x:Key="FlagConverter"/>
+    <Converters:MinMaxConverter x:Key="MinMaxConverter"/>
+    <BitmapImage x:Key="DefaultImage" UriSource="/Currency Converter;component/FlagsImages/AFN.png" />
+
+    <Converters:CountryCodeToImgSourceConverter x:Key="CountryCodeToImgSourceConverter"/>
+
+
+
+    <DataTemplate x:Key="ChartAdornmentLabelTemplate">
+            <Grid>
+                <Image  Width="40" Height="40" Source="{Binding Converter={StaticResource CountryCodeToImgSourceConverter}, FallbackValue={StaticResource DefaultImage}}">
+
+
+                </Image>
+            </Grid>
+        </DataTemplate>
+
+
+    <DataTemplate x:Key="labelTemplate">
+        <TextBlock Text="{Binding LabelContent}"  Foreground="Black"  FontSize="16"/>
+    </DataTemplate>
+
+    <Style TargetType="Line" x:Key="AxisStyle">
+        <Setter Property="Stroke" Value="DarkGray"  />
+        <Setter Property="StrokeThickness" Value="1"/>
+    </Style>
+
+    <Style TargetType="Line" x:Key="AxisStyle1">
+        <Setter Property="Stroke" Value="DarkGray"  />
+        <Setter Property="StrokeThickness" Value="0.5"/>
+    </Style>
+
+
+</ResourceDictionary>

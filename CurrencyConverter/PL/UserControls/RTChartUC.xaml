@@ -9,9 +9,13 @@
              xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" 
              mc:Ignorable="d"
-              Height="564" Width="680" Background="White" RenderTransformOrigin="0.5,0.5"
-             >
- 
+             Height="564" 
+             Width="680"
+             Background="White">
+    
+    <UserControl.DataContext>
+        <VM:RTChartVM/>
+    </UserControl.DataContext>
 
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="Loaded">
@@ -19,53 +23,46 @@
                 <Storyboard>
                     <DoubleAnimation
               Storyboard.TargetProperty="Opacity"
-              From="0.0" To="1.0" Duration="0:0:0.8"/>
+              From="0.0" To="1.0" Duration="0:0:0.5"/>
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
     </UserControl.Triggers>
+
+    <UserControl.Resources>
+        <ResourceDictionary  >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Currency Converter;component/ResorceDictionary/RTChartDictionary.xaml"  />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
-        <Grid.Resources>
-            <Converters:boolToVisibility x:Key="boolToVis" />
-            <Converters:FlagConverter x:Key="FlagConverter"/>
-            <Converters:MinMaxConverter x:Key="MinMaxConverter"/>
-            <BitmapImage x:Key="DefaultImage" UriSource="/Currency Converter;component/FlagsImages/AFN.png" />
-
-            <Converters:CountryCodeToImgSourceConverter x:Key="CountryCodeToImgSourceConverter"/>
-
-
-            <DataTemplate x:Key="labelTemplate">
-                <TextBlock Text="{Binding LabelContent}"  Foreground="Black"  FontSize="16"/>
-            </DataTemplate>
-
-            <Style TargetType="Line" x:Key="AxisStyle">
-                <Setter Property="Stroke" Value="DarkGray"  />
-                <Setter Property="StrokeThickness" Value="1"/>
-            </Style>
-
-            <Style TargetType="Line" x:Key="AxisStyle1">
-                <Setter Property="Stroke" Value="DarkGray"  />
-                <Setter Property="StrokeThickness" Value="0.5"/>
-            </Style>
-
-        </Grid.Resources>
+       
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <chart:SfChart Grid.Row="0" x:Name="columnChart" AreaBorderBrush="#8e8e8e" 
-                       Background="White" Margin="25,0,25,22" Height="492" 
-                       VerticalAlignment="Bottom" AreaBorderThickness="0,1,1,1" Grid.RowSpan="2">
+        <chart:SfChart x:Name="columnChart" 
+                       AreaBorderBrush="#8e8e8e" 
+                       Background="White" 
+                       Margin="25,0,25,22"
+                       Height="492" 
+                       VerticalAlignment="Bottom" 
+                       AreaBorderThickness="0,1,1,1"
+                       Grid.RowSpan="2">
+            
             <chart:SfChart.Behaviors>
-                <chart:ChartZoomPanBehavior EnableSelectionZooming="True" EnableZoomingToolBar="True" ></chart:ChartZoomPanBehavior>
+                <chart:ChartZoomPanBehavior EnableSelectionZooming="True" EnableZoomingToolBar="True" />
             </chart:SfChart.Behaviors>
+            
             <chart:SfChart.Header>
-                <TextBlock FontSize="22" Text="RT rates Relative to USD"  Foreground="Black" FontFamily="Segoe UI" 
-                           Margin="0,-10,0,5">
-
-
-                </TextBlock>
+                <TextBlock FontSize="22"
+                           Text="RT rates Relative to USD" 
+                           Foreground="Black" 
+                           FontFamily="Segoe UI" 
+                           Margin="0,10,0,5"/>
             </chart:SfChart.Header>
 
             <chart:SfChart.PrimaryAxis>
@@ -75,25 +72,23 @@
                                     Foreground="Black"  
                                     FontSize="20"
                                     EnableAutoIntervalOnZooming="True"
-                                     AxisLineStyle="{StaticResource AxisStyle1}" 
-                                     MajorTickLineStyle="{StaticResource AxisStyle}"
+                                    AxisLineStyle="{StaticResource AxisStyle1}" 
+                                    MajorTickLineStyle="{StaticResource AxisStyle}"
                                     LabelRotationAngle="45" 
                                     LabelsIntersectAction="MultipleRows"
-                                     MultiLevelLabelsBorderType="Rectangle" 
+                                    MultiLevelLabelsBorderType="Rectangle" 
                                     ShowTrackBallInfo="True"/>
 
             </chart:SfChart.PrimaryAxis>
 
             <chart:SfChart.SecondaryAxis>
-                <chart:NumericalAxis FontSize="20"
+                <chart:NumericalAxis x:Name="YAxis"
+                                     FontSize="20"
                                      Minimum="{Binding Path=taskCurrencies.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=min}"
                                      Maximum="{Binding Path=taskCurrencies.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=max}"
                                      Interval="{Binding Path=taskCurrencies.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=interval}"
                                      Header="Values" 
                                      Foreground="Black"
-                                    
-                                    x:Name="YAxis"
-                                     
                                      LabelTemplate="{StaticResource labelTemplate}" 
                                      AxisLineStyle="{StaticResource AxisStyle}"
                                      MajorTickLineStyle="{StaticResource AxisStyle}"/>
@@ -102,29 +97,20 @@
             <chart:ScatterSeries EnableAnimation="True"
                                  Palette="Metro"   
                                  LegendIcon="Circle"  
-                                ItemsSource="{Binding taskCurrencies.Result}" 
+                                 ItemsSource="{Binding taskCurrencies.Result}" 
                                  XBindingPath="IssuedCountryCode" 
-                                YBindingPath="Value"  
+                                 YBindingPath="Value"  
                                  ListenPropertyChange="True"
                                  ShowTooltip="True" >
                 <chart:ScatterSeries.AdornmentsInfo>
                     <chart:ChartAdornmentInfo AdornmentsPosition="Top" 
                                               HorizontalAlignment="Center"  
                                               SegmentLabelContent="LabelContentPath"
-                                             
                                               VerticalAlignment="Center" 
+                                              LabelTemplate="{StaticResource ChartAdornmentLabelTemplate}"
                                               ShowLabel="True"
                                               ShowMarker="True">
-                        <chart:ChartAdornmentInfo.LabelTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Image  Width="40" Height="40" Source="{Binding Converter={StaticResource CountryCodeToImgSourceConverter}, FallbackValue={StaticResource DefaultImage}}">
-
-
-                                    </Image>
-                                </Grid>
-                            </DataTemplate>
-                        </chart:ChartAdornmentInfo.LabelTemplate>
+                
                     </chart:ChartAdornmentInfo>
                 </chart:ScatterSeries.AdornmentsInfo>
             </chart:ScatterSeries>
@@ -133,8 +119,7 @@
         <ProgressBar Visibility="{Binding taskCurrencies.IsNotCompleted, Converter={StaticResource boolToVis}}"
                      IsIndeterminate="True" 
                      TextOptions.TextHintingMode="Animated" 
-                     AutomationProperties.HelpText="updating...." Grid.Row="1" />
-        <!--<TextBlock x:Name="zoomp" HorizontalAlignment="Left" Margin="512,0,0,0" TextWrapping="Wrap" Text="{Binding ElementName=YAxis, Path=ZoomPosition, Mode=OneWay}" VerticalAlignment="Top"/>
-        <TextBlock x:Name="zoomf" Text="{Binding ElementName=YAxis, Path=ZoomFactor, Mode=OneWay}" HorizontalAlignment="Left" Margin="561,21,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>-->
+                     AutomationProperties.HelpText="updating...." 
+                     Grid.Row="1" />
     </Grid>
 </UserControl>

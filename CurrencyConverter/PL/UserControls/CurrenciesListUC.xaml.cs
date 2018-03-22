@@ -20,32 +20,13 @@ namespace PL.UserControls
     /// Interaction logic for CountriesListUC.xaml
     /// </summary>
     public partial class CurrenciesListUC : UserControl
-    {
-
-        //private CurrenciesListVM currenciesListVM { get; set; }
-
-        //public string filterString
-        //{
-        //    get { return (string)GetValue(filterStringProperty); }
-        //    set { SetValue(filterStringProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for filterString.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty filterStringProperty =
-        //    DependencyProperty.Register("filterString", typeof(string), typeof(CurrenciesListUC), new FrameworkPropertyMetadata(){DefaultValue=null, DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged, BindsTwoWayByDefault = true ,PropertyChangedCallback=filterStringChangedCallback});
-
-        //private static void filterStringChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //   ((CurrenciesListUC)d).currenciesListVM.FilterString = e.NewValue.ToString();
-        //}
-
+    { 
         
 
         public CurrenciesListUC()
         {
             InitializeComponent();
            
-            this.DataContext = new CurrenciesListVM();
         }
     }
 }

@@ -22,39 +22,10 @@ namespace PL.UserControls
     public partial class RTChartUS : UserControl
     {
 
-
-        //public RTChartVM rtChartVM { get; set; }
-
-        //public string filterString
-        //{
-        //    get { return (string)GetValue(filterStringProperty); }
-        //    set { SetValue(filterStringProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for filterString.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty filterStringProperty =
-        //    DependencyProperty.Register("filterString",
-        //                                 typeof(string),
-        //                                 typeof(RTChartUS),
-        //                                 new FrameworkPropertyMetadata(){ DefaultValue = null,
-        //                                                                  DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
-        //                                                                  BindsTwoWayByDefault = true,
-        //                                                                  PropertyChangedCallback = filterStringChangedCallback });
-
-        //private static void filterStringChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    //לבדוק האם נוגד את MVVVM
-        //    ((RTChartUS)d).rtChartVM.FilterString = e.NewValue.ToString();
-        //}
-
-
-
         public RTChartUS()
         {
             InitializeComponent();
-            //rtChartVM = new RTChartVM();
-            //this.DataContext = rtChartVM;
-            this.DataContext = new RTChartVM();
+      
         }
        
     }
