@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PL.UserControls.HistoryUC"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,16 +7,13 @@
              
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="PL.UserControls.HistoryUC"
              mc:Ignorable="d"
              Background="White"
              Height="600"
              Width="680">
 
-    <UserControl.DataContext>
-        <local:HistoryVM/>
-    </UserControl.DataContext>
-    
-    
+
     <UserControl.Resources>
         <ResourceDictionary  >
             <ResourceDictionary.MergedDictionaries>
@@ -24,8 +21,14 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-  
+
+    
+
     <Grid >
+        <Grid.DataContext>
+            <local:HistoryVM/>
+        </Grid.DataContext>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -43,20 +46,20 @@
                    FontWeight="Bold" 
                    Foreground="#FFA4DAFB"
                    Text="HISTORY RATES"/>
-        
+
         <StackPanel Grid.Row="2" 
                     HorizontalAlignment="Center" 
                     Orientation="Horizontal">
-            
-                <TextBlock Text="Currency: " 
+
+            <TextBlock Text="Currency: " 
                            Height="20" 
                            Margin="2" />
-            
-            
-                <ComboBox x:Name="ComboBox" 
+
+
+            <ComboBox x:Name="ComboBox" 
                           ItemsSource="{Binding countries.Result, IsAsync=True}" 
                           HorizontalAlignment="Left" 
-                          IsEnabled="{Binding historyRates.IsCompleted,FallbackValue=false}"
+                          IsEnabled="{Binding historyRates.IsCompleted, FallbackValue=false}"
                           Margin="10,5,0,0" 
                           SelectedItem="{Binding baseCountry}"
                           VerticalAlignment="Top"
@@ -66,29 +69,29 @@
                           Custom:TextBoxHelper.Watermark="choose the currency to show" 
                           Custom:TextBoxHelper.UseFloatingWatermark="True" 
                           Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
 
             <Button Margin="10" 
                         Command="{Binding switchCommand}" 
-                        IsEnabled="{Binding historyRates.IsCompleted,FallbackValue=false}">
-                        <Image Source="/Currency Converter;component/Assets/Switch_Icon.png" Height="45" Width="59" />
+                        IsEnabled="{Binding historyRates.IsCompleted, FallbackValue=false}">
+                <Image Source="/Currency Converter;component/Assets/Switch_Icon.png" Height="45" Width="59" />
             </Button>
-            
-            
-                <TextBlock Text=" Relative: "
+
+
+            <TextBlock Text=" Relative: "
                            Height="20"
                            Margin="2" />
-            
-                <ComboBox x:Name="RelativeComboBox" 
+
+            <ComboBox x:Name="RelativeComboBox" 
                           ItemsSource="{Binding countries.Result, IsAsync=True}" 
                           HorizontalAlignment="Left" 
                           Margin="10,5,0,0" 
-                          IsEnabled="{Binding historyRates.IsCompleted,FallbackValue=false}"
+                          IsEnabled="{Binding historyRates.IsCompleted, FallbackValue=false}"
                           VerticalAlignment="Top"
                           ItemTemplate="{StaticResource CurrencyComboBoxItem}"
                           SelectedItem="{Binding raltiveCountry}" 
@@ -97,13 +100,13 @@
                           Custom:TextBoxHelper.Watermark="choose the relative currency" 
                           Custom:TextBoxHelper.UseFloatingWatermark="True" 
                           Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
-                       
-                          <ComboBox.ItemsPanel>
-                              <ItemsPanelTemplate>
-                                  <VirtualizingStackPanel/>
-                              </ItemsPanelTemplate>
-                          </ComboBox.ItemsPanel>
-                </ComboBox>
+
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
 
         </StackPanel>
 
@@ -112,7 +115,7 @@
                         AreaBorderThickness="0,1,1,1" 
                         Grid.Row="3"
                         Margin="0,10,15,0">
-            
+
             <chart:SfChart.Behaviors>
                 <chart:ChartZoomPanBehavior />
                 <chart:ChartTrackBallBehavior ShowLine="True" 
@@ -120,18 +123,16 @@
                                               LineStyle="{StaticResource TrackballLineStyle}"
                                               ChartTrackBallStyle="{StaticResource trackballStyle}"
                                               LabelHorizontalAlignment="Center" 
-                                              LabelVerticalAlignment="Near" >
-
-                </chart:ChartTrackBallBehavior>
+                                              LabelVerticalAlignment="Near" />
             </chart:SfChart.Behaviors>
 
 
             <chart:SfChart.PrimaryAxis>
-                <chart:DateTimeAxis Name="axis1"  
+                <chart:DateTimeAxis x:Name="axis1"  
                                     HeaderTemplate="{StaticResource headerTemplate}" 
                                     ShowGridLines="False" 
-                                    ZoomPosition="{Binding ElementName=RangeNavigator, Path=ZoomPosition, Mode=TwoWay}"
-                                    ZoomFactor="{Binding ElementName=RangeNavigator, Path=ZoomFactor, Mode=TwoWay}" 
+                                    ZoomPosition="{Binding ZoomPosition, ElementName=RangeNavigator, Mode=TwoWay}"
+                                    ZoomFactor="{Binding ZoomFactor, ElementName=RangeNavigator, Mode=TwoWay}" 
                                     LabelFormat="dd,MMM" LabelTemplate="{StaticResource labelTemplate1}"
                                     AxisLineStyle="{StaticResource AxisStyle}" 
                                     MajorTickLineStyle="{StaticResource AxisStyle}"/>
@@ -139,58 +140,58 @@
 
             <chart:SfChart.SecondaryAxis>
                 <chart:NumericalAxis x:Name="axis2" 
-                                     Minimum="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=min}"
-                                     Maximum="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=max}"
-                                     Interval="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=interval}"
+                                     Minimum="{Binding historyRates.Result, ConverterParameter=min, Converter={StaticResource MinMaxConverter}}"
+                                     Maximum="{Binding historyRates.Result, ConverterParameter=max, Converter={StaticResource MinMaxConverter}}"
+                                     Interval="{Binding historyRates.Result, ConverterParameter=interval, Converter={StaticResource MinMaxConverter}}"
                                      StartRangeFromZero="False"  
                                      HeaderTemplate="{StaticResource headerTemplate}" 
                                      LabelTemplate="{StaticResource labelTemplate}" 
                                      AxisLineStyle="{StaticResource AxisStyle}" 
                                      MinorGridLineStyle="{StaticResource GridLineStyle}"
                                      MajorTickLineStyle="{StaticResource AxisStyle}">
-                 
-                     <chart:NumericalAxis.PostfixLabelTemplate>
+
+                    <chart:NumericalAxis.PostfixLabelTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding baseCountry.Code}"/>
                         </DataTemplate>
                     </chart:NumericalAxis.PostfixLabelTemplate>
-                
+
                 </chart:NumericalAxis>
-            
+
             </chart:SfChart.SecondaryAxis>
 
-            <chart:AreaSeries Name="series" 
-                              EnableAnimation="True"
-                              ItemsSource="{Binding historyRates.Result}" 
-                              XBindingPath="date"
-                              TrackBallLabelTemplate="{StaticResource trackBallLabelTemplate}"
-                              YBindingPath="Currency.Value" 
-                              Margin="0,0,50,0">
+            <chart:SfChart.ContextMenu>
+                <ContextMenu >
+                    <!--<ContextMenu.CommandBindings>
+                        <CommandBinding Command="ApplicationCommands.Print" Executed="CommandBinding_Executed" CanExecute="CommandBinding_CanExecute"/>
+                    </ContextMenu.CommandBindings>-->
+                    <MenuItem  Header="Print"
+                               Command="{StaticResource PrintCommand}" CommandParameter="{Binding PlacementTarget, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}">
+
+                        <MenuItem.Icon>
+                            <Image Width="25" Height="25" Source="/Currency Converter;component/Assets/printIcon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </chart:SfChart.ContextMenu>
+
+            <chart:AreaSeries x:Name="series" 
+                                          EnableAnimation="True"
+                                          ItemsSource="{Binding historyRates.Result}" 
+                                          XBindingPath="date"
+                                          TrackBallLabelTemplate="{StaticResource trackBallLabelTemplate}"
+                                          YBindingPath="Currency.Value" 
+                                          Margin="0,0,50,0">
 
                 <chart:AreaSeries.Interior>
-                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03" Opacity="0.8">
+                    <LinearGradientBrush EndPoint="0.504,1.5"
+                                         StartPoint="0.504,0.03"
+                                         Opacity="0.8">
                         <GradientStop Color="LightSkyBlue" Offset="0"/>
                         <GradientStop Color="White" Offset="0.567"/>
                     </LinearGradientBrush>
                 </chart:AreaSeries.Interior>
-                
-                <!--<chart:AreaSeries.TrackBallLabelTemplate>
-                    <DataTemplate >
-                        <Grid Margin="0,0,0,5">
-                            <Border CornerRadius="5" x:Name="border" Margin="10" BorderBrush="LightSkyBlue" BorderThickness="1"  Background="White" >
-                                <StackPanel Margin="5">
-                                    <TextBlock  Text="{Binding Item.date, Converter={StaticResource trackballLabel}}" />
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Value : "  />
-                                        <TextBlock Text="{Binding ElementName=ComboBox, Path=SelectedItem.Code, Converter={StaticResource SymbolConverter} }"  />
-                                        <TextBlock Text=" "  />
-                                        <TextBlock Text="{Binding ValueY}" FontWeight="Bold" />
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </chart:AreaSeries.TrackBallLabelTemplate>-->
+
             </chart:AreaSeries>
         </chart:SfChart>
 
@@ -206,67 +207,66 @@
                                         ToolTipLabelFormat ="MMM/dd/yyyy"
                                         ScrollbarVisibility="Hidden"
                                         Margin="50,0,25,5">
-            
-            <chart:SfDateTimeRangeNavigator.Content >
 
-                <chart:SfChart xml:lang="en-US" 
+            <chart:SfDateTimeRangeNavigator.HigherLevelBarStyle>
+                <chart:LabelBarStyle SelectedLabelBrush="Black" Position="Inside" />
+            </chart:SfDateTimeRangeNavigator.HigherLevelBarStyle>
+
+            <chart:SfDateTimeRangeNavigator.LowerLevelBarStyle>
+                <chart:LabelBarStyle SelectedLabelBrush="Black" Position="Inside"  />
+            </chart:SfDateTimeRangeNavigator.LowerLevelBarStyle>
+
+            <chart:SfDateTimeRangeNavigator.Intervals>
+                <chart:Interval IntervalType="Month"/>
+                <chart:Interval IntervalType="Year" />
+            </chart:SfDateTimeRangeNavigator.Intervals>
+
+            <chart:SfDateTimeRangeNavigator.RightThumbStyle>
+                <chart:ThumbStyle SymbolTemplate="{StaticResource symboltemplate}"/>
+            </chart:SfDateTimeRangeNavigator.RightThumbStyle>
+
+            <chart:SfDateTimeRangeNavigator.LeftThumbStyle>
+                <chart:ThumbStyle SymbolTemplate="{StaticResource symboltemplate}"/>
+            </chart:SfDateTimeRangeNavigator.LeftThumbStyle>
+
+            <chart:SfChart xml:lang="en-US" 
                                AreaBorderThickness="0,1,0,0">
-                    
-                        <chart:SfChart.PrimaryAxis>
-                            <chart:DateTimeAxis  ShowGridLines="False"
-                                                  Visibility="Collapsed" />
-                        </chart:SfChart.PrimaryAxis>
 
-                        <chart:SfChart.SecondaryAxis>
-                            <chart:NumericalAxis Minimum="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=min}"
-                                                 Maximum="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=max}"
-                                                 Interval="{Binding Path=historyRates.Result, Converter={StaticResource MinMaxConverter}, ConverterParameter=interval}" 
+                <chart:SfChart.PrimaryAxis>
+                    <chart:DateTimeAxis  ShowGridLines="False"
+                                                  Visibility="Collapsed" />
+                </chart:SfChart.PrimaryAxis>
+
+                <chart:SfChart.SecondaryAxis>
+                    <chart:NumericalAxis Minimum="{Binding historyRates.Result, ConverterParameter=min, Converter={StaticResource MinMaxConverter}}"
+                                                 Maximum="{Binding historyRates.Result, ConverterParameter=max, Converter={StaticResource MinMaxConverter}}"
+                                                 Interval="{Binding historyRates.Result, ConverterParameter=interval, Converter={StaticResource MinMaxConverter}}" 
                                                  ShowGridLines="False" 
                                                  StartRangeFromZero="False" 
                                                  Visibility="Collapsed" />
-                        </chart:SfChart.SecondaryAxis>
+                </chart:SfChart.SecondaryAxis>
 
-                        <chart:AreaSeries x:Name="SeriesInRangenavigator"  
+                <chart:AreaSeries x:Name="SeriesInRangenavigator"  
                                           ItemsSource="{Binding historyRates.Result}" 
                                           XBindingPath="date" 
                                           YBindingPath="Currency.Value" 
                                           EnableAnimation="True">
-                            <chart:AreaSeries.Interior>
-                                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                                    <GradientStop Color="LightSkyBlue" Offset="0"/>
-                                    <GradientStop Color="White" Offset="0.567"/>
-                                </LinearGradientBrush>
-                            </chart:AreaSeries.Interior>
-                        </chart:AreaSeries>
-                    </chart:SfChart>
-                </chart:SfDateTimeRangeNavigator.Content>
-                <chart:SfDateTimeRangeNavigator.HigherLevelBarStyle>
-                    <chart:LabelBarStyle SelectedLabelBrush="Black" Position="Inside" />
-                </chart:SfDateTimeRangeNavigator.HigherLevelBarStyle>
+                    <chart:AreaSeries.Interior>
+                        <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                            <GradientStop Color="LightSkyBlue" Offset="0"/>
+                            <GradientStop Color="White" Offset="0.567"/>
+                        </LinearGradientBrush>
+                    </chart:AreaSeries.Interior>
+                </chart:AreaSeries>
+            </chart:SfChart>
+        </chart:SfDateTimeRangeNavigator>
 
-                <chart:SfDateTimeRangeNavigator.LowerLevelBarStyle>
-                    <chart:LabelBarStyle SelectedLabelBrush="Black" Position="Inside"  />
-                </chart:SfDateTimeRangeNavigator.LowerLevelBarStyle>
-
-                <chart:SfDateTimeRangeNavigator.Intervals>
-                    <chart:Interval IntervalType="Month"/>
-                    <chart:Interval IntervalType="Year" />
-            </chart:SfDateTimeRangeNavigator.Intervals>
-
-                <chart:SfDateTimeRangeNavigator.RightThumbStyle>
-                    <chart:ThumbStyle SymbolTemplate="{StaticResource symboltemplate}"/>
-                </chart:SfDateTimeRangeNavigator.RightThumbStyle>
-
-                <chart:SfDateTimeRangeNavigator.LeftThumbStyle>
-                    <chart:ThumbStyle SymbolTemplate="{StaticResource symboltemplate}"/>
-                </chart:SfDateTimeRangeNavigator.LeftThumbStyle>
-            </chart:SfDateTimeRangeNavigator>
-        
         <ProgressBar  Visibility="{Binding historyRates.IsNotCompleted, Converter={StaticResource boolToVis}}" 
                       Grid.Row="0" 
                       IsIndeterminate="True" 
                       TextOptions.TextHintingMode="Animated" 
                       AutomationProperties.HelpText="updating...." />
-        
+
+
     </Grid>
 </UserControl>

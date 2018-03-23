@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+using System.IO;
 
 namespace PL.UserControls
 {
@@ -26,10 +28,14 @@ namespace PL.UserControls
             series.StrokeThickness = 0.3;
             series.Stroke = new SolidColorBrush(Color.FromArgb(255, 27, 161, 226));
 
+            
+
 
             SeriesInRangenavigator.StrokeThickness = 0.3;
             SeriesInRangenavigator.Stroke = new SolidColorBrush(Color.FromArgb(255, 27, 161, 226));
 
         }
+
+     
     }
 }

@@ -10,11 +10,11 @@ namespace PL.Commands
 {
    public class SwitchCurrencyCommand : ICommand
     {
-        public Object VM { get; set; }
+        public IHistoryVM VM { get; set; }
         
 
 
-        public SwitchCurrencyCommand(Object IVM)
+        public SwitchCurrencyCommand(IHistoryVM IVM)
         {
             VM = IVM;
         }
@@ -26,10 +26,10 @@ namespace PL.Commands
 
         public void Execute(object parameter)
         {
-            if (VM is IHistoryVM)
-                (VM as IHistoryVM).SwitchSourceCurrencyAndRelative();
-            if (VM is ICurrenciesListVM)
-                (VM as ICurrenciesListVM).SwitchRTListAndRTChart();
+            
+                VM.SwitchSourceCurrencyAndRelative();
+            //if (VM is ICurrenciesListVM)
+            //    (VM as ICurrenciesListVM).SwitchRTListAndRTChart();
 
 
         }

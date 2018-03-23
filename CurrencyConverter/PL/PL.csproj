@@ -113,6 +113,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\PrintCommand.cs" />
     <Compile Include="Commands\SwitchCurrencyCommand.cs" />
     <Compile Include="Commands\SwitchUCommand.cs" />
     <Compile Include="ConverterParameter.cs" />
@@ -552,6 +553,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="appIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\printIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
