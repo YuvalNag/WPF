@@ -24,7 +24,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -113,6 +113,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="Commands\PrintCommand.cs" />
     <Compile Include="Commands\SwitchCurrencyCommand.cs" />
     <Compile Include="Commands\SwitchUCommand.cs" />
@@ -131,7 +132,6 @@
     <Compile Include="CurrancyItem.xaml.cs">
       <DependentUpon>CurrancyItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomPanel\VirtualizingWrapPanel.cs" />
     <Compile Include="Models\CurrenciesRTModel.cs" />
     <Compile Include="Models\HIstoryModel.cs" />
     <Compile Include="UserControls\RTChartUC.xaml.cs">
@@ -556,6 +556,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\printIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\saveIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

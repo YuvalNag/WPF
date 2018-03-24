@@ -3,20 +3,25 @@
                      xmlns:Converters="clr-namespace:PL.Converters"
                     xmlns:local="clr-namespace:PL">
 
-
+<!--converters-->
     <Converters:CountryCodeToImgSourceConverter x:Key="CountryCodeToImgSourceConverter" />
     <Converters:DirectionToBackgroundConverter x:Key="DirectionToBackgroundConverter" />
     <Converters:boolToVisibility x:Key="boolToVis" />
     <Converters:ConvertValuse x:Key="ConvertValuse"/>
     <Converters:FlagConverter x:Key="FlagConverter"/>
     <Converters:IssuedCountryCodeToCountrySymbolConverter x:Key="IssuedCountryCodeToCountrySymbolConverter"/>
-    <BitmapImage x:Key="DefaultImage" UriSource="/PL;component/FlagsImages/AFN.png" />
     
+    
+    <BitmapImage x:Key="DefaultImage" UriSource="/PL;component/FlagsImages/AFN.png" />
+
+<!--styles-->
     <Style TargetType="ListViewItem">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Margin" Value="5"/>
     </Style>
 
+    
+<!--data templates-->
     <DataTemplate x:Key="CurrencyComboBoxItem">
         <Grid Background="#8C008000" Width="150" Height="50">
             <Grid.RowDefinitions>
@@ -34,6 +39,8 @@
 
         </Grid>
     </DataTemplate>
+    
+    
     <DataTemplate x:Key="CurrencyItem">
         <Grid  Background="{Binding Direction, Converter={StaticResource DirectionToBackgroundConverter} }"  Width="200" Height="85">
             <Grid.RowDefinitions>
@@ -49,50 +56,46 @@
                Grid.RowSpan="2"
                HorizontalAlignment="Center"
                VerticalAlignment="Center" />
+            
             <Viewbox  Grid.Column="1" 
-                    Grid.ColumnSpan="2"
-                       StretchDirection="DownOnly" 
-                    Grid.Row="0">
-            <TextBlock  Grid.Column="1" 
-                    Grid.ColumnSpan="2"
-                    Grid.Row="0"
-                    VerticalAlignment="Center" 
-                    TextWrapping="Wrap"
-                    HorizontalAlignment="Right" 
-                    FontSize="20" Margin="0,5,10,0"  >
-                    <Run  FontWeight="Bold" 
-                          Text="{Binding IssuedCountryCode, Converter={StaticResource IssuedCountryCodeToCountrySymbolConverter} }" Block.TextAlignment="Center" />
-                    <Run Block.TextAlignment="Center">
-                        <Run.Text>
-                             <MultiBinding  Converter="{StaticResource ConvertValuse}" Mode="OneWay">
-                                <Binding   />
-                                 <Binding  ElementName="ralativeCombo" Path="SelectedItem" />
-                                <Binding ElementName="AmountTextBox"  Path="Value"/>
-                             </MultiBinding>
-                        </Run.Text>
-                    </Run>
-            </TextBlock>
+                      Grid.ColumnSpan="2"
+                      StretchDirection="DownOnly" 
+                      Grid.Row="0">
+                    <TextBlock  Grid.Column="1" 
+                                Grid.ColumnSpan="2"
+                                Grid.Row="0"
+                                VerticalAlignment="Center" 
+                                TextWrapping="Wrap"
+                                HorizontalAlignment="Right" 
+                                FontSize="20" Margin="0,5,10,0"  >
+                                <Run  FontWeight="Bold" 
+                                      Text="{Binding IssuedCountryCode, Converter={StaticResource IssuedCountryCodeToCountrySymbolConverter} }" Block.TextAlignment="Center" />
+                                <Run Block.TextAlignment="Center">
+                                    <Run.Text>
+                                         <MultiBinding  Converter="{StaticResource ConvertValuse}" Mode="OneWay">
+                                            <Binding   />
+                                             <Binding  ElementName="ralativeCombo" Path="SelectedItem" />
+                                            <Binding ElementName="AmountTextBox"  Path="Value"/>
+                                         </MultiBinding>
+                                    </Run.Text>
+                                </Run>
+                    </TextBlock>
             </Viewbox>
             <Viewbox Grid.ColumnSpan="2"
-                            Grid.Row="1" 
-                            Grid.Column="1"
-                             
-                            Grid.RowSpan="2"  
-                         StretchDirection="DownOnly" 
-                         Stretch="Uniform" Margin="10,0">
+                     Grid.Row="1" 
+                     Grid.Column="1"
+                     Grid.RowSpan="2"  
+                     StretchDirection="DownOnly" 
+                     Stretch="Uniform" 
+                     Margin="10,0">
 
-                <TextBlock  
-                            
-                           TextWrapping="Wrap"
-                            TextAlignment="Center" FontSize="16">
-                   
-                        <Run Text="{Binding IssuedCountryCode }" />
-                        <Run Text="-" />
-                        <Run Text="{Binding IssuedCountryName }" />
-
-
+                <TextBlock TextWrapping="Wrap"
+                           TextAlignment="Center" 
+                           FontSize="16">
+                           <Run Text="{Binding IssuedCountryCode }" />
+                           <Run Text="-" />
+                           <Run Text="{Binding IssuedCountryName }" />
                 </TextBlock>
-
             </Viewbox>
         </Grid>
 

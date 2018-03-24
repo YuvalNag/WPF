@@ -39,6 +39,8 @@ namespace PL.ViewModels
 
             }
         }
+
+
         private bool _showTop15;
         public bool showTop15
         {
@@ -50,13 +52,13 @@ namespace PL.ViewModels
             {
 
                 _showTop15 = value;
-              
+                    //update the list accordingly
                     if (_showTop15)
                     {
 
-                        currenciesList = Top12CollectioView;
+                        currenciesList = Top15CollectioView;
                     currenciesList.Refresh();
-                    relativeCurrenciesListCollection = Top12List;
+                    relativeCurrenciesListCollection = Top15List;
 
                     }
                     else
@@ -73,6 +75,7 @@ namespace PL.ViewModels
             }
         }
 
+        //the list for the main display
         private ICollectionView _currenciesList;
         public ICollectionView currenciesList
         {
@@ -88,6 +91,7 @@ namespace PL.ViewModels
             }
         }
 
+        //the list for te combo box (needs to be diffrent the the other list)_
         private ObservableCollection<Currency> _relativeCurrenciesListCollection;
         public ObservableCollection<Currency> relativeCurrenciesListCollection
         {
@@ -119,6 +123,7 @@ namespace PL.ViewModels
         }
 
 
+        //a prop for binding and filtering the list
         private string _filterString;
         public string FilterString
         {
@@ -131,58 +136,54 @@ namespace PL.ViewModels
                     currenciesList.Refresh();
             }
         }
-        
 
+        //props for supporting the change 
+        private ObservableCollection<Currency> Top15List { get; set; }
+        private ICollectionView Top15CollectioView { get; set; }
 
-      
+        private ObservableCollection<Currency> allList { get; set; }
+        private ICollectionView allCollectioView { get; set; }
+
 
         private CurrenciesRTModel RTModel { set; get; }
 
-        #endregion
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion
 
 
-       
+
+
         public CurrenciesListVM()
         {
             
             RTModel = new CurrenciesRTModel();
             taskCurrencies=new NotifyTaskCompletion<Currencies>(ConvertToICollectionViewAsync());
-            //UC = new ObservableCollection<UserControl>();
-            //UC.Add(new ColumnsChartUS());
-
         }
 
-        //get in the backround the 
+        
         private async Task<Currencies> ConvertToICollectionViewAsync()
         {
 
             Currencies tempCurrencies = await (RTModel.GetCurrencies());
             allList = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
-            allCollectioView = CollectionViewSource.GetDefaultView(new ObservableCollection<Currency>(allList));
+            allCollectioView = CollectionViewSource.GetDefaultView(tempCurrencies.CurrenciesList);
             allCollectioView.Filter = CurrenciesFilter;
 
             string[] currenciesCodes = {  "AED", "BTC", "ILS", "EUR", "BRL", "AUD", "BZD", "CAD", "GBP", "CZK", "HKD", "SAR", "SEK", "SGD", "USD" };
             tempCurrencies = await (RTModel.GetCurrencies(currenciesCodes));
-            Top12List = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
-            Top12CollectioView = CollectionViewSource.GetDefaultView(new ObservableCollection<Currency>(Top12List));
-            Top12CollectioView.Filter = CurrenciesFilter;
+            Top15List = new ObservableCollection<Currency>(tempCurrencies.CurrenciesList);
+            Top15CollectioView = CollectionViewSource.GetDefaultView(tempCurrencies.CurrenciesList);
+            Top15CollectioView.Filter = CurrenciesFilter;
 
-            
-
+           
             showTop15 = true;
            
             return tempCurrencies;
 
         }
         
-        private ObservableCollection<Currency> Top12List { get; set; }
-        private ICollectionView Top12CollectioView { get; set; }
-
-        private ObservableCollection<Currency> allList { get; set; }
-        private ICollectionView allCollectioView { get; set; }
-
+      
         // a predicate to filter for ICollectionView
         private bool CurrenciesFilter(object item)
         {
