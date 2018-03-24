@@ -3,34 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL"
-          
-    
-    xmlns:Converters="clr-namespace:PL.Converters"
+        xmlns:Converters="clr-namespace:PL.Converters"
+        xmlns:VM="clr-namespace:PL.ViewModels"
+        xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
+        x:Class="PL.MainWindow"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"    
+        mc:Ignorable="d"
+        Title="Currency Converter"
+        Icon="Assets/appIcon.png" 
+        SizeToContent="WidthAndHeight" 
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        IconBitmapScalingMode="Linear" >
 
-    xmlns:VM="clr-namespace:PL.ViewModels"
-      xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:UserControls="clr-namespace:PL.UserControls" 
-    x:Class="PL.MainWindow"
-    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"    
-    mc:Ignorable="d"
-        Title="Currency Converter" Icon="Assets/appIcon.png" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" IconBitmapScalingMode="Linear" >
-  
+    <Window.Resources>
+        <Converters:ContentConverter x:Key="ContentConverter"/>
+    </Window.Resources>
+    
     <Window.DataContext>
         <VM:MainVM></VM:MainVM>
     </Window.DataContext>
+  
     <Grid>
-        <Grid.Resources>
-       
-            
-            <Converters:ContentConverter x:Key="ContentConverter"/>
-
-
-        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
+        
         <Button Height="50" 
                 Width="50"  
                 Command="{Binding switchCommand}" 
@@ -54,12 +53,9 @@
                         Height="600"
                         Width="680"  
                         EnableTouch="False"
-                        ItemsPerPage="-1" 
+                        ItemsPerPage="1" 
                         VisualMode="Standard"
                         OpacityFraction="0">
-           
-
-
         </syncfusion:Carousel>
     </Grid>
 </Custom:MetroWindow>

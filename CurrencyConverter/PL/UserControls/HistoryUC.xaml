@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PL.ViewModels"
-             
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
              x:Class="PL.UserControls.HistoryUC"
@@ -21,14 +20,14 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
+    
+    <UserControl.DataContext>
+        <local:HistoryVM/>
+    </UserControl.DataContext>
     
 
     <Grid >
-        <Grid.DataContext>
-            <local:HistoryVM/>
-        </Grid.DataContext>
-
+    
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>

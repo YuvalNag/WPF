@@ -9,6 +9,8 @@ namespace PL.ViewModels
 {
     public class MainVM : INotifyPropertyChanged, ISwitchUC
     {
+        #region properties
+
         private ObservableCollection<UserControl> _UC;
         public ObservableCollection<UserControl> UC
         {
@@ -22,14 +24,9 @@ namespace PL.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UC"));
             }
         }
-        public MainVM()
-        {
-            UC = new ObservableCollection<UserControl>();
-            UC.Add(new HistoryUC());
-            
-            selectedIndex = 0;
-            switchCommand = new SwitchUCommand(this);
-        }
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
 
@@ -47,7 +44,7 @@ namespace PL.ViewModels
                 return _selectedIndex;
             }
         }
-      
+
         private ICommand _switchCommand;
         public ICommand switchCommand
         {
@@ -60,7 +57,18 @@ namespace PL.ViewModels
                 _switchCommand = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("switchCommand"));
             }
+        } 
+        #endregion
+
+        public MainVM()
+        {
+            UC = new ObservableCollection<UserControl>();
+            UC.Add(new HistoryUC());
+
+            selectedIndex = 0;
+            switchCommand = new SwitchUCommand(this);
         }
+
         public void SwitchUCSelected()
         {
             if (selectedIndex == 0)

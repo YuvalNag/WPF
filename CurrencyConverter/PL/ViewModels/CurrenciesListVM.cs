@@ -1,16 +1,11 @@
 ﻿
 using DP;
 using PL.Models;
-using PL.UserControls;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace PL.ViewModels
@@ -178,7 +173,9 @@ namespace PL.ViewModels
 
            
             showTop15 = true;
-           
+            relativeCurrency = Top15List.FirstOrDefault(t => t.IssuedCountryCode == "USD");
+
+
             return tempCurrencies;
 
         }
