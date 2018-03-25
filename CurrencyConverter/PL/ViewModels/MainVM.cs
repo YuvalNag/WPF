@@ -51,15 +51,16 @@ namespace PL.ViewModels
             {
                 _switchCommand = value;
                 OnPropertyChanged();
-
             }
         } 
         #endregion
 
         public MainVM()
         {
-            UC = new ObservableCollection<UserControl>();
-            UC.Add(new HistoryUC());
+            UC = new ObservableCollection<UserControl>
+            {
+                new HistoryUC()
+            };
 
             selectedIndex = 0;
             switchCommand = new SwitchUCommand(this);

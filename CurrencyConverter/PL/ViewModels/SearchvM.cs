@@ -49,18 +49,18 @@ namespace PL.ViewModels
             }
         }
 
-        private UserControl _prevUC { set; get; }
+        private UserControl _unSelectedUC { set; get; }
   
 
         public void SwitchUCSelected()
         {
-            if (_prevUC ==null)
+            if (_unSelectedUC ==null)
             {
-                _prevUC = new RTChartUS();
+                _unSelectedUC = new RTChartUS();
             }
 
-            UserControl temp = _prevUC;
-            _prevUC = selectedUC;
+            UserControl temp = _unSelectedUC;
+            _unSelectedUC = selectedUC;
             selectedUC = temp;
         }
     }
