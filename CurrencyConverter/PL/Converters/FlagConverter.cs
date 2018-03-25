@@ -14,10 +14,6 @@ namespace PL.Converters
         {
             string name = value as string;
             return @"/Currency Converter;component/FlagsImages/" + name+".png";
-            
-
-
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

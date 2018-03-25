@@ -124,7 +124,6 @@
     <Compile Include="Commands\PrintCommand.cs" />
     <Compile Include="Commands\SwitchCurrencyCommand.cs" />
     <Compile Include="Commands\SwitchUCommand.cs" />
-    <Compile Include="ConverterParameter.cs" />
     <Compile Include="Converters\ButtonchartListConverter.cs" />
     <Compile Include="Converters\ContentConverter.cs" />
     <Compile Include="Converters\ConvertValuse.cs" />
@@ -136,10 +135,6 @@
     <Compile Include="Converters\IssuedCountryCodeToCountrySymbolConverter.cs" />
     <Compile Include="Converters\LabelConverter.cs" />
     <Compile Include="Converters\MinMaxConverter.cs" />
-    <Compile Include="Converters\MultiConverter.cs" />
-    <Compile Include="CurrancyItem.xaml.cs">
-      <DependentUpon>CurrancyItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Models\CurrenciesRTModel.cs" />
     <Compile Include="Models\HIstoryModel.cs" />
     <Compile Include="UserControls\RTChartUC.xaml.cs">
@@ -164,10 +159,6 @@
     <Compile Include="ViewModels\NotifyTaskCompletion.cs" />
     <Compile Include="ViewModels\RTChartVM.cs" />
     <Compile Include="ViewModels\SearchVM.cs" />
-    <Page Include="CurrancyItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
