@@ -10,7 +10,7 @@ using System.Windows.Data;
 
 namespace PL.ViewModels
 {
-    public class RTChartVM
+    public class RTChartVM:BaseVM
     {
 
         #region Properties
@@ -22,7 +22,8 @@ namespace PL.ViewModels
             set
             {
                 _taskCurrencies = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("taskCurrencies"));
+                OnPropertyChanged();
+
             }
             get
             {
@@ -38,7 +39,7 @@ namespace PL.ViewModels
             set
             {
                 _filterString = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FilterString"));
+                OnPropertyChanged();
                 if (taskCurrencies != null && taskCurrencies.IsCompleted)
                     taskCurrencies.Result.Refresh();
             }
@@ -47,9 +48,9 @@ namespace PL.ViewModels
 
 
 
-        private CurrenciesRTModel rTModel { set; get; }
+        private CurrenciesRTModel RTModel { set; get; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        
 
         #endregion
 
@@ -59,7 +60,7 @@ namespace PL.ViewModels
         public RTChartVM()
         {
 
-            rTModel = new CurrenciesRTModel();
+            RTModel = new CurrenciesRTModel();
             taskCurrencies = new NotifyTaskCompletion<ICollectionView>(ConvertToICollectionViewAsync());
 
         }
@@ -70,7 +71,7 @@ namespace PL.ViewModels
 
 
             string[] currenciescodes = { "AED", "BTC", "ILS", "EUR", "BRL", "AUD", "BZD", "CAD", "GBP", "CZK", "HKD", "SAR", "SEK", "SGD", "USD" };
-            Currencies tempCurrencies = await (rTModel.GetCurrencies(currenciescodes));
+            Currencies tempCurrencies = await (RTModel.GetCurrencies(currenciescodes));
 
             ICollectionView collectionView = CollectionViewSource.GetDefaultView(tempCurrencies.CurrenciesList);
             collectionView.Filter = CurrenciesFilter;

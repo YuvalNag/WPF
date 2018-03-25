@@ -60,15 +60,26 @@
     
     
     <DataTemplate x:Key="headerTemplate">
-        <TextBlock FontSize="16" Foreground="Black" Margin="5" Text="{Binding}"/>
+        <TextBlock FontSize="16"
+                   Foreground="Black"
+                   Margin="5" 
+                   Text="{Binding}"/>
     </DataTemplate>
 
     <DataTemplate x:Key="labelTemplate">
         <StackPanel Orientation="Horizontal">
-            <TextBlock FontSize="14" Text="{Binding ElementName=ComboBox, Path=SelectedItem.Code, Converter={StaticResource SymbolConverter} }" Foreground="Black"/>
-            <TextBlock FontSize="14" Foreground="Black" Text=" "/>
-
-            <TextBlock FontSize="14" Foreground="Black" Text="{Binding Path=LabelContent}"/>
+           
+            <TextBlock FontSize="14" 
+                       Text="{Binding ElementName=ComboBox, Path=SelectedItem.Code, Converter={StaticResource SymbolConverter} }"
+                       Foreground="Black"/>
+          
+            <TextBlock FontSize="14" 
+                       Foreground="Black" 
+                       Text=" "/>
+           
+            <TextBlock FontSize="14" 
+                       Foreground="Black" 
+                       Text="{Binding Path=LabelContent}"/>
         </StackPanel>
     </DataTemplate>
 
