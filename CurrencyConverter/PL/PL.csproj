@@ -53,7 +53,7 @@
     <StartupObject>PL.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>9BBB8061A2798FBFEC227342D3D679165B042C7C</ManifestCertificateThumbprint>
@@ -66,6 +66,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>appIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
@@ -129,9 +132,6 @@
     <Compile Include="Converters\LabelConverter.cs" />
     <Compile Include="Converters\MinMaxConverter.cs" />
     <Compile Include="Converters\MultiConverter.cs" />
-    <Compile Include="CurrancyItem.xaml.cs">
-      <DependentUpon>CurrancyItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Models\CurrenciesRTModel.cs" />
     <Compile Include="Models\HIstoryModel.cs" />
     <Compile Include="UserControls\RTChartUC.xaml.cs">
@@ -155,10 +155,6 @@
     <Compile Include="ViewModels\NotifyTaskCompletion.cs" />
     <Compile Include="ViewModels\RTChartVM.cs" />
     <Compile Include="ViewModels\SearchVM.cs" />
-    <Page Include="CurrancyItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
