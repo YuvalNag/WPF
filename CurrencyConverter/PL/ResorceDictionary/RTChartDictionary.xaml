@@ -5,6 +5,7 @@
     <!--converters-->
     <Converters:boolToVisibility x:Key="boolToVis" />
     <Converters:FlagConverter x:Key="FlagConverter"/>
+    
     <Converters:MinMaxConverter x:Key="MinMaxConverter"/>
     <Converters:CountryCodeToImgSourceConverter x:Key="CountryCodeToImgSourceConverter"/>
 

@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace PL.ViewModels
 {
-    public class HistoryVM : INotifyPropertyChanged, IHistoryVM
+    public class HistoryVM : BaseVM, IHistoryVM
     {
         private ICommand _switchCommand;
         public ICommand switchCommand {
@@ -20,42 +20,44 @@ namespace PL.ViewModels
             set
             {
                 _switchCommand = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("switchCommand"));
+                OnPropertyChanged();
+
             }
         }
-        
+
+       
         private NotifyTaskCompletion<ObservableCollection<HistoryDTO>> _historyRates;
         public NotifyTaskCompletion<ObservableCollection<HistoryDTO>> historyRates
         {
             set
             {
                 _historyRates = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("historyRates"));
+                OnPropertyChanged();
+
             }
             get
             {
                 return _historyRates;
             }
         }
+
         private NotifyTaskCompletion<ObservableCollection<Country>> _countries;
         public NotifyTaskCompletion<ObservableCollection<Country>> countries
         {
             set
             {
                 _countries = value;
+                OnPropertyChanged();
 
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("countries"));
             }
             get
             {
                 return _countries;
             }
         }
+
         private Models.HIstoryModel hModel { set; get; }
 
-
-        
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private Country _baseCountry;
         public Country baseCountry
@@ -68,8 +70,9 @@ namespace PL.ViewModels
             {
                 _baseCountry = value;
                 historyRates = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(ConvertHistoryToObservableCollection());
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("baseCountry"));
-                
+                OnPropertyChanged();
+
+
             }
         }
 
@@ -84,7 +87,8 @@ namespace PL.ViewModels
             {
                 _raltiveCountry = value;
                 historyRates = new NotifyTaskCompletion<ObservableCollection<HistoryDTO>>(ConvertHistoryToObservableCollection());
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("raltiveCountry"));
+                OnPropertyChanged();
+
 
             }
         }
@@ -95,6 +99,7 @@ namespace PL.ViewModels
            
             countries = new NotifyTaskCompletion<ObservableCollection<Country>>(ConvertCountriesToObservableCollection());
             switchCommand = new SwitchCurrencyCommand(this);
+            
         }
         
 
@@ -108,7 +113,8 @@ namespace PL.ViewModels
 
             //skip the property  
             _raltiveCountry = countriesTemp.Find(t => String.Equals(t.Code,"USD"));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("raltiveCountry"));
+            OnPropertyChanged(nameof(raltiveCountry));
+
 
 
             return new ObservableCollection<Country>(countriesTemp);
@@ -123,8 +129,9 @@ namespace PL.ViewModels
             //skip the property 
             _baseCountry = tempRelative;
             raltiveCountry = tempsource;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("baseCountry"));
-           
+            OnPropertyChanged(nameof(baseCountry));
+
+
 
         }
         private async Task<ObservableCollection<HistoryDTO>> ConvertHistoryToObservableCollection()

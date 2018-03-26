@@ -29,7 +29,7 @@ namespace PL.Commands
             {
                 using (Stream fs = sfd.OpenFile())
                 {
-                    ((SfChart)parameter).Save(fs, new PngBitmapEncoder());
+                    ((SfChart)parameter).Save(fs, new JpegBitmapEncoder());
                 }
             }
             

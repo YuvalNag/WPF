@@ -10,7 +10,7 @@ using System.Windows.Data;
 
 namespace PL.ViewModels
 {
-   public class CurrenciesListVM : INotifyPropertyChanged
+   public class CurrenciesListVM : BaseVM
     {
 
 
@@ -29,7 +29,7 @@ namespace PL.ViewModels
                 if (value != null)
                 {
                     _relativeCurrency = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("relativeCurrency"));
+                    OnPropertyChanged();
                 }
 
             }
@@ -47,26 +47,21 @@ namespace PL.ViewModels
             {
 
                 _showTop15 = value;
-                    //update the list accordingly
-                    if (_showTop15)
-                    {
-
-                        currenciesList = Top15CollectioView;
+                //update the list accordingly
+                if (_showTop15)
+                {
+                    currenciesList = Top15CollectioView;
                     currenciesList.Refresh();
                     relativeCurrenciesListCollection = Top15List;
+                }
+                else
+                {
+                    currenciesList = allCollectioView;
+                    currenciesList.Refresh();
+                    relativeCurrenciesListCollection = allList;
+                }
 
-                    }
-                    else
-                    {
-
-                        currenciesList = allCollectioView;
-                        currenciesList.Refresh();
-                        relativeCurrenciesListCollection = allList;
-
-                    }
-               
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("showTop15"));
-
+                OnPropertyChanged();
             }
         }
 
@@ -81,7 +76,8 @@ namespace PL.ViewModels
             set
             {
                 _currenciesList = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("currenciesList"));
+                OnPropertyChanged();
+
 
             }
         }
@@ -97,7 +93,8 @@ namespace PL.ViewModels
             set
             {
                 _relativeCurrenciesListCollection = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("relativeCurrenciesListCollection"));
+                OnPropertyChanged();
+
 
             }
         }
@@ -109,7 +106,7 @@ namespace PL.ViewModels
             set
             {
                 _taskCurrencies = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("taskCurrencies"));
+                OnPropertyChanged();
             }
             get
             {
@@ -126,13 +123,14 @@ namespace PL.ViewModels
             set
             {
                 _filterString = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FilterString"));
+                OnPropertyChanged();
+
                 if (_currenciesList != null)
                     currenciesList.Refresh();
             }
         }
 
-        //props for supporting the change 
+        //props for supporting swap 
         private ObservableCollection<Currency> Top15List { get; set; }
         private ICollectionView Top15CollectioView { get; set; }
 
@@ -142,7 +140,7 @@ namespace PL.ViewModels
 
         private CurrenciesRTModel RTModel { set; get; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+
 
         #endregion
 
@@ -193,7 +191,7 @@ namespace PL.ViewModels
     
     }
 }
-//string[] d = { "AED",
+//available currencies { "AED",
 //             //"AFN",
 //             "BTC",
 //             //"ALL",

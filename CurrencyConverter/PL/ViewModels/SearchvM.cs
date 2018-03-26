@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace PL.ViewModels 
 {
-    class SearchVM: INotifyPropertyChanged, ISwitchUC
+    class SearchVM: BaseVM, ISwitchUC
     {
         public SearchVM()
         {
@@ -31,14 +31,11 @@ namespace PL.ViewModels
             set
             {
                 _switchCommand = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("switchCommand"));
+                OnPropertyChanged();
             }
         }
 
         private UserControl _selectedUC;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public UserControl selectedUC
         {
             get
@@ -48,22 +45,22 @@ namespace PL.ViewModels
             set
             {
                 _selectedUC = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("selectedUC"));
+                OnPropertyChanged();
             }
         }
 
-        private UserControl _prevUC { set; get; }
+        private UserControl _unSelectedUC { set; get; }
   
 
         public void SwitchUCSelected()
         {
-            if (_prevUC ==null)
+            if (_unSelectedUC ==null)
             {
-                _prevUC = new RTChartUS();
+                _unSelectedUC = new RTChartUS();
             }
 
-            UserControl temp = _prevUC;
-            _prevUC = selectedUC;
+            UserControl temp = _unSelectedUC;
+            _unSelectedUC = selectedUC;
             selectedUC = temp;
         }
     }

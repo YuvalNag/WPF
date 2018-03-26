@@ -24,9 +24,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>12</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -68,8 +69,18 @@
     <ApplicationIcon>appIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+
+
+
+    <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+
+
+
+
+	</PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
@@ -120,7 +131,7 @@
     <Compile Include="Commands\PrintCommand.cs" />
     <Compile Include="Commands\SwitchCurrencyCommand.cs" />
     <Compile Include="Commands\SwitchUCommand.cs" />
-    <Compile Include="ConverterParameter.cs" />
+    <Compile Include="Converters\ButtonchartListConverter.cs" />
     <Compile Include="Converters\ContentConverter.cs" />
     <Compile Include="Converters\ConvertValuse.cs" />
     <Compile Include="Converters\CountryCodeToImgSourceConverter.cs" />
@@ -131,7 +142,6 @@
     <Compile Include="Converters\IssuedCountryCodeToCountrySymbolConverter.cs" />
     <Compile Include="Converters\LabelConverter.cs" />
     <Compile Include="Converters\MinMaxConverter.cs" />
-    <Compile Include="Converters\MultiConverter.cs" />
     <Compile Include="Models\CurrenciesRTModel.cs" />
     <Compile Include="Models\HIstoryModel.cs" />
     <Compile Include="UserControls\RTChartUC.xaml.cs">
@@ -146,6 +156,7 @@
     <Compile Include="UserControls\SearchUC.xaml.cs">
       <DependentUpon>SearchUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\BaseVM.cs" />
     <Compile Include="ViewModels\CurrenciesListVM.cs" />
     <Compile Include="ViewModels\HistoryVM.cs" />
     <Compile Include="ViewModels\ICurrenciesListVM.cs" />
@@ -171,7 +182,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ResorceDictionary\DictionaryCurrency.xaml">
+    <Page Include="ResorceDictionary\CurrencyListDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -224,6 +235,7 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="PL_TemporaryKey.pfx" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -542,6 +554,11 @@
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SqlServer.Express.11.0">
+      <Visible>False</Visible>
+      <ProductName>SQL Server 2012 Express</ProductName>
+      <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>

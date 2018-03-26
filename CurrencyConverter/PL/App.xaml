@@ -15,28 +15,6 @@
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
 
-        <!--<Style TargetType="ComboBox" 
-                          ItemsSource="{Binding countries.Result, IsAsync=True}" 
-                          HorizontalAlignment="Left" 
-                          Margin="10,5,0,0" 
-                          VerticalAlignment="Top"
-                          ItemTemplate="{StaticResource CurrencyComboBoxItem}"
-                          SelectedItem="{Binding raltiveCountry}" 
-                          Cursor="Hand" 
-                          
-                          
-                          Custom:TextBoxHelper.UseFloatingWatermark="True" 
-                          Background="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
-            <ComboBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    --><!--<StackPanel/>
-                    If StackPanel was used, the memory consumed was over 2GB and dead slow.
-                    --><!--
-                    <VirtualizingStackPanel>
-                        --><!--Memory footprint is only 200 mb--><!--
-                    </VirtualizingStackPanel>
-                </ItemsPanelTemplate>
-            </ComboBox.ItemsPanel>
-        </Style>-->
+      
     </Application.Resources>
 </Application>

@@ -30,7 +30,7 @@
     <UserControl.Resources>
         <ResourceDictionary >
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Currency Converter;component/ResorceDictionary/DictionaryCurrency.xaml"  />
+                <ResourceDictionary Source="/Currency Converter;component/ResorceDictionary/CurrencyListDictionary.xaml"  />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>

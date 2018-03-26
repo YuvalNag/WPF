@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace PL.ViewModels
 {
-    public class MainVM : INotifyPropertyChanged, ISwitchUC
+    public class MainVM : BaseVM, ISwitchUC
     {
         #region properties
 
@@ -21,23 +21,18 @@ namespace PL.ViewModels
             set
             {
                 _UC = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UC"));
+                OnPropertyChanged();
             }
         }
 
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-
+        
         private int _selectedIndex;
         public int selectedIndex
         {
             set
             {
                 _selectedIndex = value;
-
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("selectedIndex"));
+                OnPropertyChanged();
             }
             get
             {
@@ -55,15 +50,17 @@ namespace PL.ViewModels
             set
             {
                 _switchCommand = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("switchCommand"));
+                OnPropertyChanged();
             }
         } 
         #endregion
 
         public MainVM()
         {
-            UC = new ObservableCollection<UserControl>();
-            UC.Add(new HistoryUC());
+            UC = new ObservableCollection<UserControl>
+            {
+                new HistoryUC()
+            };
 
             selectedIndex = 0;
             switchCommand = new SwitchUCommand(this);

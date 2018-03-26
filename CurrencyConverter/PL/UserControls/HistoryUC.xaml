@@ -133,7 +133,8 @@
                                     ShowGridLines="False" 
                                     ZoomPosition="{Binding ZoomPosition, ElementName=RangeNavigator, Mode=TwoWay}"
                                     ZoomFactor="{Binding ZoomFactor, ElementName=RangeNavigator, Mode=TwoWay}" 
-                                    LabelFormat="dd,MMM" LabelTemplate="{StaticResource labelTemplate1}"
+                                    LabelFormat="dd,MMM" 
+                                    LabelTemplate="{StaticResource labelTemplate1}"
                                     AxisLineStyle="{StaticResource AxisStyle}" 
                                     MajorTickLineStyle="{StaticResource AxisStyle}"/>
             </chart:SfChart.PrimaryAxis>
@@ -150,12 +151,7 @@
                                      MinorGridLineStyle="{StaticResource GridLineStyle}"
                                      MajorTickLineStyle="{StaticResource AxisStyle}">
 
-                    <chart:NumericalAxis.PostfixLabelTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding baseCountry.Code}"/>
-                        </DataTemplate>
-                    </chart:NumericalAxis.PostfixLabelTemplate>
-
+                   
                 </chart:NumericalAxis>
 
             </chart:SfChart.SecondaryAxis>
@@ -164,16 +160,18 @@
                 <ContextMenu >
                    
                     <MenuItem  Header="Print"
-                               Command="{StaticResource PrintCommand}" CommandParameter="{Binding PlacementTarget, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}">
+                               Command="{StaticResource PrintCommand}" 
+                               CommandParameter="{Binding PlacementTarget, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}">
                         <MenuItem.Icon>
-                            <Image Width="25" Height="25" Source="/Currency Converter;component/Assets/printIcon.png"/>
+                            <Image Width="20" Height="20" Source="/Currency Converter;component/Assets/printIcon.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem  Header="Save"
-                               Command="{StaticResource SaveCommand}" CommandParameter="{Binding PlacementTarget, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}">
+                    <MenuItem  Header="Save (Beta)"
+                               Command="{StaticResource SaveCommand}"
+                               CommandParameter="{Binding PlacementTarget, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}">
                         <MenuItem.Icon>
-                            <Image Width="25" Height="25" Source="/Currency Converter;component/Assets/saveIcon.png"/>
+                            <Image Width="20" Height="20" Source="/Currency Converter;component/Assets/saveIcon.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     
@@ -233,28 +231,27 @@
                 <chart:ThumbStyle SymbolTemplate="{StaticResource symboltemplate}"/>
             </chart:SfDateTimeRangeNavigator.LeftThumbStyle>
 
-            <chart:SfChart xml:lang="en-US" 
-                               AreaBorderThickness="0,1,0,0">
+            <chart:SfChart AreaBorderThickness="0,1,0,0">
 
                 <chart:SfChart.PrimaryAxis>
                     <chart:DateTimeAxis  ShowGridLines="False"
-                                                  Visibility="Collapsed" />
+                                         Visibility="Collapsed" />
                 </chart:SfChart.PrimaryAxis>
 
                 <chart:SfChart.SecondaryAxis>
                     <chart:NumericalAxis Minimum="{Binding historyRates.Result, ConverterParameter=min, Converter={StaticResource MinMaxConverter}}"
-                                                 Maximum="{Binding historyRates.Result, ConverterParameter=max, Converter={StaticResource MinMaxConverter}}"
-                                                 Interval="{Binding historyRates.Result, ConverterParameter=interval, Converter={StaticResource MinMaxConverter}}" 
-                                                 ShowGridLines="False" 
-                                                 StartRangeFromZero="False" 
-                                                 Visibility="Collapsed" />
+                                         Maximum="{Binding historyRates.Result, ConverterParameter=max, Converter={StaticResource MinMaxConverter}}"
+                                         Interval="{Binding historyRates.Result, ConverterParameter=interval, Converter={StaticResource MinMaxConverter}}" 
+                                         ShowGridLines="False" 
+                                         StartRangeFromZero="False" 
+                                         Visibility="Collapsed" />
                 </chart:SfChart.SecondaryAxis>
 
                 <chart:AreaSeries x:Name="SeriesInRangenavigator"  
-                                          ItemsSource="{Binding historyRates.Result}" 
-                                          XBindingPath="date" 
-                                          YBindingPath="Currency.Value" 
-                                          EnableAnimation="True">
+                                  ItemsSource="{Binding historyRates.Result}" 
+                                  XBindingPath="date" 
+                                  YBindingPath="Currency.Value" 
+                                  EnableAnimation="True">
                     <chart:AreaSeries.Interior>
                         <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                             <GradientStop Color="LightSkyBlue" Offset="0"/>

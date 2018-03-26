@@ -18,28 +18,16 @@ namespace PL.Converters
             Currency source, target;
             source = values[0] as Currency;
             target = values[1] as Currency;
-            //String factor;
-            //factor = values[2] as String;
+           
 
             double dfactor = (values[2]==null) ? 1:(double)values[2];
-            if (source != null &&/* DependencyProperty.UnsetValue != target&&*/ target != null)
+
+            if (source != null && target != null)
             {
                 double result= (source.Value / target.Value);
-               
-                //if (!(source.IssuedCountryCode == "BTC"))
-                //    result= Math.Round((source.Value / target.Value), 3);
-                //else
-                // result = Math.Round((source.Value / target.Value),10);
-
-                //if (!String.IsNullOrWhiteSpace(factor) && 
-                //    double.TryParse(factor, out dfactor)&&
-                //    dfactor>0)
 
                 if (dfactor> 1)
-                
                     result= (result * dfactor);
-
-
 
                 if (result < 0.0000001)
                     result = Math.Round(result, 10);
@@ -56,12 +44,7 @@ namespace PL.Converters
                     return source.Value;
 
             return "0";
-
-
-
         }
-
-
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
